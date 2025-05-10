@@ -1,39 +1,94 @@
-import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import CookingMapPage from './pages/CookingMapPage';
-import CountryPage from './pages/CountryPage';
-import DishDetailPage from './pages/DishDetailPage';
-import RestaurantMapPage from './pages/RestaurantMapPage';
-import RestaurantDetailPage from './pages/RestaurantDetailPage';
-import TimelinePage from './pages/TimelinePage';
-import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
+import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider, CssBaseline, Box, Typography, Container, Button } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
-const App: React.FC = () => (
-  <>
-    <AppBar position="static" color="primary">
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Food Blog
-        </Typography>
-        <Button color="inherit" component={Link} to="/">Home</Button>
-        <Button color="inherit" component={Link} to="/map/cooking">Cooking Map</Button>
-        <Button color="inherit" component={Link} to="/map/restaurants">Restaurants</Button>
-        <Button color="inherit" component={Link} to="/timeline">Timeline</Button>
-      </Toolbar>
-    </AppBar>
-    <Container sx={{ mt: 4 }}>
+// Pages
+import Home from './pages/Home';
+
+// Placeholder components until real ones are created
+const PlaceholderPage = ({ title }: { title: string }) => (
+  <Container maxWidth="md" sx={{ mt: 8, textAlign: 'center' }}>
+    <Typography variant="h3" component="h1" gutterBottom>
+      {title}
+    </Typography>
+    <Typography variant="body1" paragraph>
+      This page is under construction. Check back soon!
+    </Typography>
+    <Button variant="contained" color="primary" href="/">
+      Return Home
+    </Button>
+  </Container>
+);
+
+const CountryDetail = () => <PlaceholderPage title="Country Details" />;
+const DishDetail = () => <PlaceholderPage title="Dish Details" />;
+const RestaurantDetail = () => <PlaceholderPage title="Restaurant Details" />;
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#7A5D3C', // Rich brown for food theme
+    },
+    secondary: {
+      main: '#D4AF37', // Gold accent color
+    },
+    background: {
+      default: '#FAFAFA',
+      paper: '#FFFFFF',
+    },
+  },
+  typography: {
+    fontFamily: '"Playfair Display", "Roboto", "Arial", sans-serif',
+    h1: {
+      fontWeight: 700,
+      letterSpacing: '-0.01em',
+    },
+    h3: {
+      fontWeight: 600,
+      letterSpacing: '0.02em',
+    },
+    button: {
+      fontWeight: 500,
+      letterSpacing: '0.05em',
+    },
+  },
+  shape: {
+    borderRadius: 8,
+  },
+  components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          fontSize: '1rem',
+          textTransform: 'none',
+          padding: '12px 24px',
+          minWidth: 120,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+        },
+      },
+    },
+  },
+});
+
+function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/map/cooking" element={<CookingMapPage />} />
-        <Route path="/map/cooking/:countryCode" element={<CountryPage />} />
-        <Route path="/map/cooking/:countryCode/:dishId" element={<DishDetailPage />} />
-        <Route path="/map/restaurants" element={<RestaurantMapPage />} />
-        <Route path="/map/restaurants/:restaurantId" element={<RestaurantDetailPage />} />
-        <Route path="/timeline" element={<TimelinePage />} />
+        <Route path="/country/:countryId" element={<CountryDetail />} />
+        <Route path="/dish/:dishId" element={<DishDetail />} />
+        <Route path="/restaurant/:restaurantId" element={<RestaurantDetail />} />
       </Routes>
-    </Container>
-  </>
-);
+    </ThemeProvider>
+  );
+}
 
 export default App;
