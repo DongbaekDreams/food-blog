@@ -41,6 +41,7 @@ export interface Dish {
   ingredients: string[];
   sourceUrl?: string;
   googleSearchUrl?: string;
+  mainImage: string;
   photos: string[];
   prepTime?: string;
   cookTime?: string;
@@ -48,6 +49,8 @@ export interface Dish {
   servings?: number;
   notes?: string;
   tags?: string[];
+  recipe?: string;
+  videoUrl?: string;
 }
 
 // Country data type with dishes

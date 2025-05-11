@@ -142,9 +142,12 @@ const dishes: Dish[] = [
       '1/4 cup parmesan cheese',
       'Shredded cheese (optional, for extra cheesiness)'
     ],
+    mainImage: '/images/dishes/cajun-pasta/CajunPasta.jpg',
     photos: [
-      // Using the new directory structure
-      '/images/dishes/cajun-pasta/CajunPasta.jpg'
+      '/images/dishes/cajun-pasta/CajunPasta.jpg',
+      '/images/dishes/cajun-pasta/prep-work-sausage.heic',
+      '/images/dishes/cajun-pasta/prep-work-tomato.heic',
+      '/images/dishes/cajun-pasta/sauce.heic'
     ],
     // Optional fields
     prepTime: '15 minutes',
@@ -183,9 +186,12 @@ const dishes: Dish[] = [
       '1/4 cup parmesan cheese',
       'Shredded cheese (optional, for extra cheesiness)'
     ],
+    mainImage: '/images/dishes/cajun-pasta/CajunPasta.jpg',
     photos: [
-      // Using the new directory structure
-      '/images/dishes/cajun-pasta/CajunPasta.jpg'
+      '/images/dishes/cajun-pasta/CajunPasta.jpg',
+      '/images/dishes/cajun-pasta/prep-work-sausage.heic',
+      '/images/dishes/cajun-pasta/prep-work-tomato.heic',
+      '/images/dishes/cajun-pasta/sauce.heic'
     ],
     // Optional fields
     prepTime: '15 minutes',
@@ -217,9 +223,12 @@ const dishes: Dish[] = [
       'Olive oil',
       'Black pepper'
     ],
+    mainImage: '/images/dishes/garlic-bread/GarlicBread.jpg',
     photos: [
-      // Using the new directory structure
-      '/images/dishes/garlic-bread/GarlicBread.jpg'
+      '/images/dishes/garlic-bread/GarlicBread.jpg',
+      '/images/dishes/garlic-bread/prep-work-add-cheese.heic',
+      '/images/dishes/garlic-bread/prep-work-baste.heic',
+      '/images/dishes/garlic-bread/prep-work-stuffing.heic'
     ],
     prepTime: '10 minutes',
     cookTime: '12 minutes',

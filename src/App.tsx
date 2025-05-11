@@ -4,6 +4,7 @@ import { createTheme } from '@mui/material/styles';
 
 // Pages
 import Home from './pages/Home';
+import DishDetailPage from './pages/DishDetailPage';
 
 // Placeholder components until real ones are created
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -21,7 +22,6 @@ const PlaceholderPage = ({ title }: { title: string }) => (
 );
 
 const CountryDetail = () => <PlaceholderPage title="Country Details" />;
-const DishDetail = () => <PlaceholderPage title="Dish Details" />;
 const RestaurantDetail = () => <PlaceholderPage title="Restaurant Details" />;
 
 const theme = createTheme({
@@ -84,7 +84,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/country/:countryId" element={<CountryDetail />} />
-        <Route path="/dish/:dishId" element={<DishDetail />} />
+        <Route path="/dish/:dishId" element={<DishDetailPage />} />
         <Route path="/restaurant/:restaurantId" element={<RestaurantDetail />} />
       </Routes>
     </ThemeProvider>

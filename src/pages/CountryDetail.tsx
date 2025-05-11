@@ -11,54 +11,31 @@ import {
   Button,
   Box,
   Breadcrumbs,
-  Link
+  Link,
+  Chip
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
-// Mock data - replace with real data fetching
-const mockDishes = {
-  'US': [
-    { id: 'us1', name: 'Hamburger', rating: 4.5, photoUrl: 'https://via.placeholder.com/300x200?text=Hamburger' },
-    { id: 'us2', name: 'Hot Dog', rating: 4.0, photoUrl: 'https://via.placeholder.com/300x200?text=Hot+Dog' },
-    { id: 'us3', name: 'Apple Pie', rating: 4.7, photoUrl: 'https://via.placeholder.com/300x200?text=Apple+Pie' },
-  ],
-  'IT': [
-    { id: 'it1', name: 'Pizza Margherita', rating: 4.8, photoUrl: 'https://via.placeholder.com/300x200?text=Pizza+Margherita' },
-    { id: 'it2', name: 'Pasta Carbonara', rating: 4.6, photoUrl: 'https://via.placeholder.com/300x200?text=Pasta+Carbonara' },
-  ],
-  'JP': [
-    { id: 'jp1', name: 'Sushi', rating: 4.9, photoUrl: 'https://via.placeholder.com/300x200?text=Sushi' },
-  ],
-  'FR': [
-    { id: 'fr1', name: 'Croissant', rating: 4.5, photoUrl: 'https://via.placeholder.com/300x200?text=Croissant' },
-    { id: 'fr2', name: 'Coq au Vin', rating: 4.7, photoUrl: 'https://via.placeholder.com/300x200?text=Coq+au+Vin' },
-  ],
-  'IN': [
-    { id: 'in1', name: 'Butter Chicken', rating: 4.6, photoUrl: 'https://via.placeholder.com/300x200?text=Butter+Chicken' },
-    { id: 'in2', name: 'Samosa', rating: 4.3, photoUrl: 'https://via.placeholder.com/300x200?text=Samosa' },
-  ],
-};
-
-// Country name mapping
-const countryNames: Record<string, string> = {
-  'US': 'United States',
-  'IT': 'Italy',
-  'JP': 'Japan',
-  'FR': 'France',
-  'IN': 'India',
-};
+import { getCountriesData } from '../data/dataService';
+import { Dish } from '../data/types';
 
 const CountryDetail = () => {
   const { countryId } = useParams<{ countryId: string }>();
   const navigate = useNavigate();
-  const [dishes, setDishes] = useState<any[]>([]);
+  const [dishes, setDishes] = useState<Dish[]>([]);
   const [countryName, setCountryName] = useState<string>('');
 
   useEffect(() => {
     if (countryId) {
-      // In a real app, fetch data from API
-      setDishes(mockDishes[countryId as keyof typeof mockDishes] || []);
-      setCountryName(countryNames[countryId as keyof typeof countryNames] || countryId);
+      const countriesData = getCountriesData();
+      const countryData = countriesData[countryId];
+      
+      if (countryData) {
+        setDishes(countryData.dishes);
+        setCountryName(countryData.dishes[0]?.countryName || '');
+      }
     }
   }, [countryId]);
 
@@ -109,20 +86,54 @@ const CountryDetail = () => {
                   transform: 'scale(1.03)',
                   cursor: 'pointer',
                 },
+                boxShadow: 3,
+                borderRadius: 2,
+                overflow: 'hidden'
               }}
               onClick={() => handleDishClick(dish.id)}
             >
               <CardMedia
                 component="img"
-                height="200"
-                image={dish.photoUrl}
+                height="220"
+                image={dish.mainImage}
                 alt={dish.name}
+                sx={{ objectFit: 'cover' }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="h2" gutterBottom>
                   {dish.name}
                 </Typography>
-                <Rating value={dish.rating} precision={0.5} readOnly />
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <Rating value={dish.rating} precision={0.5} readOnly size="small" />
+                  <Typography variant="body2" sx={{ ml: 1 }}>
+                    {dish.rating.toFixed(1)}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
+                  <Chip 
+                    label={dish.difficulty} 
+                    size="small" 
+                    color={
+                      dish.difficulty === 'Easy' ? 'success' : 
+                      dish.difficulty === 'Medium' ? 'primary' : 'error'
+                    }
+                    variant="outlined"
+                  />
+                  {dish.prepTime && (
+                    <Chip 
+                      icon={<AccessTimeIcon fontSize="small" />}
+                      label={dish.prepTime}
+                      size="small"
+                      variant="outlined"
+                    />
+                  )}
+                  <Chip 
+                    icon={<CalendarTodayIcon fontSize="small" />}
+                    label={new Date(dish.dateCooked).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    size="small"
+                    variant="outlined"
+                  />
+                </Box>
               </CardContent>
             </Card>
           </Grid>

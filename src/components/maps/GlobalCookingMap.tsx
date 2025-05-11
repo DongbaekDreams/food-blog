@@ -254,7 +254,7 @@ const GlobalCookingMap = () => {
                         sx={{ 
                           height: '100%',
                           minHeight: 250,
-                          backgroundImage: `url(${dish.photos[0]})`,
+                          backgroundImage: `url(${dish.mainImage})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                           display: 'flex',
