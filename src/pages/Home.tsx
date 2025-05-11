@@ -76,7 +76,7 @@ function Home() {
             sx={{ 
               position: 'relative',
               overflow: 'hidden',
-              py: 8,
+              py: 4,
               background: 'linear-gradient(135deg, #F8F3E7 0%, #FFFFFF 100%)',
               borderRadius: 3,
               borderTop: `4px solid ${theme.palette.secondary.main}`,
@@ -114,11 +114,26 @@ function Home() {
                 color: 'primary.main',
                 fontWeight: 700,
                 fontSize: { xs: '2.2rem', md: '3.2rem' },
-                mb: 1,
+                mb: 0.5,
                 position: 'relative',
               }}
             >
               Gourmet and Gormand
+            </Typography>
+            
+            {/* Korean subtitle */}
+            <Typography 
+              variant="subtitle1" 
+              align="center" 
+              className="korean-text"
+              sx={{ 
+                mb: 2,
+                fontWeight: 500,
+                fontSize: { xs: '0.9rem', md: '1rem' },
+                color: alpha(theme.palette.primary.dark, 0.8)
+              }}
+            >
+              맛의 세상, 미식가와 먹보가 함께해요
             </Typography>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
@@ -139,7 +154,7 @@ function Home() {
                 mx: 'auto',
                 px: 3,
                 fontSize: { xs: '1rem', md: '1.1rem' },
-                mb: 4
+                mb: 3
               }}
             >
               A curated journey through global cuisines and culinary adventures
@@ -158,7 +173,7 @@ function Home() {
                     borderRadius: 2,
                     px: 3,
                     py: 1.5,
-                    fontWeight: 500
+                    fontWeight: 600
                   }}
                 >
                   Browse All Dishes
@@ -178,7 +193,7 @@ function Home() {
                     borderRadius: 2,
                     px: 3,
                     py: 1.5,
-                    fontWeight: 500
+                    fontWeight: 600
                   }}
                 >
                   View Recipes

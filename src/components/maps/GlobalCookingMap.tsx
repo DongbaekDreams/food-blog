@@ -291,7 +291,7 @@ const GlobalCookingMap = () => {
                             precision={0.5} 
                             readOnly 
                             size="small"
-                            sx={{ color: theme.palette.secondary.main }} 
+                            sx={{ color: '#FFB400' }} 
                           />
                         </Box>
                       </Box>
