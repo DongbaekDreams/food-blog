@@ -33,9 +33,9 @@ const theme = createTheme({
       dark: '#2E8B57', // Dark mint
     },
     secondary: {
-      main: '#6A8EF0', // Blue (replacing pink)
-      light: '#A0C4FF', // Light blue (replacing pastel pink)
-      dark: '#4A6FD0', // Dark blue (replacing darker pastel pink)
+      main: '#81BECE', // Lighter blue to match mint
+      light: '#A7D8E4', // Very light blue
+      dark: '#5A9CAD', // Darker but still soft blue
     },
     info: {
       main: '#A0C4FF', // Pastel blue

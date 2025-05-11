@@ -70,16 +70,16 @@ function Home() {
       pb: 8
     }}>
       <Container maxWidth="lg">
-        <Box sx={{ mb: 5 }}>
+        <Box sx={{ mb: 4 }}>
           <Paper 
             elevation={0} 
             sx={{ 
               position: 'relative',
               overflow: 'hidden',
-              py: 4,
-              background: 'linear-gradient(135deg, #F8F3E7 0%, #FFFFFF 100%)',
+              py: 3,
+              background: 'linear-gradient(135deg, #F2F2F2 0%, #FFFFFF 100%)',
               borderRadius: 3,
-              borderTop: `4px solid ${theme.palette.secondary.main}`,
+              borderTop: `3px solid ${theme.palette.primary.main}`,
             }}
           >
             {/* Decorative elements */}
@@ -88,9 +88,9 @@ function Home() {
                 position: 'absolute',
                 top: 0,
                 right: 0,
-                width: 150,
-                height: 150,
-                background: alpha(theme.palette.secondary.main, 0.15),
+                width: 120,
+                height: 120,
+                background: alpha(theme.palette.secondary.light, 0.2),
                 borderBottomLeftRadius: '100%',
               }}
             />
@@ -99,9 +99,9 @@ function Home() {
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
-                width: 100,
-                height: 100,
-                background: alpha(theme.palette.primary.main, 0.07),
+                width: 80,
+                height: 80,
+                background: alpha(theme.palette.primary.light, 0.15),
                 borderTopRightRadius: '100%',
               }}
             />
@@ -113,8 +113,8 @@ function Home() {
               sx={{ 
                 color: 'primary.main',
                 fontWeight: 700,
-                fontSize: { xs: '2.2rem', md: '3.2rem' },
-                mb: 0.5,
+                fontSize: { xs: '2rem', md: '2.8rem' },
+                mb: 0.25,
                 position: 'relative',
               }}
             >
@@ -127,18 +127,18 @@ function Home() {
               align="center" 
               className="korean-text"
               sx={{ 
-                mb: 2,
+                mb: 1.5,
                 fontWeight: 500,
-                fontSize: { xs: '0.9rem', md: '1rem' },
+                fontSize: { xs: '0.8rem', md: '0.9rem' },
                 color: alpha(theme.palette.primary.dark, 0.8)
               }}
             >
               맛의 세상, 미식가와 먹보가 함께해요
             </Typography>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1.5 }}>
               <Divider sx={{ 
-                width: '60px', 
+                width: '40px', 
                 borderColor: theme.palette.secondary.main,
                 borderWidth: 2,
                 borderRadius: 1,
@@ -149,12 +149,12 @@ function Home() {
               variant="subtitle1"
               align="center"
               sx={{
-                color: alpha('#000000', 0.7),
-                maxWidth: '650px',
+                color: alpha('#000000', 0.6),
+                maxWidth: '600px',
                 mx: 'auto',
                 px: 3,
-                fontSize: { xs: '1rem', md: '1.1rem' },
-                mb: 3
+                fontSize: { xs: '0.9rem', md: '1rem' },
+                mb: 2.5
               }}
             >
               A curated journey through global cuisines and culinary adventures
@@ -166,13 +166,13 @@ function Home() {
                 <Button
                   variant="contained"
                   color="primary"
-                  size="large"
+                  size="medium"
                   startIcon={<RestaurantMenuIcon />}
                   onClick={() => navigate('/dishes')}
                   sx={{
                     borderRadius: 2,
-                    px: 3,
-                    py: 1.5,
+                    px: 2.5,
+                    py: 1,
                     fontWeight: 600
                   }}
                 >
@@ -183,7 +183,7 @@ function Home() {
                 <Button
                   variant="outlined"
                   color="primary"
-                  size="large"
+                  size="medium"
                   startIcon={<MenuBookIcon />}
                   onClick={() => {
                     // When we implement a recipe page, navigate there
@@ -191,8 +191,8 @@ function Home() {
                   }}
                   sx={{
                     borderRadius: 2,
-                    px: 3,
-                    py: 1.5,
+                    px: 2.5,
+                    py: 1,
                     fontWeight: 600
                   }}
                 >
