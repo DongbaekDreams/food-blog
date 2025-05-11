@@ -155,7 +155,28 @@ const dishes: Dish[] = [
     totalTime: '35 minutes',
     servings: 4,
     notes: 'We substituted chorizo for the pineapple sausage in this recipe. Adjust the Cajun seasoning and cayenne to control the heat level. For a lighter version, use half-and-half instead of heavy cream.',
-    tags: ['American', 'Pasta', 'Spicy', 'Seafood', 'Chorizo']
+    tags: ['American', 'Pasta', 'Spicy', 'Seafood', 'Chorizo'],
+    recipe: `Instructions:
+
+1. Bring a large pot of salted water to a rolling boil. Add the rigatoni and cook according to package instructions until al dente. Drain and reserve.
+
+2. While the pasta cooks, heat a pan over medium heat. Add the sliced chorizo and sauté until browned. Transfer the cooked chorizo to a bowl and set aside.
+
+3. In the same pan, melt 1 tbsp of butter. Add the seasoned tiger shrimp and cook until opaque and lightly golden on both sides. Remove the shrimp and add to the chorizo bowl.
+
+4. Reduce the heat to medium‑low. Add the remaining 1 tbsp butter, then the minced garlic, chopped sun‑dried tomatoes, and chopped cherry tomatoes. Stir gently to combine, taking care not to burn the garlic.
+
+5. Spoon in the tomato paste and stir until fully incorporated.
+
+6. Pour in the heavy cream and bring the sauce just to a simmer. Stir in salt, pepper, Cajun seasoning, lemon pepper, smoked paprika, onion powder, and garlic powder.
+
+7. Return the chorizo and shrimp to the pan. Stir to coat evenly with the sauce.
+
+8. Add the cooked rigatoni to the pan and toss thoroughly, ensuring each piece is well coated.
+
+9. Sprinkle in the Parmesan cheese and stir until melted into the sauce. For extra cheesiness, top with shredded cheese just before serving.
+
+10. Serve immediately, garnished with a light dusting of smoked paprika or chopped fresh parsley if desired.`
   },
   {
     id: 'us-2',
@@ -199,7 +220,28 @@ const dishes: Dish[] = [
     totalTime: '35 minutes',
     servings: 4,
     notes: 'We substituted chorizo for the pineapple sausage in this recipe. Adjust the Cajun seasoning and cayenne to control the heat level. For a lighter version, use half-and-half instead of heavy cream.',
-    tags: ['American', 'Pasta', 'Spicy', 'Seafood', 'Chorizo']
+    tags: ['American', 'Pasta', 'Spicy', 'Seafood', 'Chorizo'],
+    recipe: `Instructions:
+
+1. Bring a large pot of salted water to a rolling boil. Add the rigatoni and cook according to package instructions until al dente. Drain and reserve.
+
+2. While the pasta cooks, heat a pan over medium heat. Add the sliced chorizo and sauté until browned. Transfer the cooked chorizo to a bowl and set aside.
+
+3. In the same pan, melt 1 tbsp of butter. Add the seasoned tiger shrimp and cook until opaque and lightly golden on both sides. Remove the shrimp and add to the chorizo bowl.
+
+4. Reduce the heat to medium‑low. Add the remaining 1 tbsp butter, then the minced garlic, chopped sun‑dried tomatoes, and chopped cherry tomatoes. Stir gently to combine, taking care not to burn the garlic.
+
+5. Spoon in the tomato paste and stir until fully incorporated.
+
+6. Pour in the heavy cream and bring the sauce just to a simmer. Stir in salt, pepper, Cajun seasoning, lemon pepper, smoked paprika, onion powder, and garlic powder.
+
+7. Return the chorizo and shrimp to the pan. Stir to coat evenly with the sauce.
+
+8. Add the cooked rigatoni to the pan and toss thoroughly, ensuring each piece is well coated.
+
+9. Sprinkle in the Parmesan cheese and stir until melted into the sauce. For extra cheesiness, top with shredded cheese just before serving.
+
+10. Serve immediately, garnished with a light dusting of smoked paprika or chopped fresh parsley if desired.`
   },
   
   // YOUR GARLIC BREAD - RESTORED
