@@ -4,87 +4,18 @@ import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import { Box, Paper, Typography, useTheme, Button, Divider, Dialog, DialogContent, DialogTitle, IconButton, Grid } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import 'leaflet/dist/leaflet.css';
-
-// Dish type definition
-interface Dish {
-  id: string;
-  name: string;
-  description: string;
-  imagePath: string;
-  dateCooked: string;
-  rating: number;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  ingredients: string[];
-}
+import { getCountriesData } from '../../data/dataService';
+import { Dish, CountryData } from '../../data/types';
 
 // Country data type with dishes
-interface CountryData {
-  dishCount: number;
-  dishes: Dish[];
+interface CountryDataWithUI extends CountryData {
   flagEmoji?: string;
 }
-
-// Temporary mock data with dishes - replace with real data later
-const mockData: Record<string, CountryData> = {
-  'US': {
-    dishCount: 1,
-    flagEmoji: '🇺🇸',
-    dishes: [
-      {
-        id: 'us-1',
-        name: 'Cajun Pasta',
-        description: 'A spicy pasta dish with Cajun-seasoned chicken, bell peppers, and a creamy sauce. The perfect blend of Southern and Italian flavors with a kick of heat.',
-        imagePath: '/images/dishes/CajunPasta.jpg',
-        dateCooked: '2024-03-15',
-        rating: 4.8,
-        difficulty: 'Medium',
-        ingredients: [
-          'Chicken breast',
-          'Penne pasta',
-          'Bell peppers',
-          'Onions',
-          'Garlic',
-          'Cajun seasoning',
-          'Heavy cream',
-          'Parmesan cheese',
-          'Green onions',
-          'Olive oil',
-          'Cayenne pepper'
-        ]
-      }
-    ]
-  },
-  'IT': {
-    dishCount: 1,
-    flagEmoji: '🇮🇹',
-    dishes: [
-      {
-        id: 'it-1',
-        name: 'Garlic Bread',
-        description: 'Crusty Italian bread slathered with garlic-infused butter and herbs, then toasted to golden perfection. A simple yet irresistible side that pairs perfectly with pasta dishes.',
-        imagePath: '/images/dishes/GarlicBread.jpg',
-        dateCooked: '2024-04-02',
-        rating: 4.5,
-        difficulty: 'Easy',
-        ingredients: [
-          'Italian bread',
-          'Butter',
-          'Fresh garlic',
-          'Parsley',
-          'Parmesan cheese',
-          'Salt',
-          'Oregano',
-          'Olive oil',
-          'Black pepper'
-        ]
-      }
-    ]
-  }
-};
 
 const GlobalCookingMap = () => {
   const navigate = useNavigate();
   const [geoData, setGeoData] = useState<any>(null);
+  const [countryData, setCountryData] = useState<Record<string, CountryDataWithUI>>({});
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [countryDetailsOpen, setCountryDetailsOpen] = useState(false);
@@ -96,22 +27,26 @@ const GlobalCookingMap = () => {
       .then(response => response.json())
       .then(data => setGeoData(data))
       .catch(error => console.error('Error fetching GeoJSON data:', error));
+
+    // Get real data from dataService
+    const data = getCountriesData();
+    setCountryData(data);
   }, []);
 
   const getColor = (countryCode: string) => {
-    const countryData = mockData[countryCode as keyof typeof mockData];
-    if (!countryData) return '#E5E5E5'; // Light gray for countries with no data
-    const count = countryData.dishCount;
+    const data = countryData[countryCode];
+    if (!data) return '#E5E5E5'; // Light gray for countries with no data
+    const count = data.dishCount;
     if (count === 0) return '#E5E5E5';
-    if (count < 5) return '#FFF176'; // 1-4 dishes (light yellow)
-    if (count < 10) return '#FFB300'; // 5-9 dishes (gold)
-    return '#8D6E63'; // 10+ dishes (brown)
+    if (count < 5) return theme.palette.secondary.light; // 1-4 dishes
+    if (count < 10) return theme.palette.secondary.main; // 5-9 dishes
+    return theme.palette.primary.main; // 10+ dishes
   };
 
   const onEachFeature = (feature: any, layer: any) => {
     const countryCode = feature.properties["ISO3166-1-Alpha-2"];
-    console.log('GeoJSON country code:', countryCode, 'Mock data exists:', !!mockData[countryCode]);
-    const countryData = mockData[countryCode as keyof typeof mockData];
+    console.log('GeoJSON country code:', countryCode, 'Data exists:', !!countryData[countryCode]);
+    const data = countryData[countryCode];
 
     layer.on({
       mouseover: () => {
@@ -129,7 +64,7 @@ const GlobalCookingMap = () => {
         });
       },
       click: () => {
-        if (countryData && countryData.dishes.length > 0) {
+        if (data && data.dishes.length > 0) {
           setSelectedCountry(countryCode);
           setCountryDetailsOpen(true);
         } else {
@@ -181,7 +116,6 @@ const GlobalCookingMap = () => {
         attributionControl={false}
         scrollWheelZoom={true}
       >
-        {/* Simple light-colored base map */}
         <TileLayer
           url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
@@ -213,12 +147,12 @@ const GlobalCookingMap = () => {
           }}
         >
           <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 0.5, color: theme.palette.primary.main }}>
-            {mockData[hoveredCountry as keyof typeof mockData]?.flagEmoji || ''} {getCountryName(hoveredCountry)}
+            {countryData[hoveredCountry]?.flagEmoji || ''} {getCountryName(hoveredCountry)}
           </Typography>
           <Typography variant="body2">
-            Dishes cooked: <strong>{mockData[hoveredCountry as keyof typeof mockData]?.dishCount || 0}</strong>
+            Dishes cooked: <strong>{countryData[hoveredCountry]?.dishCount || 0}</strong>
           </Typography>
-          {mockData[hoveredCountry as keyof typeof mockData]?.dishes.length > 0 && (
+          {countryData[hoveredCountry]?.dishes.length > 0 && (
             <Button 
               size="small" 
               variant="outlined" 
@@ -245,19 +179,20 @@ const GlobalCookingMap = () => {
         p: 1.5,
         borderRadius: 1,
         border: `1px solid ${theme.palette.divider}`,
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
       }}>
-        <Typography variant="body2" sx={{ mb: 1, fontWeight: 500 }}>Dishes Cooked:</Typography>
+        <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }}>Dishes Cooked:</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-          <Box sx={{ width: 12, height: 12, backgroundColor: theme.palette.primary.main, borderRadius: '2px' }} />
-          <Typography variant="caption">10+ dishes</Typography>
+          <Box sx={{ width: 16, height: 16, backgroundColor: theme.palette.primary.main, borderRadius: '3px' }} />
+          <Typography variant="caption" sx={{ fontWeight: 500 }}>10+ dishes</Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
-          <Box sx={{ width: 12, height: 12, backgroundColor: theme.palette.secondary.main, borderRadius: '2px' }} />
-          <Typography variant="caption">5-9 dishes</Typography>
+          <Box sx={{ width: 16, height: 16, backgroundColor: theme.palette.secondary.main, borderRadius: '3px' }} />
+          <Typography variant="caption" sx={{ fontWeight: 500 }}>5-9 dishes</Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Box sx={{ width: 12, height: 12, backgroundColor: theme.palette.secondary.light, borderRadius: '2px' }} />
-          <Typography variant="caption">1-4 dishes</Typography>
+          <Box sx={{ width: 16, height: 16, backgroundColor: theme.palette.secondary.light, borderRadius: '3px' }} />
+          <Typography variant="caption" sx={{ fontWeight: 500 }}>1-4 dishes</Typography>
         </Box>
       </Box>
 
@@ -285,7 +220,7 @@ const GlobalCookingMap = () => {
             py: 2
           }}>
             <Typography variant="h5" fontWeight="bold">
-              {mockData[selectedCountry as keyof typeof mockData]?.flagEmoji || ''} {getCountryName(selectedCountry)} Cuisine
+              {countryData[selectedCountry]?.flagEmoji || ''} {getCountryName(selectedCountry)} Cuisine
             </Typography>
             <IconButton 
               edge="end" 
@@ -302,7 +237,7 @@ const GlobalCookingMap = () => {
                 Dishes I've cooked from {getCountryName(selectedCountry)}:
               </Typography>
               
-              {mockData[selectedCountry as keyof typeof mockData]?.dishes.map((dish, index) => (
+              {countryData[selectedCountry]?.dishes.map((dish) => (
                 <Paper 
                   key={dish.id} 
                   elevation={1} 
@@ -319,7 +254,7 @@ const GlobalCookingMap = () => {
                         sx={{ 
                           height: '100%',
                           minHeight: 250,
-                          backgroundImage: `url(${dish.imagePath})`,
+                          backgroundImage: `url(${dish.photos[0]})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                           display: 'flex',
@@ -371,26 +306,28 @@ const GlobalCookingMap = () => {
                         </Box>
                         
                         <Typography variant="body1" sx={{ mb: 2 }}>
-                          {dish.description}
+                          {dish.recipeDetails}
                         </Typography>
                         
                         <Typography variant="subtitle2" fontWeight="bold" sx={{ mb: 1 }}>
-                          Key Ingredients:
+                          Tags:
                         </Typography>
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.8 }}>
-                          {dish.ingredients.map((ingredient, idx) => (
+                          {dish.tags?.map((tag, idx) => (
                             <Typography 
                               key={idx} 
                               variant="body2" 
                               sx={{ 
-                                backgroundColor: theme.palette.grey[100],
-                                px: 1,
+                                backgroundColor: theme.palette.primary.light,
+                                color: theme.palette.primary.dark,
+                                px: 1.5,
                                 py: 0.5,
-                                borderRadius: 1,
-                                fontSize: '0.75rem'
+                                borderRadius: 10,
+                                fontSize: '0.75rem',
+                                fontWeight: 500
                               }}
                             >
-                              {ingredient}
+                              {tag}
                             </Typography>
                           ))}
                         </Box>
