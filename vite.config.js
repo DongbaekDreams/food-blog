@@ -8,6 +8,11 @@ export default defineConfig({
     strictPort: false,
     hmr: {
       overlay: true
-    }
+    },
+    allowedHosts: [
+      'localhost',
+      '*.ngrok-free.app',
+      '6308-2600-1700-2df1-c910-c4c0-95d7-6bca-82ae.ngrok-free.app'
+    ]
   }
 });
