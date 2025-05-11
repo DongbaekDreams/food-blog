@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Container, 
   Tabs, 
@@ -9,9 +10,13 @@ import {
   alpha,
   CircularProgress,
   useTheme,
-  Divider
+  Divider,
+  Button,
+  Grid
 } from '@mui/material';
 import GlobalCookingMap from '../components/maps/GlobalCookingMap';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 // Use lazy loading for the components that might have issues
 const RestaurantVisitsMap = lazy(() => 
   import('../components/maps/RestaurantVisitsMap').catch(() => ({
@@ -51,6 +56,7 @@ function TabPanel(props: TabPanelProps) {
 function Home() {
   const [value, setValue] = useState(0);
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -64,7 +70,7 @@ function Home() {
       pb: 8
     }}>
       <Container maxWidth="lg">
-        <Box sx={{ mb: 8 }}>
+        <Box sx={{ mb: 5 }}>
           <Paper 
             elevation={0} 
             sx={{ 
@@ -133,10 +139,52 @@ function Home() {
                 mx: 'auto',
                 px: 3,
                 fontSize: { xs: '1rem', md: '1.1rem' },
+                mb: 4
               }}
             >
               A curated journey through global cuisines and culinary adventures
             </Typography>
+
+            {/* Navigation buttons */}
+            <Grid container justifyContent="center" spacing={2}>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  startIcon={<RestaurantMenuIcon />}
+                  onClick={() => navigate('/dishes')}
+                  sx={{
+                    borderRadius: 2,
+                    px: 3,
+                    py: 1.5,
+                    fontWeight: 500
+                  }}
+                >
+                  Browse All Dishes
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  startIcon={<MenuBookIcon />}
+                  onClick={() => {
+                    // When we implement a recipe page, navigate there
+                    navigate('/dishes');
+                  }}
+                  sx={{
+                    borderRadius: 2,
+                    px: 3,
+                    py: 1.5,
+                    fontWeight: 500
+                  }}
+                >
+                  View Recipes
+                </Button>
+              </Grid>
+            </Grid>
           </Paper>
         </Box>
         
