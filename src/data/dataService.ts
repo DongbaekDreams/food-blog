@@ -159,7 +159,7 @@ const dishes: Dish[] = [
   },
   {
     id: 'us-2',
-    name: 'Cajun Pasta4',
+    name: 'TEST SECOND DISH',
     country: 'US',
     countryName: 'United States',
     dateCooked: '2024-03-15',

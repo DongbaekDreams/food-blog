@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
-import { Box, Paper, Typography, useTheme, Button, Divider, Dialog, DialogContent, DialogTitle, IconButton, Grid } from '@mui/material';
+import { Box, Paper, Typography, useTheme, Button, Divider, Dialog, DialogContent, DialogTitle, IconButton, Grid, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import 'leaflet/dist/leaflet.css';
 import { getCountriesData } from '../../data/dataService';
@@ -104,6 +104,10 @@ const GlobalCookingMap = () => {
 
   const handleCloseCountryDetails = () => {
     setCountryDetailsOpen(false);
+  };
+
+  const handleDishClick = (dishId: string) => {
+    navigate(`/dish/${dishId}`);
   };
 
   return (
@@ -245,8 +249,15 @@ const GlobalCookingMap = () => {
                     mb: 3, 
                     overflow: 'hidden',
                     borderRadius: 2,
-                    border: `1px solid ${theme.palette.divider}`
+                    border: `1px solid ${theme.palette.divider}`,
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    '&:hover': {
+                      transform: 'translateY(-3px)',
+                      boxShadow: 3,
+                    }
                   }}
+                  onClick={() => handleDishClick(dish.id)}
                 >
                   <Grid container>
                     <Grid item xs={12} md={4}>
@@ -257,51 +268,60 @@ const GlobalCookingMap = () => {
                           backgroundImage: `url(${dish.mainImage})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
-                          display: 'flex',
-                          alignItems: 'flex-end',
-                          p: 2
+                          position: 'relative'
                         }}
                       >
-                        <Paper sx={{ 
-                          p: 1.5, 
-                          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                          backdropFilter: 'blur(4px)',
-                          width: '100%',
-                          borderRadius: 1
-                        }}>
-                          <Typography variant="subtitle1" fontWeight="bold">
-                            {dish.name}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            Cooked on {formatDate(dish.dateCooked)}
-                          </Typography>
-                        </Paper>
+                        {/* Rating overlay in top-right */}
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            top: 10,
+                            right: 10,
+                            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                            color: 'white',
+                            borderRadius: 1,
+                            px: 1,
+                            py: 0.5,
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <Rating 
+                            value={dish.rating} 
+                            precision={0.5} 
+                            readOnly 
+                            size="small"
+                            sx={{ color: theme.palette.secondary.main }} 
+                          />
+                        </Box>
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={8}>
                       <Box sx={{ p: 3 }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                          <Typography variant="body2" sx={{ 
-                            backgroundColor: theme.palette.secondary.light,
-                            color: theme.palette.secondary.dark,
-                            px: 1.5,
-                            py: 0.5,
-                            borderRadius: 10,
-                            fontSize: '0.75rem',
-                            fontWeight: 500
-                          }}>
-                            Difficulty: {dish.difficulty}
+                        <Typography variant="h6" sx={{ mb: 1, fontWeight: 'bold' }}>
+                          {dish.name}
+                        </Typography>
+                        
+                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                          <Typography variant="body2" color="text.secondary" sx={{ mr: 2 }}>
+                            Cooked on {formatDate(dish.dateCooked)}
                           </Typography>
                           <Typography variant="body2" sx={{ 
-                            backgroundColor: theme.palette.primary.light,
-                            color: theme.palette.primary.dark,
+                            backgroundColor: 
+                              dish.difficulty === 'Easy' ? theme.palette.success.light :
+                              dish.difficulty === 'Medium' ? theme.palette.primary.light :
+                              theme.palette.error.light,
+                            color:
+                              dish.difficulty === 'Easy' ? theme.palette.success.dark :
+                              dish.difficulty === 'Medium' ? theme.palette.primary.dark :
+                              theme.palette.error.dark,
                             px: 1.5,
                             py: 0.5,
                             borderRadius: 10,
                             fontSize: '0.75rem',
                             fontWeight: 500
                           }}>
-                            Rating: {dish.rating}/5
+                            {dish.difficulty}
                           </Typography>
                         </Box>
                         
@@ -309,28 +329,32 @@ const GlobalCookingMap = () => {
                           {dish.recipeDetails}
                         </Typography>
                         
-                        <Typography variant="subtitle2" fontWeight="bold" sx={{ mb: 1 }}>
-                          Tags:
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.8 }}>
-                          {dish.tags?.map((tag, idx) => (
-                            <Typography 
-                              key={idx} 
-                              variant="body2" 
-                              sx={{ 
-                                backgroundColor: theme.palette.primary.light,
-                                color: theme.palette.primary.dark,
-                                px: 1.5,
-                                py: 0.5,
-                                borderRadius: 10,
-                                fontSize: '0.75rem',
-                                fontWeight: 500
-                              }}
-                            >
-                              {tag}
+                        {dish.tags && dish.tags.length > 0 && (
+                          <>
+                            <Typography variant="subtitle2" fontWeight="bold" sx={{ mb: 1 }}>
+                              Tags:
                             </Typography>
-                          ))}
-                        </Box>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.8 }}>
+                              {dish.tags.map((tag, idx) => (
+                                <Typography 
+                                  key={idx} 
+                                  variant="body2" 
+                                  sx={{ 
+                                    backgroundColor: theme.palette.primary.light,
+                                    color: theme.palette.primary.dark,
+                                    px: 1.5,
+                                    py: 0.5,
+                                    borderRadius: 10,
+                                    fontSize: '0.75rem',
+                                    fontWeight: 500
+                                  }}
+                                >
+                                  {tag}
+                                </Typography>
+                              ))}
+                            </Box>
+                          </>
+                        )}
                       </Box>
                     </Grid>
                   </Grid>

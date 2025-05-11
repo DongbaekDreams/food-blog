@@ -6,6 +6,7 @@ import { createTheme } from '@mui/material/styles';
 import Home from './pages/Home';
 import DishDetailPage from './pages/DishDetailPage';
 import DishGalleryPage from './pages/DishGalleryPage';
+import CountryDetail from './pages/CountryDetail';
 
 // Placeholder components until real ones are created
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -22,7 +23,6 @@ const PlaceholderPage = ({ title }: { title: string }) => (
   </Container>
 );
 
-const CountryDetail = () => <PlaceholderPage title="Country Details" />;
 const RestaurantDetail = () => <PlaceholderPage title="Restaurant Details" />;
 
 const theme = createTheme({
