@@ -12,7 +12,7 @@ export default defineConfig({
     allowedHosts: [
       'localhost',
       '*.ngrok-free.app',
-      '6308-2600-1700-2df1-c910-c4c0-95d7-6bca-82ae.ngrok-free.app'
+      '4352-2600-1700-2df1-c910-90d9-d20-6759-73fd.ngrok-free.app' 
     ]
   }
 });

@@ -215,7 +215,9 @@ function Home() {
             <Tabs 
               value={value} 
               onChange={handleChange} 
-              centered
+              variant="scrollable"
+              scrollButtons="auto"
+              allowScrollButtonsMobile
               textColor="primary"
               indicatorColor="primary"
               sx={{ 
@@ -225,6 +227,15 @@ function Home() {
                 },
                 '& .Mui-selected': {
                   fontWeight: 600,
+                },
+                '& .MuiTab-root': {
+                  minWidth: { xs: '130px', sm: '150px' },
+                  fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1rem' }
+                },
+                '& .MuiTabs-scroller': {
+                  [theme.breakpoints.up('md')]: {
+                    flexGrow: 0 // Center tabs on desktop
+                  }
                 }
               }}
             >
