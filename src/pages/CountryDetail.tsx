@@ -95,7 +95,7 @@ const CountryDetail = () => {
               <CardMedia
                 component="img"
                 height="220"
-                image={dish.mainImage}
+                image={`${import.meta.env.BASE_URL}${dish.mainImage.startsWith('/') ? dish.mainImage.substring(1) : dish.mainImage}`}
                 alt={dish.name}
                 sx={{ objectFit: 'cover' }}
               />

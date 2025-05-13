@@ -131,7 +131,7 @@ const RestaurantDetail = () => {
         <Grid item xs={12}>
           <Paper elevation={2} sx={{ overflow: 'hidden' }}>
             <img 
-              src={restaurant.photos[0]} 
+              src={`${import.meta.env.BASE_URL}${restaurant.photos[0].startsWith('/') ? restaurant.photos[0].substring(1) : restaurant.photos[0]}`} 
               alt={restaurant.name} 
               style={{ width: '100%', height: 'auto', maxHeight: '500px', objectFit: 'cover' }}
             />
@@ -212,7 +212,7 @@ const RestaurantDetail = () => {
                   <CardMedia
                     component="img"
                     height="200"
-                    image={photo}
+                    image={`${import.meta.env.BASE_URL}${photo.startsWith('/') ? photo.substring(1) : photo}`}
                     alt={`${restaurant.name} food ${index + 1}`}
                   />
                 </Card>

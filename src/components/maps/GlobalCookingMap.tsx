@@ -265,7 +265,7 @@ const GlobalCookingMap = () => {
                         sx={{ 
                           height: '100%',
                           minHeight: 250,
-                          backgroundImage: `url(${dish.mainImage})`,
+                          backgroundImage: `url(${import.meta.env.BASE_URL}${dish.mainImage.startsWith('/') ? dish.mainImage.substring(1) : dish.mainImage})`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                           position: 'relative'
