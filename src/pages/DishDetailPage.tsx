@@ -174,7 +174,7 @@ const DishDetailPage = () => {
             </IconButton>
             
             <img 
-              src={dish.photos[currentImageIndex]} 
+              src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`} 
               alt={`${dish.name} ${currentImageIndex + 1}`} 
               style={{ 
                 maxWidth: '100%', 
@@ -241,7 +241,7 @@ const DishDetailPage = () => {
             }}
           >
             <img 
-              src={dish.photos[currentImageIndex]} 
+              src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`} 
               alt={dish.name} 
               style={{ 
                 width: '100%', 
@@ -285,7 +285,7 @@ const DishDetailPage = () => {
                   onClick={() => handleThumbnailClick(index)}
                 >
                   <img 
-                    src={photo} 
+                    src={`${import.meta.env.BASE_URL}${photo.startsWith('/') ? photo.substring(1) : photo}`} 
                     alt={`Thumbnail ${index + 1}`} 
                     style={{ 
                       width: '100%', 
