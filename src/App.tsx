@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import DishDetailPage from './pages/DishDetailPage';
 import DishGalleryPage from './pages/DishGalleryPage';
 import CountryDetail from './pages/CountryDetail';
+import RestaurantDetailPage from './pages/RestaurantDetailPage';
 
 // Placeholder components until real ones are created
 const PlaceholderPage = ({ title }: { title: string }) => (
@@ -23,7 +24,7 @@ const PlaceholderPage = ({ title }: { title: string }) => (
   </Container>
 );
 
-const RestaurantDetail = () => <PlaceholderPage title="Restaurant Details" />;
+// Removed placeholder RestaurantDetail component since we now have a real one
 
 const theme = createTheme({
   palette: {
@@ -129,7 +130,7 @@ function App() {
         <Route path="/dishes" element={<DishGalleryPage />} />
         <Route path="/country/:countryId" element={<CountryDetail />} />
         <Route path="/dish/:dishId" element={<DishDetailPage />} />
-        <Route path="/restaurant/:restaurantId" element={<RestaurantDetail />} />
+        <Route path="/restaurant/:restaurantId" element={<RestaurantDetailPage />} />
       </Routes>
     </ThemeProvider>
   );

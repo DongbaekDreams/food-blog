@@ -136,7 +136,7 @@ const dishes: Dish[] = [
     name: 'Cajun Pasta',
     country: 'US',
     countryName: 'United States',
-    dateCooked: '2024-03-15',
+    dateCooked: '2025-03-15',
     rating: 4.8,
     difficulty: 'Medium',
     recipeDetails: 'A spicy pasta dish with chorizo (substituted for pineapple sausage), shrimp, and a creamy sauce. The perfect blend of Southern and Italian flavors with a kick of heat. The dish combines rigatoni pasta with sautéed chorizo, shrimp, and a rich cream sauce seasoned with Cajun spices.',
@@ -204,7 +204,7 @@ const dishes: Dish[] = [
     name: 'Garlic Bread',
     country: 'IT',
     countryName: 'Italy',
-    dateCooked: '2024-04-02',
+    dateCooked: '2025-04-02',
     rating: 4.5,
     difficulty: 'Easy',
     recipeDetails: 'Crusty Italian bread slathered with garlic-infused butter and herbs, then toasted to golden perfection. A simple yet irresistible side that pairs perfectly with pasta dishes.',
@@ -237,10 +237,10 @@ const dishes: Dish[] = [
   },
   {
     id: 'baby-octopus-stirfry-1',
-    name: 'Baby Octopus Stir-fry',
+    name: 'Baby Octopus Stir-Fry',
     country: 'KR',
     countryName: 'South Korea',
-    dateCooked: '2015-05-17',
+    dateCooked: '2025-05-17',
     rating: 4,
     difficulty: 'Medium',
     recipeDetails: "A vibrant and spicy Korean stir-fry featuring tender baby octopus and savory pork belly, all brought together with a rich gochujang-based sauce and crisp vegetables. A flavorful dish with a delightful kick.",
@@ -287,10 +287,10 @@ const dishes: Dish[] = [
   },
   {
     id: 'cake-jello-1',
-    name: 'Cake Jello',
+    name: 'Cake With Jello',
     country: 'US',
     countryName: 'United States',
-    dateCooked: '2015-05-17',
+    dateCooked: '2025-05-17',
     rating: 2.5,
     difficulty: 'Easy',
     recipeDetails: "A soft, homemade cake topped with a light and tangy frosting made from Greek yogurt and a blend of cheesecake and white chocolate jello powders. Finished with fresh, sliced strawberries for a delightful and unique dessert experience.",
@@ -366,23 +366,31 @@ const generateCountriesData = (): Record<string, CountryData> => {
 
 // Generate timeline events from restaurants and dishes
 const generateTimelineEvents = (): TimelineEvent[] => {
-  const restaurantEvents: TimelineEvent[] = restaurants.map(r => ({
-    id: `rest-${r.id}`,
-    type: 'restaurant',
-    content: r.name,
-    start: r.visitDate,
-    location: `${r.location.city}, ${r.location.country}`,
-    rating: r.rating
-  }));
+  const restaurantEvents: TimelineEvent[] = restaurants
+    .filter(r => r.visitDate !== 'YYYY-MM-DD') // Filter out placeholder dates
+    .map(r => ({
+      id: `rest-${r.id}`,
+      type: 'restaurant',
+      content: r.name,
+      start: r.visitDate,
+      location: `${r.location.city}, ${r.location.country}`,
+      rating: r.rating,
+      photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
+      itemUrl: `/restaurant/${r.id}`
+    }));
 
-  const dishEvents: TimelineEvent[] = dishes.map(d => ({
-    id: `dish-${d.id}`,
-    type: 'dish',
-    content: d.name,
-    start: d.dateCooked,
-    country: d.countryName,
-    rating: d.rating
-  }));
+  const dishEvents: TimelineEvent[] = dishes
+    .filter(d => d.dateCooked !== 'YYYY-MM-DD') // Filter out placeholder dates
+    .map(d => ({
+      id: `dish-${d.id}`,
+      type: 'dish',
+      content: d.name,
+      start: d.dateCooked,
+      country: d.countryName,
+      rating: d.rating,
+      photoUrl: d.mainImage ? d.mainImage : undefined,
+      itemUrl: `/dish/${d.id}`
+    }));
 
   return [...restaurantEvents, ...dishEvents].sort((a, b) => 
     new Date(b.start).getTime() - new Date(a.start).getTime()

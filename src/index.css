@@ -1,32 +1,70 @@
 /* Timeline event styles */
 .dish-event {
-  background-color: #4CAF50 !important;
-  border-color: #388E3C !important;
+  /* We'll override the actual item content via custom template */
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  max-width: 240px !important;
 }
 
 .restaurant-event {
-  background-color: #2196F3 !important;
-  border-color: #1976D2 !important;
+  /* We'll override the actual item content via custom template */
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  max-width: 240px !important;
 }
 
 /* Timeline customization */
 .vis-timeline {
   border: none !important;
   font-family: 'Poppins', sans-serif !important;
+  background-color: #f8f8f8 !important;
+  border-radius: 8px !important;
+  padding: 20px 0 !important;
 }
 
 .vis-item {
-  border-radius: 4px !important;
-  color: white !important;
-  font-weight: 500 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background-color: transparent !important;
+  overflow: visible !important;
+  height: auto !important;
+  max-width: 240px !important;
+  margin: 10px 0 !important;
+}
+
+.vis-foreground .vis-group {
+  margin-top: 10px !important;
 }
 
 .vis-item .vis-item-content {
-  padding: 4px 8px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  width: 240px !important;
+  max-width: 240px !important;
+}
+
+.vis-item.vis-selected {
+  /* Custom selection style */
+  z-index: 10 !important;
 }
 
 .vis-time-axis {
   font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.vis-time-axis .vis-text {
+  color: #666 !important;
+}
+
+.vis-time-axis .vis-grid.vis-minor {
+  border-color: #eaeaea !important;
+}
+
+.vis-time-axis .vis-grid.vis-major {
+  border-color: #d0d0d0 !important;
 }
 
 /* Map customization */
@@ -49,4 +87,112 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Timeline item cards - completely redesigned and with !important flags */
+.timeline-item-card {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 240px !important;
+  height: 80px !important;
+  background-color: white !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  margin: 0 !important;
+}
+
+.timeline-item-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.timeline-item-image-container {
+  width: 80px !important;
+  height: 80px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+}
+
+.timeline-item-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.3s ease !important;
+}
+
+.timeline-item-card:hover .timeline-item-image {
+  transform: scale(1.05) !important;
+}
+
+.timeline-item-details {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 6px 8px !important;
+  background-color: white !important;
+  flex: 1 !important;
+  justify-content: space-between !important;
+  min-width: 0 !important;
+  max-width: 160px !important;
+}
+
+.timeline-item-title {
+  font-size: 0.85em !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  margin-bottom: 4px !important;
+  line-height: 1.2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+.timeline-item-date {
+  font-size: 0.7em !important;
+  color: #666 !important;
+  margin-bottom: 2px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.timeline-item-location {
+  display: inline-block !important;
+  font-size: 0.65em !important;
+  color: #555 !important;
+  background-color: #f0f4f8 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  margin-bottom: 2px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+
+.dish-event .timeline-item-location {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+.restaurant-event .timeline-item-location {
+  background-color: #e3f2fd !important;
+  color: #1565c0 !important;
+}
+
+.timeline-item-rating {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  font-size: 0.7em !important;
+  color: #555 !important;
+} 
+
+.timeline-item-rating span {
+  color: #faaf00 !important;
+  letter-spacing: 1px !important;
 } 

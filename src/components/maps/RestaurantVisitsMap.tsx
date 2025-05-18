@@ -70,7 +70,7 @@ const RestaurantVisitsMap = () => {
 
   const handleRestaurantClick = (restaurantId: string) => {
     console.log(`Navigate to restaurant with ID: ${restaurantId}`);
-    // navigate(`/restaurant/${restaurantId}`); // Uncomment if you have restaurant detail pages
+    navigate(`/restaurant/${restaurantId}`); // Navigate to restaurant detail page
   };
 
   const allCities = Array.from(new Set(restaurants.map(r => r.location.city))).sort();
@@ -103,14 +103,19 @@ const RestaurantVisitsMap = () => {
             key={restaurant.id}
             position={[restaurant.location.lat, restaurant.location.lng]}
             icon={createCustomIcon(getRatingColor(restaurant.rating))}
-            eventHandlers={{
-              click: () => {
-                handleRestaurantClick(restaurant.id);
-              },
-            }}
           >
             <Popup closeButton={false}>
-              <Box sx={{ minWidth: 220, maxWidth: 250 }}>
+              <Box 
+                sx={{ 
+                  minWidth: 220, 
+                  maxWidth: 250, 
+                  cursor: 'pointer',
+                  '&:hover': {
+                    opacity: 0.9
+                  }
+                }}
+                onClick={() => handleRestaurantClick(restaurant.id)}
+              >
                 {/* Image Container for Overlay */}
                 {restaurant.photos && restaurant.photos.length > 0 && (
                   <Box sx={{ position: 'relative', width: '100%', height: '150px', borderRadius: '4px', overflow: 'hidden', marginBottom: '8px' }}>
@@ -221,6 +226,18 @@ const RestaurantVisitsMap = () => {
                 <Typography variant="body2" sx={{ fontSize: '0.85rem' }}>
                   {restaurant.review}
                 </Typography>
+
+                <Box sx={{ 
+                  mt: 1.5, 
+                  p: 1, 
+                  bgcolor: alpha(theme.palette.primary.main, 0.1), 
+                  borderRadius: 1,
+                  textAlign: 'center'
+                }}>
+                  <Typography variant="caption" sx={{ color: theme.palette.primary.main, fontWeight: 500 }}>
+                    Click to view details
+                  </Typography>
+                </Box>
               </Box>
             </Popup>
           </Marker>

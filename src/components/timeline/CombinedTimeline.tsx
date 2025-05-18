@@ -1,36 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, Button, Stack as MuiStack } from '@mui/material';
 import { Timeline, DataSet } from 'vis-timeline/standalone';
 import 'vis-timeline/styles/vis-timeline-graph2d.css';
-
-// Temporary mock data - replace with real data later
-const mockEvents = [
-  {
-    id: '1',
-    type: 'dish',
-    content: 'Homemade Pizza',
-    start: '2024-03-01',
-    country: 'Italy',
-    rating: 4.5,
-  },
-  {
-    id: '2',
-    type: 'restaurant',
-    content: 'Le Petit Bistro',
-    start: '2024-02-15',
-    location: 'Paris, France',
-    rating: 4.8,
-  },
-  {
-    id: '3',
-    type: 'dish',
-    content: 'Sushi Roll',
-    start: '2024-01-20',
-    country: 'Japan',
-    rating: 4.2,
-  },
-];
+import { getTimelineEvents } from '../../data/dataService';
+import { TimelineEvent as AppTimelineEvent } from '../../data/types';
+import { format } from 'date-fns';
 
 const CombinedTimeline = () => {
   const navigate = useNavigate();
@@ -38,52 +13,133 @@ const CombinedTimeline = () => {
   const [timelineInstance, setTimelineInstance] = useState<Timeline | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Inject custom CSS to override vis-timeline styles
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      .vis-item {
+        border-radius: 12px !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+        border-width: 0 !important;
+        padding: 0 !important;
+        font-size: 12px !important;
+        font-family: 'Poppins', sans-serif !important;
+        color: white !important;
+      }
+      
+      .vis-item.dish-event {
+        background-color: rgba(76, 175, 80, 0.8) !important;
+        border-color: #4CAF50 !important;
+        color: white !important;
+      }
+      
+      .vis-item.restaurant-event {
+        background-color: rgba(33, 150, 243, 0.8) !important;
+        border-color: #2196F3 !important;
+        color: white !important;
+      }
+      
+      .vis-item .vis-item-content {
+        padding: 6px 10px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    `;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      styleElement.remove();
+    };
+  }, []);
+
   useEffect(() => {
     if (timelineRef.current) {
       try {
-        // Create items data set
+        const actualEvents = getTimelineEvents();
+        if (actualEvents.length === 0) {
+          setError('No timeline events found. Add some dishes or restaurant visits!');
+          return;
+        }
+
+        console.log("Events data:", actualEvents);
+        
+        // Create simpler items that rely on direct className styling
         const items = new DataSet(
-          mockEvents.map(event => ({
+          actualEvents.map(event => ({
             id: event.id,
             content: event.content,
             start: event.start,
             className: event.type === 'dish' ? 'dish-event' : 'restaurant-event',
+            title: `${event.content} - ${format(new Date(event.start), 'MMM d, yyyy')}${event.type === 'dish' && event.country ? ` - ${event.country}` : ''}${event.type === 'restaurant' && event.location ? ` - ${event.location}` : ''}`,
           }))
         );
-
-        // Timeline options
+        
         const options = {
-          height: '400px',
+          height: '500px',
+          minHeight: '400px',
+          maxHeight: '600px',
           zoomable: true,
           moveable: true,
           orientation: 'top',
           showCurrentTime: false,
-          zoomMin: 1000 * 60 * 60 * 24 * 7, // 1 week
-          zoomMax: 1000 * 60 * 60 * 24 * 365, // 1 year
+          zoomKey: 'ctrlKey' as 'ctrlKey',
+          stack: true,
+          stackSubgroups: true,
+          zoomMin: 1000 * 60 * 60 * 24 * 7, 
+          zoomMax: 1000 * 60 * 60 * 24 * 365 * 5,
+          margin: { item: { horizontal: 5, vertical: 8 }, axis: 20 },
+          selectable: true,
+          verticalScroll: true,
+          horizontalScroll: true,
+          tooltip: {
+            followMouse: true,
+            overflowMethod: 'cap' as 'cap'
+          }
         };
+        
+        const newTimeline = new Timeline(timelineRef.current, items, options);
+        setTimelineInstance(newTimeline);
 
-        // Create new timeline instance
-        const timeline = new Timeline(timelineRef.current, items, options);
-        setTimelineInstance(timeline);
-
-        // Add click handler
-        timeline.on('click', (properties: any) => {
+        // Auto-zoom to fit all events with some padding
+        try {
+          // Find min and max dates from all events
+          const dates = actualEvents.map(event => new Date(event.start).getTime());
+          if (dates.length > 0) {
+            const minDate = new Date(Math.min(...dates));
+            const maxDate = new Date(Math.max(...dates));
+            
+            // Add 2 months padding before and after
+            const startDate = new Date(minDate);
+            startDate.setMonth(startDate.getMonth() - 2);
+            
+            const endDate = new Date(maxDate);
+            endDate.setMonth(endDate.getMonth() + 2);
+            
+            // Set window to the range of dates with padding
+            newTimeline.setWindow(startDate, endDate, { animation: true });
+          }
+        } catch (e) {
+          console.error("Error auto-fitting timeline:", e);
+          // Fallback to 2025 if auto-fit fails
+          const start = new Date('2025-01-01');
+          const end = new Date('2025-12-31');
+          newTimeline.setWindow(start, end, { animation: true });
+        }
+        
+        newTimeline.on('click', (properties: any) => {
           if (properties.item) {
-            const event = mockEvents.find(e => e.id === properties.item);
-            if (event) {
-              if (event.type === 'dish') {
-                navigate(`/dish/${event.id}`);
-              } else {
-                navigate(`/restaurant/${event.id}`);
-              }
+            const clickedEvent = actualEvents.find(e => e.id === properties.item);
+            if (clickedEvent && clickedEvent.itemUrl) {
+              navigate(clickedEvent.itemUrl);
             }
           }
         });
 
-        // Clean up function
         return () => {
-          if (timeline) {
-            timeline.destroy();
+          if (newTimeline) {
+            newTimeline.destroy();
+            setTimelineInstance(null);
           }
         };
       } catch (err) {
@@ -92,6 +148,9 @@ const CombinedTimeline = () => {
       }
     }
   }, [navigate]);
+
+  const handleZoomIn = () => timelineInstance?.zoomIn(0.2);
+  const handleZoomOut = () => timelineInstance?.zoomOut(0.2);
 
   if (error) {
     return (
@@ -103,37 +162,38 @@ const CombinedTimeline = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Legend
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box
-              sx={{
-                width: 20,
-                height: 20,
-                backgroundColor: '#4CAF50',
-                borderRadius: 1,
-              }}
-            />
-            <Typography variant="body2">Dishes Cooked</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Box
-              sx={{
-                width: 20,
-                height: 20,
-                backgroundColor: '#2196F3',
-                borderRadius: 1,
-              }}
-            />
-            <Typography variant="body2">Restaurant Visits</Typography>
-          </Box>
+      <Paper elevation={3} sx={{ p: 2, mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box>
+          <Typography variant="h6" gutterBottom sx={{mb: 0.5}}>
+            Legend
+          </Typography>
+          <MuiStack direction="row" spacing={2}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ 
+                width: 16, 
+                height: 16, 
+                backgroundColor: 'rgba(76, 175, 80, 0.8)', 
+                borderRadius: '12px',
+              }}/>
+              <Typography variant="body2">Dishes Cooked</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ 
+                width: 16, 
+                height: 16, 
+                backgroundColor: 'rgba(33, 150, 243, 0.8)', 
+                borderRadius: '12px',
+              }}/>
+              <Typography variant="body2">Restaurant Visits</Typography>
+            </Box>
+          </MuiStack>
         </Box>
+        <MuiStack direction="row" spacing={1}>
+          <Button variant="outlined" size="small" onClick={handleZoomOut}>Zoom Out</Button>
+          <Button variant="outlined" size="small" onClick={handleZoomIn}>Zoom In</Button>
+        </MuiStack>
       </Paper>
-
-      <div ref={timelineRef} style={{ height: '400px' }} />
+      <div ref={timelineRef} style={{ minHeight: '400px', height: '500px' }} />
     </Box>
   );
 };

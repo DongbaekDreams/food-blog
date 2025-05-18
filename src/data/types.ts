@@ -76,4 +76,6 @@ export interface TimelineEvent {
   country?: string;
   location?: string;
   rating: number;
+  photoUrl?: string;
+  itemUrl?: string;
 } 
