@@ -238,7 +238,7 @@ const GlobalCookingMap = () => {
           <DialogContent sx={{ p: 0 }}>
             <Box sx={{ p: 3 }}>
               <Typography variant="body1" sx={{ mb: 3 }}>
-                Dishes I've cooked from {getCountryName(selectedCountry)}:
+                Dishes we've cooked from {getCountryName(selectedCountry)}:
               </Typography>
               
               {countryData[selectedCountry]?.dishes.map((dish) => (

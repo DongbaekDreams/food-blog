@@ -18,7 +18,7 @@ const DishGalleryPage = () => {
         
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            My Dish Collection
+            Our Dish Collection
           </Typography>
           <Button 
             variant="contained" 
@@ -31,7 +31,7 @@ const DishGalleryPage = () => {
         </Box>
         
         <Typography variant="subtitle1" color="text.secondary" paragraph>
-          Browse all my cooking adventures, filter by country or ingredients, and discover new recipes!
+          Browse all our cooking adventures, filter by country or ingredients, and discover new recipes!
         </Typography>
       </Box>
 

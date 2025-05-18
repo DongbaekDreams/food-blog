@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Box, Typography, Rating, Chip, useTheme, Paper } from '@mui/material';
+import { Box, Typography, Rating, Chip, useTheme, Paper, alpha } from '@mui/material';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import GoogleIcon from '@mui/icons-material/Google';
+import { getRestaurants } from '../../data/dataService';
+import { Restaurant } from '../../data/types';
 
 // Define Atlanta's coordinates
 const ATLANTA_COORDS = { lat: 33.749, lng: -84.388 };
@@ -19,80 +22,15 @@ const createCustomIcon = (color: string) => {
   });
 };
 
-// Restaurant data
-const restaurantData = [
-  {
-    id: '1',
-    name: 'Staplehouse',
-    location: { lat: 33.7536, lng: -84.3723 },
-    rating: 4.9,
-    visitDate: '2024-04-12',
-    review: 'Exceptional tasting menu with seasonal ingredients. The atmosphere was intimate and service impeccable.',
-    cuisine: 'New American',
-    priceRange: '$$$$',
-    city: 'Atlanta'
-  },
-  {
-    id: '2',
-    name: 'Bones Restaurant',
-    location: { lat: 33.8454, lng: -84.3670 },
-    rating: 4.7,
-    visitDate: '2024-03-18',
-    review: 'Classic steakhouse with perfect dry-aged steaks. Old-school elegance and attentive service.',
-    cuisine: 'Steakhouse',
-    priceRange: '$$$$',
-    city: 'Atlanta'
-  },
-  {
-    id: '3',
-    name: 'Tuk Tuk Thai Food Loft',
-    location: { lat: 33.7894, lng: -84.3660 },
-    rating: 4.4,
-    visitDate: '2024-02-28',
-    review: 'Authentic Thai flavors with a modern twist. The rooftop setting provides a nice view of the city.',
-    cuisine: 'Thai',
-    priceRange: '$$',
-    city: 'Atlanta'
-  },
-  {
-    id: '4',
-    name: 'Slutty Vegan',
-    location: { lat: 33.7539, lng: -84.4301 },
-    rating: 4.6,
-    visitDate: '2024-03-05',
-    review: 'Incredible plant-based burgers that would satisfy even meat lovers. Always a fun atmosphere.',
-    cuisine: 'Vegan',
-    priceRange: '$$',
-    city: 'Atlanta'
-  },
-  {
-    id: '5',
-    name: 'Pancake Pantry',
-    location: { lat: 36.1513, lng: -86.7980 },
-    rating: 4.5,
-    visitDate: '2024-02-15',
-    review: 'Iconic Nashville breakfast spot with incredible pancakes. Worth the wait in line!',
-    cuisine: 'Breakfast',
-    priceRange: '$$',
-    city: 'Nashville'
-  },
-  {
-    id: '6',
-    name: 'Hattie B\'s Hot Chicken',
-    location: { lat: 36.1514, lng: -86.7939 },
-    rating: 4.7,
-    visitDate: '2024-02-16',
-    review: 'The best hot chicken in Nashville. Perfect spice levels and incredibly juicy.',
-    cuisine: 'Southern',
-    priceRange: '$$',
-    city: 'Nashville'
-  },
-];
-
 const RestaurantVisitsMap = () => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [activeCity, setActiveCity] = useState<string | null>(null);
+
+  useEffect(() => {
+    setRestaurants(getRestaurants());
+  }, []);
 
   // Calculate rating colors
   const getRatingColor = (rating: number) => {
@@ -103,25 +41,33 @@ const RestaurantVisitsMap = () => {
 
   // Function to filter restaurants by city when a city is selected
   const filteredRestaurants = activeCity 
-    ? restaurantData.filter(r => r.city === activeCity)
-    : restaurantData;
+    ? restaurants.filter(r => r.location.city === activeCity)
+    : restaurants;
 
-  // Function to calculate map center based on active city or default to Atlanta
-  const getMapCenter = () => {
+  // Function to calculate map center based on active city or default (or first restaurant)
+  const getMapCenter = (): [number, number] => {
     if (activeCity === 'Nashville') {
       return [36.1627, -86.7816];
     }
-    return [ATLANTA_COORDS.lat, ATLANTA_COORDS.lng];
+    if (restaurants.length > 0 && !activeCity) {
+        return [restaurants[0].location.lat, restaurants[0].location.lng];
+    }
+    // Default to Atlanta or a general view if no restaurants or city selected
+    return [ATLANTA_COORDS.lat, ATLANTA_COORDS.lng]; 
   };
 
   // Function to calculate zoom level
   const getZoomLevel = () => {
-    return activeCity ? 13 : 5;
+    if (activeCity || (restaurants.length === 1 && !activeCity)) return 13;
+    return 5; // Default zoom for multiple restaurants or general view
   };
 
   const handleRestaurantClick = (restaurantId: string) => {
-    navigate(`/restaurant/${restaurantId}`);
+    console.log(`Navigate to restaurant with ID: ${restaurantId}`);
+    // navigate(`/restaurant/${restaurantId}`); // Uncomment if you have restaurant detail pages
   };
+
+  const allCities = Array.from(new Set(restaurants.map(r => r.location.city))).sort();
 
   return (
     <Box sx={{ 
@@ -133,7 +79,7 @@ const RestaurantVisitsMap = () => {
       border: `1px solid ${theme.palette.divider}`
     }}>
       <MapContainer
-        center={activeCity ? getMapCenter() as [number, number] : [35.5, -85]}
+        center={getMapCenter()}
         zoom={getZoomLevel()}
         style={{ height: '100%', width: '100%' }}
         zoomControl={true}
@@ -156,17 +102,76 @@ const RestaurantVisitsMap = () => {
               },
             }}
           >
-            <Popup>
+            <Popup closeButton={false}>
               <Box sx={{ minWidth: 220, maxWidth: 250 }}>
+                {/* Image Container for Overlay */}
+                {restaurant.photos && restaurant.photos.length > 0 && (
+                  <Box sx={{ position: 'relative', width: '100%', height: '150px', borderRadius: '4px', overflow: 'hidden', marginBottom: '8px' }}>
+                    <img 
+                      src={`${import.meta.env.BASE_URL}${restaurant.photos[0].startsWith('/') ? restaurant.photos[0].substring(1) : restaurant.photos[0]}`} 
+                      alt={restaurant.name} 
+                      style={{ 
+                        width: '100%', 
+                        height: '150px', 
+                        objectFit: 'cover',
+                      }}
+                    />
+                    {/* Ratings Overlay */}
+                    <Box sx={{ position: 'absolute', top: 8, right: 8, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      {/* Our Rating Bubble */}
+                      <Box 
+                        sx={{ 
+                          backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+                          color: 'white', 
+                          p: '2px 8px', // Adjusted padding
+                          borderRadius: '12px', // Adjusted border radius
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: 0.5 
+                        }}
+                      >
+                        <Rating value={restaurant.rating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: 'white' } }} />
+                        <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2' }}>
+                          {restaurant.rating.toFixed(1)}
+                        </Typography>
+                         <Typography variant="caption" sx={{ fontWeight: 300, lineHeight: '1.2' }}>
+                          Our
+                        </Typography>
+                      </Box>
+                      {/* Google Rating Bubble */}
+                      {restaurant.googleRating && (
+                        <Box 
+                          sx={{ 
+                            backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+                            color: 'white', 
+                            p: '2px 8px', // Adjusted padding
+                            borderRadius: '12px', // Adjusted border radius
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 0.5 
+                          }}
+                        >
+                          <Rating value={restaurant.googleRating} precision={0.1} size="small" readOnly 
+                            sx={{ 
+                              '& .MuiRating-iconFilled': { color: '#fb8c00' }, 
+                              '& .MuiRating-iconEmpty': { borderColor: '#fb8c00' }
+                            }} 
+                          />
+                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2' }}>
+                            {restaurant.googleRating.toFixed(1)}
+                          </Typography>
+                          <GoogleIcon sx={{ fontSize: '0.9rem', color: 'white', ml: 0.25 }}/>
+                        </Box>
+                      )}
+                    </Box>
+                  </Box>
+                )}
+
+                {/* Details Below Image */}
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
                   {restaurant.name}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                  <Rating value={restaurant.rating} precision={0.1} size="small" readOnly />
-                  <Typography variant="body2" color="text.secondary" fontWeight={500}>
-                    {restaurant.rating.toFixed(1)}
-                  </Typography>
-                </Box>
+
                 <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mb: 1 }}>
                   <Chip 
                     label={restaurant.cuisine} 
@@ -189,7 +194,7 @@ const RestaurantVisitsMap = () => {
                     }} 
                   />
                   <Chip 
-                    label={restaurant.city} 
+                    label={restaurant.location.city} 
                     size="small" 
                     sx={{ 
                       backgroundColor: alpha(theme.palette.primary.dark, 0.07),
@@ -233,39 +238,31 @@ const RestaurantVisitsMap = () => {
         <Typography variant="h6" sx={{ color: theme.palette.primary.main, fontWeight: 600, mb: 0.5 }}>
           Restaurant Visits
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Tracking memorable dining experiences from my travels
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+          Tracking memorable dining experiences from our travels
         </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
           <Chip 
-            label="All" 
-            color={activeCity === null ? "primary" : "default"} 
-            size="small" 
+            label="All"
             onClick={() => setActiveCity(null)}
-            sx={{ fontWeight: 500 }}
+            color={!activeCity ? 'primary' : 'default'}
+            size="small"
+            clickable
           />
-          <Chip 
-            label="Atlanta" 
-            color={activeCity === 'Atlanta' ? "primary" : "default"} 
-            size="small" 
-            onClick={() => setActiveCity('Atlanta')}
-            sx={{ fontWeight: 500 }}
-          />
-          <Chip 
-            label="Nashville" 
-            color={activeCity === 'Nashville' ? "primary" : "default"} 
-            size="small" 
-            onClick={() => setActiveCity('Nashville')}
-            sx={{ fontWeight: 500 }}
-          />
+          {allCities.map(city => (
+            <Chip 
+              key={city}
+              label={city}
+              onClick={() => setActiveCity(city)}
+              color={activeCity === city ? 'primary' : 'default'}
+              size="small"
+              clickable
+            />
+          ))}
         </Box>
       </Paper>
     </Box>
   );
 };
-
-function alpha(color: string, value: number) {
-  return color + Math.round(value * 255).toString(16).padStart(2, '0');
-}
 
 export default RestaurantVisitsMap; 

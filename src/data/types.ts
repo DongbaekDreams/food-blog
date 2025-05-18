@@ -28,6 +28,13 @@ export interface Restaurant {
   tags?: string[];
 }
 
+// New interface for structured source links
+export interface SourceLink {
+  url: string;
+  type: 'instagram' | 'youtube' | 'web'; // Type of the link for embedding/display logic
+  description?: string; // Optional description of the link
+}
+
 // Dish types
 export interface Dish {
   id: string;
@@ -39,7 +46,7 @@ export interface Dish {
   difficulty: 'Easy' | 'Medium' | 'Hard';
   recipeDetails: string;
   ingredients: string[];
-  sourceUrl?: string;
+  sourceUrls?: SourceLink[]; // Replaced sourceUrl with an array of SourceLink objects
   googleSearchUrl?: string;
   mainImage: string;
   photos: string[];
