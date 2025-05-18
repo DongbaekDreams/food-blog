@@ -30,6 +30,32 @@ const restaurants: Restaurant[] = [
     ],
     tags: ['Pizza', 'Casual', 'Wood-fired']
   },
+  {
+    id: 'rreal-tacos-buckhead',
+    name: 'Rreal Tacos - Buckhead',
+    location: {
+      lat: 33.788181,
+      lng: -84.371338,
+      address: '3365 Piedmont Rd NE Suite 1120, Atlanta, GA 30305, USA',
+      city: 'Atlanta',
+      country: 'USA',
+      googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Rreal+Tacos+-+Buckhead+3365+Piedmont+Rd+NE+Suite+1120+Atlanta+GA+30305'
+    },
+    rating: 4.8, // Our Rating
+    googleRating: 4.9,
+    visitDate: 'YYYY-MM-DD', // Please update!
+    review: 'Review pending.', // Please update!
+    cuisine: 'Tacos',
+    priceRange: '$$', // Please update if different
+    photos: ['/images/dishes/restaurants/rreal-tacos/generated-tacos.png'],
+    phoneNumber: '+1 404-968-9837',
+    website: 'https://rrealtacos.com',
+    openingHours: [
+      'Monday - Saturday: 11:00 AM-12:00 AM',
+      'Sunday: 11:00 AM-11:00 PM'
+    ],
+    tags: ['Tacos', 'Mexican', 'Casual'] // Please update if different
+  },
   
   // ADD YOUR OWN RESTAURANT ENTRIES HERE
   // {

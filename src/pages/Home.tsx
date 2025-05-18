@@ -121,7 +121,7 @@ function Home() {
               Gourmet and Gormand
             </Typography>
             
-            {/* Korean subtitle */}
+            {/* Korean subtitle  */}
             <Typography 
               variant="subtitle1" 
               align="center" 
