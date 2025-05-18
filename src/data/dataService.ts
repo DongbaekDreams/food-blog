@@ -6,8 +6,8 @@ const restaurants: Restaurant[] = [
     id: 'varasanos-pizzeria-atlanta',
     name: 'Varasano\'s Pizzeria',
     location: {
-      lat: 33.753746,
-      lng: -84.386330,
+      lat: 33.813414802239876,
+      lng: -84.3918889204468,
       address: '2171 Peachtree Rd NE UNIT 100, Atlanta, GA 30309, USA',
       city: 'Atlanta',
       country: 'USA',
@@ -19,7 +19,7 @@ const restaurants: Restaurant[] = [
     review: 'We visited the pizzeria and enjoyed fantastic pizza, each slice showcasing a bold, aromatic hit of garlic. The wood-fired oven produced an impeccably crisp crust with a subtle smoky depth, perfectly complementing the toppings.',
     cuisine: 'Pizzeria',
     priceRange: '$$',
-    photos: ['/images/dishes/restaurants/verasanos-pizzeria/generated-pizza.png'],
+    photos: ['/images/restaurants/verasanos-pizzeria/generated-pizza.png'],
     phoneNumber: '+1 404-352-8216',
     website: 'https://varasanos.com',
     openingHours: [
@@ -34,8 +34,8 @@ const restaurants: Restaurant[] = [
     id: 'rreal-tacos-buckhead',
     name: 'Rreal Tacos - Buckhead',
     location: {
-      lat: 33.788181,
-      lng: -84.371338,
+      lat: 33.84734319436399, 
+      lng: -84.37277376044099,
       address: '3365 Piedmont Rd NE Suite 1120, Atlanta, GA 30305, USA',
       city: 'Atlanta',
       country: 'USA',
@@ -43,11 +43,11 @@ const restaurants: Restaurant[] = [
     },
     rating: 4.8, // Our Rating
     googleRating: 4.9,
-    visitDate: 'YYYY-MM-DD', // Please update!
-    review: 'Review pending.', // Please update!
+    visitDate: '2025-04-25',
+    review: 'The birria quesadilla delivers tender, slow‑braised beef folded into a crisp tortilla with just the right balance of melted cheese and savory broth infusion. The drink menu complements the food perfectly, featuring well‑crafted margaritas and a decent beer selection that cleanse the palate between bites. Coupled with a warm, inviting atmosphere that buzzes with energy, this spot offers a thoroughly satisfying dining experience.',
     cuisine: 'Tacos',
     priceRange: '$$', // Please update if different
-    photos: ['/images/dishes/restaurants/rreal-tacos/generated-tacos.png'],
+    photos: ['/images/restaurants/rreal-tacos/generated-tacos.png'],
     phoneNumber: '+1 404-968-9837',
     website: 'https://rrealtacos.com',
     openingHours: [

@@ -49,17 +49,23 @@ const RestaurantVisitsMap = () => {
     if (activeCity === 'Nashville') {
       return [36.1627, -86.7816];
     }
-    if (restaurants.length > 0 && !activeCity) {
-        return [restaurants[0].location.lat, restaurants[0].location.lng];
+    // Always default to Atlanta if no city is active
+    if (!activeCity) {
+      return [ATLANTA_COORDS.lat, ATLANTA_COORDS.lng];
     }
-    // Default to Atlanta or a general view if no restaurants or city selected
+    // If a city is active, find the first restaurant in that city or default to Atlanta
+    const cityRestaurant = restaurants.find(r => r.location.city === activeCity);
+    if (cityRestaurant) {
+      return [cityRestaurant.location.lat, cityRestaurant.location.lng];
+    }
+    // Fallback to Atlanta if activeCity doesn't match any restaurant (should not happen with current UI)
     return [ATLANTA_COORDS.lat, ATLANTA_COORDS.lng]; 
   };
 
   // Function to calculate zoom level
   const getZoomLevel = () => {
-    if (activeCity || (restaurants.length === 1 && !activeCity)) return 13;
-    return 5; // Default zoom for multiple restaurants or general view
+    if (activeCity) return 13; // Zoom in when a city is selected
+    return 11; // Default zoom for Atlanta overview
   };
 
   const handleRestaurantClick = (restaurantId: string) => {
@@ -84,11 +90,12 @@ const RestaurantVisitsMap = () => {
         style={{ height: '100%', width: '100%' }}
         zoomControl={true}
         scrollWheelZoom={true}
+        attributionControl={false}
       >
-        {/* Standard OpenStreetMap street view */}
+        {/* Stadia Stamen Toner for high contrast */}
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
         />
         
         {filteredRestaurants.map((restaurant) => (
