@@ -453,6 +453,45 @@ const RestaurantDetailPage = () => {
                   </Box>
                 </>
               )}
+              
+              {restaurant.parking && (
+                <>
+                  <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>Parking</Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                    <pre style={{ fontSize: '11px', backgroundColor: '#f5f5f5', padding: '5px', marginBottom: '10px' }}>
+                      {JSON.stringify(restaurant.parking, null, 2)}
+                    </pre>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                    {/* Static test image */}
+                    <img 
+                      src="/images/icons/thumbs-up.png"
+                      alt="Static Thumbs Up Test" 
+                      style={{ width: '28px', height: '28px', marginRight: '15px', border: '1px solid red' }}
+                    />
+                    {/* Test with BASE_URL */}
+                    <img 
+                      src={`${import.meta.env.BASE_URL}images/icons/thumbs-up.png`}
+                      alt="BASE_URL Test" 
+                      style={{ width: '28px', height: '28px', marginRight: '15px', border: '1px solid blue' }}
+                    />
+                    {/* Dynamic images based on count */}
+                    {[...Array(restaurant.parking?.count || 0)].map((_, i) => (
+                      <img 
+                        key={i} 
+                        src={`${import.meta.env.BASE_URL}${restaurant.parking?.icon?.startsWith('/') ? restaurant.parking?.icon?.substring(1) : restaurant.parking?.icon}`}
+                        alt="Parking Rating" 
+                        style={{ width: '28px', height: '28px', marginRight: '4px' }}
+                      />
+                    ))}
+                    {restaurant.parking?.description && (
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        ({restaurant.parking?.description})
+                      </Typography>
+                    )}
+                  </Box>
+                </>
+              )}
             </TabPanel>
             
             {/* Map Tab */}
@@ -529,6 +568,26 @@ const RestaurantDetailPage = () => {
                       <Typography variant="body2">
                         {restaurant.googleRating.toFixed(1)}
                       </Typography>
+                    </Box>
+                  </Grid>
+                )}
+                {restaurant.parking && (
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2">Parking</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
+                      {[...Array(restaurant.parking?.count || 0)].map((_, i) => (
+                        <img 
+                          key={i} 
+                          src={`${import.meta.env.BASE_URL}${restaurant.parking?.icon?.startsWith('/') ? restaurant.parking?.icon?.substring(1) : restaurant.parking?.icon}`}
+                          alt="Parking" 
+                          style={{ width: '20px', height: '20px', marginRight: '3px' }}
+                        />
+                      ))}
+                      {restaurant.parking?.description && (
+                        <Typography variant="body2" sx={{ ml: 1 }}>
+                          ({restaurant.parking?.description})
+                        </Typography>
+                      )}
                     </Box>
                   </Grid>
                 )}

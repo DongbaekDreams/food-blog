@@ -10,6 +10,13 @@ export interface RestaurantLocation {
   googleMapsUrl?: string;
 }
 
+// Parking type for restaurant
+export interface ParkingInfo {
+  icon: string;
+  count: number;
+  description: string;
+}
+
 export interface Restaurant {
   id: string;
   name: string;
@@ -26,6 +33,7 @@ export interface Restaurant {
   website?: string;
   openingHours?: string[];
   tags?: string[];
+  parking?: ParkingInfo;
 }
 
 // New interface for structured source links

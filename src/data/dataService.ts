@@ -28,7 +28,12 @@ const restaurants: Restaurant[] = [
       'Saturday: 11:30 AM-10:00 PM',
       'Sunday: 11:30 AM-9:00 PM'
     ],
-    tags: ['Pizza', 'Casual', 'Wood-fired']
+    tags: ['Pizza', 'Casual', 'Wood-fired'],
+    parking: { 
+      icon: '/images/icons/thumbs-up.png',
+      count: 1,
+      description: 'Street parking'
+    }
   },
   {
     id: 'rreal-tacos-buckhead',
@@ -41,12 +46,12 @@ const restaurants: Restaurant[] = [
       country: 'USA',
       googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Rreal+Tacos+-+Buckhead+3365+Piedmont+Rd+NE+Suite+1120+Atlanta+GA+30305'
     },
-    rating: 4.8, // Our Rating
+    rating: 4.8,
     googleRating: 4.9,
     visitDate: '2025-04-25',
     review: 'The birria quesadilla delivers tender, slow‑braised beef folded into a crisp tortilla with just the right balance of melted cheese and savory broth infusion. The drink menu complements the food perfectly, featuring well‑crafted margaritas and a decent beer selection that cleanse the palate between bites. Coupled with a warm, inviting atmosphere that buzzes with energy, this spot offers a thoroughly satisfying dining experience.',
     cuisine: 'Tacos',
-    priceRange: '$$', // Please update if different
+    priceRange: '$$',
     photos: ['/images/restaurants/rreal-tacos/generated-tacos.png'],
     phoneNumber: '+1 404-968-9837',
     website: 'https://rrealtacos.com',
@@ -54,7 +59,48 @@ const restaurants: Restaurant[] = [
       'Monday - Saturday: 11:00 AM-12:00 AM',
       'Sunday: 11:00 AM-11:00 PM'
     ],
-    tags: ['Tacos', 'Mexican', 'Casual'] // Please update if different
+    tags: ['Tacos', 'Mexican', 'Casual'],
+    parking: {
+      icon: '/images/icons/thumbs-up.png',
+      count: 1,
+      description: 'Validated'
+    }
+  },
+  {
+    id: 'jbistro',
+    name: 'J-Bistro',
+    location: {
+      lat: 33.9075105378245, 
+      lng: -84.28713452936195,
+      address: '6035 Peachtree Rd A112, Atlanta, GA 30360, USA',
+      city: 'Atlanta',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=11797768855317478154'
+    },
+    rating: 4,
+    googleRating: 4.4,
+    visitDate: '2025-05-18',
+    review: 'A cozy and authentic spot serving up delicious Chinese and Korean dishes. The dumplings (mandu) were especially good - perfectly crispy on the outside and flavorful on the inside. Great value for money with generous portions and friendly service. The restaurant has a casual atmosphere that makes it perfect for a quick lunch or casual dinner.',
+    cuisine: 'Chinese',
+    priceRange: '$',
+    photos: ['/images/restaurants/jbistro/mandu.heic'],
+    phoneNumber: '+1 678-691-8886',
+    website: 'https://www.j-bistroga.com/',
+    openingHours: [
+      'Monday: 11:30 AM-2:30 PM, 4:30-9:00 PM',
+      'Tuesday: 11:30 AM-2:30 PM, 4:30-9:00 PM',
+      'Wednesday: Closed',
+      'Thursday: 11:30 AM-2:30 PM, 4:30-9:00 PM',
+      'Friday: 11:30 AM-2:30 PM, 4:30-10:00 PM',
+      'Saturday: 12:00-10:00 PM',
+      'Sunday: 11:30 AM-9:00 PM'
+    ],
+    tags: ['Korean', 'Chinese', 'Casual', 'Cozy', 'Inexpensive'],
+    parking: {
+      icon: '/images/icons/thumbs-up.png',
+      count: 2,
+      description: ''
+    }
   },
   
   // ADD YOUR OWN RESTAURANT ENTRIES HERE

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'react-leaflet';
 import { Box, Typography, Rating, Chip, useTheme, Paper, alpha } from '@mui/material';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -27,6 +27,7 @@ const RestaurantVisitsMap = () => {
   const theme = useTheme();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [activeCity, setActiveCity] = useState<string | null>(null);
+  const [isOverlayMinimized, setIsOverlayMinimized] = useState(false);
 
   useEffect(() => {
     setRestaurants(getRestaurants());
@@ -75,6 +76,40 @@ const RestaurantVisitsMap = () => {
 
   const allCities = Array.from(new Set(restaurants.map(r => r.location.city))).sort();
 
+  // Custom zoom control component
+  const CustomZoomControl = () => {
+    const map = useMap();
+    
+    return (
+      <div className="leaflet-bottom leaflet-left" style={{ marginBottom: '20px', marginLeft: '10px' }}>
+        <div className="leaflet-control-zoom leaflet-bar leaflet-control">
+          <a 
+            className="leaflet-control-zoom-in" 
+            href="#" 
+            title="Zoom in" 
+            role="button" 
+            aria-label="Zoom in"
+            onClick={(e) => {
+              e.preventDefault();
+              map.zoomIn();
+            }}
+          >+</a>
+          <a 
+            className="leaflet-control-zoom-out" 
+            href="#" 
+            title="Zoom out" 
+            role="button" 
+            aria-label="Zoom out"
+            onClick={(e) => {
+              e.preventDefault();
+              map.zoomOut();
+            }}
+          >-</a>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Box sx={{ 
       height: '600px', 
@@ -88,7 +123,7 @@ const RestaurantVisitsMap = () => {
         center={getMapCenter()}
         zoom={getZoomLevel()}
         style={{ height: '100%', width: '100%' }}
-        zoomControl={true}
+        zoomControl={false}
         scrollWheelZoom={true}
         attributionControl={false}
       >
@@ -97,6 +132,9 @@ const RestaurantVisitsMap = () => {
           url="https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
         />
+        
+        {/* Add custom zoom control */}
+        <CustomZoomControl />
         
         {filteredRestaurants.map((restaurant) => (
           <Marker
@@ -216,6 +254,25 @@ const RestaurantVisitsMap = () => {
                     }} 
                   />
                 </Box>
+                
+                {restaurant.parking && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                    {[...Array(restaurant.parking?.count || 0)].map((_, i) => (
+                      <img 
+                        key={i} 
+                        src={`${import.meta.env.BASE_URL}${restaurant.parking?.icon?.startsWith('/') ? restaurant.parking?.icon?.substring(1) : restaurant.parking?.icon}`}
+                        alt="Parking Rating" 
+                        style={{ width: '16px', height: '16px', marginRight: '2px' }}
+                      />
+                    ))}
+                    {restaurant.parking?.description && (
+                      <Typography variant="caption" sx={{ ml: 0.5, fontSize: '0.7rem', color: 'text.secondary' }}>
+                        ({restaurant.parking?.description})
+                      </Typography>
+                    )}
+                  </Box>
+                )}
+                
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                   Visited: {new Date(restaurant.visitDate).toLocaleDateString('en-US', { 
                     year: 'numeric',
@@ -250,40 +307,92 @@ const RestaurantVisitsMap = () => {
         sx={{ 
           position: 'absolute', 
           top: 16, 
-          left: 16, 
-          zIndex: 1000,
+          right: 16,
+          zIndex: 400,
           p: 1.5,
           backgroundColor: 'rgba(255, 255, 255, 0.9)',
           backdropFilter: 'blur(4px)',
           borderRadius: 2,
-          maxWidth: 300
+          maxWidth: 250,
+          transition: 'all 0.3s ease',
+          transform: isOverlayMinimized ? 'translateX(calc(100% - 48px))' : 'translateX(0)',
+          '&:hover': {
+            boxShadow: 3
+          }
         }}
       >
-        <Typography variant="h6" sx={{ color: theme.palette.primary.main, fontWeight: 600, mb: 0.5 }}>
-          Restaurant Visits
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
-          Tracking memorable dining experiences from our travels
-        </Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          <Chip 
-            label="All"
-            onClick={() => setActiveCity(null)}
-            color={!activeCity ? 'primary' : 'default'}
-            size="small"
-            clickable
-          />
-          {allCities.map(city => (
-            <Chip 
-              key={city}
-              label={city}
-              onClick={() => setActiveCity(city)}
-              color={activeCity === city ? 'primary' : 'default'}
-              size="small"
-              clickable
-            />
-          ))}
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          mb: isOverlayMinimized ? 0 : 0.5 
+        }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              color: theme.palette.primary.main, 
+              fontWeight: 600,
+              mb: 0,
+              whiteSpace: 'nowrap'
+            }}
+          >
+            {isOverlayMinimized ? '' : 'Restaurant Visits'}
+          </Typography>
+          <Box 
+            onClick={() => setIsOverlayMinimized(!isOverlayMinimized)}
+            sx={{ 
+              cursor: 'pointer', 
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minWidth: 28,
+              minHeight: 28,
+              width: 28,
+              height: 28,
+              borderRadius: '50%',
+              border: '1px solid',
+              borderColor: 'divider',
+              backgroundColor: 'background.paper',
+              fontSize: '18px',
+              fontWeight: 'bold',
+              color: 'primary.main',
+              '&:hover': { 
+                bgcolor: 'rgba(0,0,0,0.05)',
+                boxShadow: '0 0 5px rgba(0,0,0,0.2)' 
+              },
+              zIndex: 2
+            }}
+          >
+            {isOverlayMinimized ? '«' : '»'}
+          </Box>
         </Box>
+        
+        {!isOverlayMinimized && (
+          <>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+              Tracking memorable dining experiences from our travels
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              <Chip 
+                label="All"
+                onClick={() => setActiveCity(null)}
+                color={!activeCity ? 'primary' : 'default'}
+                size="small"
+                clickable
+              />
+              {allCities.map(city => (
+                <Chip 
+                  key={city}
+                  label={city}
+                  onClick={() => setActiveCity(city)}
+                  color={activeCity === city ? 'primary' : 'default'}
+                  size="small"
+                  clickable
+                />
+              ))}
+            </Box>
+          </>
+        )}
       </Paper>
     </Box>
   );
