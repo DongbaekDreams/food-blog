@@ -1,37 +1,55 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-const DISHES_DIR = path.join(process.cwd(), 'public', 'images', 'dishes');
+const PUBLIC_IMAGES_DIR = path.join(process.cwd(), 'public', 'images');
+const DISHES_DIR = path.join(PUBLIC_IMAGES_DIR, 'dishes');
+const RESTAURANTS_DIR = path.join(PUBLIC_IMAGES_DIR, 'restaurants');
 
-interface ImageManifest {
-  [dishDir: string]: string[];
+interface ImageCollection {
+  [dirName: string]: string[];
 }
 
-function generateImageManifest(): void {
-  const manifest: ImageManifest = {};
+interface CombinedImageManifest {
+  dishes: ImageCollection;
+  restaurants: ImageCollection;
+}
 
-  // Read all dish directories
-  const dishDirs = fs.readdirSync(DISHES_DIR, { withFileTypes: true })
+function listImagesInDirectory(baseDir: string, imagePathPrefix: string): ImageCollection {
+  const collection: ImageCollection = {};
+  if (!fs.existsSync(baseDir)) {
+    console.warn(`Warning: Directory not found: ${baseDir}`);
+    return collection;
+  }
+
+  const subDirs = fs.readdirSync(baseDir, { withFileTypes: true })
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
 
-  // For each dish directory, get all image files
-  dishDirs.forEach(dishDir => {
-    const fullPath = path.join(DISHES_DIR, dishDir);
+  subDirs.forEach(subDir => {
+    const fullPath = path.join(baseDir, subDir);
     const files = fs.readdirSync(fullPath)
       .filter(file => {
         const ext = path.extname(file).toLowerCase();
         return ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic'].includes(ext);
       })
-      .map(file => `/images/dishes/${dishDir}/${file}`);
+      .map(file => `${imagePathPrefix}/${subDir}/${file}`);
     
-    manifest[dishDir] = files;
+    if (files.length > 0) {
+      collection[subDir] = files;
+    }
   });
+  return collection;
+}
 
-  // Write the manifest to a JSON file
+function generateImageManifest(): void {
+  const manifest: CombinedImageManifest = {
+    dishes: listImagesInDirectory(DISHES_DIR, '/images/dishes'),
+    restaurants: listImagesInDirectory(RESTAURANTS_DIR, '/images/restaurants')
+  };
+
   const manifestPath = path.join(process.cwd(), 'src', 'data', 'imageManifest.json');
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-  console.log('Image manifest generated successfully!');
+  console.log('Combined image manifest generated successfully!');
 }
 
 generateImageManifest(); 

@@ -27,6 +27,7 @@ export interface Restaurant {
   cuisine: string;
   priceRange: string;
   photos: string[];
+  mainImage?: string;
   googlePlaceId?: string;
   googleRating?: number;
   phoneNumber?: string;

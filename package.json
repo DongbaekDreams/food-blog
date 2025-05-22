@@ -9,7 +9,8 @@
     "deploy": "gh-pages -d dist",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "generate-manifest": "tsx scripts/generateImageManifest.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -33,6 +34,8 @@
     "eslint": "^8.57.0",
     "gh-pages": "^6.3.0",
     "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.0"
   }
