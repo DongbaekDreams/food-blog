@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import 'leaflet/dist/leaflet.css';
 import { getCountriesData } from '../../data/dataService';
 import { Dish, CountryData } from '../../data/types';
+import { alpha } from '@mui/material/styles';
 
 // Country data type with dishes
 interface CountryDataWithUI extends CountryData {
@@ -141,7 +142,11 @@ const GlobalCookingMap = () => {
           scrollWheelZoom={true}
         >
           <TileLayer
-            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png"
+            url={
+              theme.palette.mode === 'dark'
+                ? 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png'
+                : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png'
+            }
             attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
           />
           
@@ -163,17 +168,17 @@ const GlobalCookingMap = () => {
               right: 20,
               padding: 2,
               zIndex: 1000,
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === 'light' ? 0.9 : 0.85),
               backdropFilter: 'blur(4px)',
               borderRadius: 2,
-              border: `1px solid ${theme.palette.secondary.light}`,
+              border: `1px solid ${theme.palette.divider}`,
               minWidth: 180,
             }}
           >
             <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 0.5, color: theme.palette.primary.main }}>
               {countryData[hoveredCountry]?.flagEmoji || ''} {getCountryName(hoveredCountry)}
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
               Dishes cooked: <strong>{countryData[hoveredCountry]?.dishCount || 0}</strong>
             </Typography>
             {countryData[hoveredCountry]?.dishes.length > 0 && (
@@ -193,30 +198,32 @@ const GlobalCookingMap = () => {
           </Paper>
         )}
 
-        <Box sx={{ 
-          position: 'absolute', 
-          bottom: 20, 
-          left: 20, 
-          zIndex: 1000, 
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(4px)',
-          p: 1.5,
-          borderRadius: 1,
-          border: `1px solid ${theme.palette.divider}`,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-        }}>
-          <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }}>Dishes Cooked:</Typography>
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 20,
+            left: 20,
+            zIndex: 1000,
+            backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === 'light' ? 0.9 : 0.85),
+            backdropFilter: 'blur(4px)',
+            p: 1.5,
+            borderRadius: 1,
+            border: `1px solid ${theme.palette.divider}`,
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          }}
+        >
+          <Typography variant="body2" sx={{ mb: 1, fontWeight: 600, color: theme.palette.text.primary }}>Dishes Cooked:</Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
             <Box sx={{ width: 16, height: 16, backgroundColor: theme.palette.primary.main, borderRadius: '3px' }} />
-            <Typography variant="caption" sx={{ fontWeight: 500 }}>10+ dishes</Typography>
+            <Typography variant="caption" sx={{ fontWeight: 500, color: theme.palette.text.secondary }}>10+ dishes</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5 }}>
             <Box sx={{ width: 16, height: 16, backgroundColor: theme.palette.secondary.main, borderRadius: '3px' }} />
-            <Typography variant="caption" sx={{ fontWeight: 500 }}>5-9 dishes</Typography>
+            <Typography variant="caption" sx={{ fontWeight: 500, color: theme.palette.text.secondary }}>5-9 dishes</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box sx={{ width: 16, height: 16, backgroundColor: theme.palette.secondary.light, borderRadius: '3px' }} />
-            <Typography variant="caption" sx={{ fontWeight: 500 }}>1-4 dishes</Typography>
+            <Typography variant="caption" sx={{ fontWeight: 500, color: theme.palette.text.secondary }}>1-4 dishes</Typography>
           </Box>
         </Box>
 
@@ -270,11 +277,14 @@ const GlobalCookingMap = () => {
                       overflow: 'hidden',
                       borderRadius: 2,
                       border: `1px solid ${theme.palette.divider}`,
+                      backgroundColor: theme.palette.background.paper,
+                      color: theme.palette.text.primary,
                       cursor: 'pointer',
-                      transition: 'transform 0.2s, box-shadow 0.2s',
+                      transition: 'transform 0.2s, box-shadow 0.2s, background 0.2s',
                       '&:hover': {
                         transform: 'translateY(-3px)',
                         boxShadow: 3,
+                        backgroundColor: theme.palette.action.hover,
                       }
                     }}
                     onClick={() => handleDishClick(dish.id)}
@@ -332,9 +342,11 @@ const GlobalCookingMap = () => {
                                 dish.difficulty === 'Medium' ? theme.palette.primary.light :
                                 theme.palette.error.light,
                               color:
-                                dish.difficulty === 'Easy' ? theme.palette.success.dark :
-                                dish.difficulty === 'Medium' ? theme.palette.primary.dark :
-                                theme.palette.error.dark,
+                                theme.palette.mode === 'dark'
+                                  ? theme.palette.common.white
+                                  : dish.difficulty === 'Easy' ? theme.palette.success.dark :
+                                    dish.difficulty === 'Medium' ? theme.palette.primary.dark :
+                                    theme.palette.error.dark,
                               px: 1.5,
                               py: 0.5,
                               borderRadius: 10,
@@ -361,7 +373,7 @@ const GlobalCookingMap = () => {
                                     variant="body2" 
                                     sx={{ 
                                       backgroundColor: theme.palette.primary.light,
-                                      color: theme.palette.primary.dark,
+                                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.primary.dark,
                                       px: 1.5,
                                       py: 0.5,
                                       borderRadius: 10,

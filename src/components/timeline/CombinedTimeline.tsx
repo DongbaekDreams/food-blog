@@ -6,17 +6,34 @@ import 'vis-timeline/styles/vis-timeline-graph2d.css';
 import { getTimelineEvents } from '../../data/dataService';
 import { TimelineEvent as AppTimelineEvent } from '../../data/types';
 import { format } from 'date-fns';
+import { useTheme } from '@mui/material/styles';
 
 const CombinedTimeline = () => {
   const navigate = useNavigate();
   const timelineRef = useRef<HTMLDivElement>(null);
   const [timelineInstance, setTimelineInstance] = useState<Timeline | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const theme = useTheme();
 
   // Inject custom CSS to override vis-timeline styles
   useEffect(() => {
     const styleElement = document.createElement('style');
+    const isDarkMode = theme.palette.mode === 'dark';
+    const axisTextColor = isDarkMode ? 'rgba(255, 255, 255, 0.7)' : '#666';
+    const minorGridColor = isDarkMode ? 'rgba(255, 255, 255, 0.2)' : '#eaeaea';
+    const majorGridColor = isDarkMode ? 'rgba(255, 255, 255, 0.3)' : '#d0d0d0';
+    const timelineBackgroundColor = isDarkMode ? '#333' : '#f8f8f8';
+    const itemTextColor = isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'white';
+    
     styleElement.textContent = `
+      .vis-timeline {
+        border: none !important;
+        font-family: 'Poppins', sans-serif !important;
+        background-color: ${timelineBackgroundColor} !important;
+        border-radius: 8px !important;
+        padding: 20px 0 !important;
+      }
+
       .vis-item {
         border-radius: 12px !important;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
@@ -24,7 +41,7 @@ const CombinedTimeline = () => {
         padding: 0 !important;
         font-size: 12px !important;
         font-family: 'Poppins', sans-serif !important;
-        color: white !important;
+        color: ${itemTextColor} !important;
       }
       
       .vis-item.dish-event {
@@ -44,6 +61,20 @@ const CombinedTimeline = () => {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      .vis-time-axis .vis-text {
+        color: ${axisTextColor} !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+      }
+
+      .vis-time-axis .vis-grid.vis-minor {
+        border-color: ${minorGridColor} !important;
+      }
+
+      .vis-time-axis .vis-grid.vis-major {
+        border-color: ${majorGridColor} !important;
       }
     `;
     document.head.appendChild(styleElement);

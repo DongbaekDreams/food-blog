@@ -190,7 +190,7 @@ const DishGallery = () => {
       </Paper>
 
       {/* Results count */}
-      <Typography variant="subtitle1" sx={{ mb: 2 }}>
+      <Typography variant="subtitle1" sx={{ mb: 2, color: theme => theme.palette.text.primary }}>
         {filteredDishes.length} {filteredDishes.length === 1 ? 'dish' : 'dishes'} found
       </Typography>
 
@@ -246,7 +246,8 @@ const DishGallery = () => {
                     position: 'absolute', 
                     top: 10, 
                     left: 10, 
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backgroundColor: theme => theme.palette.mode === 'dark' ? 'rgba(30,30,30,0.85)' : 'rgba(255, 255, 255, 0.8)',
+                    color: theme => theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.text.primary,
                     borderRadius: 1,
                     px: 1,
                     py: 0.5,

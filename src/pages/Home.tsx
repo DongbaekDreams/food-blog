@@ -66,7 +66,7 @@ function Home() {
     <Box sx={{ 
       minHeight: '100vh', 
       backgroundColor: 'background.default',
-      pt: 6,
+      pt: 4,
       pb: 8
     }}>
       <Container maxWidth="lg">
@@ -76,13 +76,16 @@ function Home() {
             sx={{ 
               position: 'relative',
               overflow: 'hidden',
-              py: 3,
-              background: 'linear-gradient(135deg, #F2F2F2 0%, #FFFFFF 100%)',
+              py: { xs: 4, md: 6 },
+              backgroundColor: alpha(theme.palette.background.paper, 0.7),
               borderRadius: 3,
-              borderTop: `3px solid ${theme.palette.primary.main}`,
+              textAlign: 'center',
+              border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+              boxShadow: `0px 4px 12px ${alpha(theme.palette.common.black, 0.05)}`
             }}
           >
             {/* Decorative elements */}
+            
             <Box 
               sx={{ 
                 position: 'absolute',
@@ -90,7 +93,7 @@ function Home() {
                 right: 0,
                 width: 120,
                 height: 120,
-                background: alpha(theme.palette.secondary.light, 0.2),
+                background: alpha(theme.palette.secondary.light, theme.palette.mode === 'light' ? 0.15 : 0.05),
                 borderBottomLeftRadius: '100%',
               }}
             />
@@ -101,11 +104,13 @@ function Home() {
                 left: 0,
                 width: 80,
                 height: 80,
-                background: alpha(theme.palette.primary.light, 0.15),
+                background: alpha(theme.palette.primary.light, theme.palette.mode === 'light' ? 0.1 : 0.04),
                 borderTopRightRadius: '100%',
               }}
             />
             
+            
+            {/* 
             <Typography 
               variant="h3" 
               component="h1" 
@@ -120,6 +125,7 @@ function Home() {
             >
               Gourmet and Gormand
             </Typography>
+            */}
             
             {/* Korean subtitle  */}
             <Typography 
@@ -127,15 +133,17 @@ function Home() {
               align="center" 
               className="korean-text"
               sx={{ 
-                mb: 1.5,
+                mb: 1,
                 fontWeight: 500,
-                fontSize: { xs: '0.8rem', md: '0.9rem' },
-                color: alpha(theme.palette.primary.dark, 0.8)
+                fontSize: { xs: '1.2rem', md: '1.5rem' },
+                color: alpha(theme.palette.primary.dark, 0.9),
+                textShadow: `1px 1px 3px ${alpha(theme.palette.common.black, 0.1)}`
               }}
             >
               맛의 세상, 미식가와 먹보가 함께해요
             </Typography>
 
+            {/*
             <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1.5 }}>
               <Divider sx={{ 
                 width: '40px', 
@@ -144,23 +152,25 @@ function Home() {
                 borderRadius: 1,
               }} />
             </Box>
+            */}
 
             <Typography
               variant="subtitle1"
               align="center"
               sx={{
-                color: alpha('#000000', 0.6),
+                color: theme.palette.text.secondary,
                 maxWidth: '600px',
                 mx: 'auto',
                 px: 3,
                 fontSize: { xs: '0.9rem', md: '1rem' },
-                mb: 2.5
+                textShadow: `1px 1px 3px ${alpha(theme.palette.common.black, 0.07)}`
               }}
             >
               A curated journey through global cuisines and culinary adventures
             </Typography>
 
             {/* Navigation buttons */}
+            {/*
             <Grid container justifyContent="center" spacing={2}>
               <Grid item>
                 <Button
@@ -173,7 +183,8 @@ function Home() {
                     borderRadius: 2,
                     px: 2.5,
                     py: 1,
-                    fontWeight: 600
+                    fontWeight: 600,
+                    color: theme.palette.mode === 'dark' ? theme.palette.common.white : undefined,
                   }}
                 >
                   Browse All Dishes
@@ -193,13 +204,16 @@ function Home() {
                     borderRadius: 2,
                     px: 2.5,
                     py: 1,
-                    fontWeight: 600
+                    fontWeight: 600,
+                    color: theme.palette.mode === 'dark' ? theme.palette.common.white : undefined,
+                    borderColor: theme.palette.mode === 'dark' ? theme.palette.primary.light : undefined,
                   }}
                 >
                   View Recipes
                 </Button>
               </Grid>
             </Grid>
+            */}
           </Paper>
         </Box>
         

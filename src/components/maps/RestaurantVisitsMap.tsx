@@ -127,10 +127,18 @@ const RestaurantVisitsMap = () => {
         scrollWheelZoom={true}
         attributionControl={false}
       >
-        {/* Stadia Stamen Toner for high contrast */}
+        {/* Stamen Toner Tiles */}
         <TileLayer
-          url="https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+          url={
+            theme.palette.mode === 'dark'
+              ? 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+              : 'https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{r}.png'
+          }
+          attribution={
+            theme.palette.mode === 'dark'
+              ? '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+              : '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+          }
         />
         
         {/* Add custom zoom control */}
@@ -227,9 +235,9 @@ const RestaurantVisitsMap = () => {
                     label={restaurant.cuisine} 
                     size="small" 
                     sx={{ 
-                      backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                      color: theme.palette.primary.main,
-                      fontWeight: 500,
+                      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : alpha(theme.palette.primary.main, 0.1),
+                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.primary.main,
+                      fontWeight: 600,
                       fontSize: '0.7rem'
                     }} 
                   />
@@ -237,9 +245,9 @@ const RestaurantVisitsMap = () => {
                     label={restaurant.priceRange} 
                     size="small" 
                     sx={{ 
-                      backgroundColor: alpha(theme.palette.secondary.main, 0.1),
-                      color: theme.palette.secondary.main,
-                      fontWeight: 500,
+                      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.secondary.dark : alpha(theme.palette.secondary.main, 0.1),
+                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.secondary.main,
+                      fontWeight: 600,
                       fontSize: '0.7rem'
                     }} 
                   />
@@ -247,9 +255,9 @@ const RestaurantVisitsMap = () => {
                     label={restaurant.location.city} 
                     size="small" 
                     sx={{ 
-                      backgroundColor: alpha(theme.palette.primary.dark, 0.07),
-                      color: theme.palette.primary.dark,
-                      fontWeight: 500,
+                      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : alpha(theme.palette.primary.dark, 0.07),
+                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.primary.dark,
+                      fontWeight: 600,
                       fontSize: '0.7rem'
                     }} 
                   />
@@ -310,10 +318,11 @@ const RestaurantVisitsMap = () => {
           right: 16,
           zIndex: 400,
           p: 1.5,
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === 'light' ? 0.9 : 0.85),
           backdropFilter: 'blur(4px)',
           borderRadius: 2,
           maxWidth: 250,
+          border: `1px solid ${theme.palette.divider}`,
           transition: 'all 0.3s ease',
           transform: isOverlayMinimized ? 'translateX(calc(100% - 48px))' : 'translateX(0)',
           '&:hover': {
@@ -338,7 +347,7 @@ const RestaurantVisitsMap = () => {
           >
             {isOverlayMinimized ? '' : 'Restaurant Visits'}
           </Typography>
-          <Box 
+          <Box
             onClick={() => setIsOverlayMinimized(!isOverlayMinimized)}
             sx={{ 
               cursor: 'pointer', 
@@ -357,7 +366,7 @@ const RestaurantVisitsMap = () => {
               fontWeight: 'bold',
               color: 'primary.main',
               '&:hover': { 
-                bgcolor: 'rgba(0,0,0,0.05)',
+                bgcolor: 'action.hover',
                 boxShadow: '0 0 5px rgba(0,0,0,0.2)' 
               },
               zIndex: 2
@@ -369,7 +378,7 @@ const RestaurantVisitsMap = () => {
         
         {!isOverlayMinimized && (
           <>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+            <Typography variant="body2" sx={{ color: theme.palette.text.secondary, mb: 1.5 }}>
               Tracking memorable dining experiences from our travels
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
