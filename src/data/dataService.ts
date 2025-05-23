@@ -1,5 +1,6 @@
 import { Restaurant, Dish, TimelineEvent, CountryData } from './types';
-import imageManifestData from './imageManifest.json';
+import imageManifestData from './imageManifest.json'; // Reverted to original path
+// import imageManifestData from '../../../public/imageManifest.json'; // Commented out the adjusted path
 
 // Define types for the imported manifest
 interface ImageCollection {
@@ -379,7 +380,10 @@ Prepare the frosting: In a medium bowl, combine the vanilla Greek yogurt, cheese
 const generateCountriesData = (): Record<string, CountryData> => {
   const countriesMap: Record<string, CountryData> = {};
 
-  dishesData.forEach(dish => {
+  // Use processed dish data that includes mainImage and photos
+  const processedDishesList = getDishes(); // This calls processDishData()
+
+  processedDishesList.forEach(dish => {
     if (!countriesMap[dish.country]) {
       countriesMap[dish.country] = {
         dishCount: 0,
@@ -388,7 +392,7 @@ const generateCountriesData = (): Record<string, CountryData> => {
       };
     }
     
-    countriesMap[dish.country].dishes.push(dish);
+    countriesMap[dish.country].dishes.push(dish); // Push the fully processed dish
     countriesMap[dish.country].dishCount = countriesMap[dish.country].dishes.length;
   });
 
@@ -456,7 +460,7 @@ let processedDishes: Dish[] | null = null;
 function processRestaurantData(): Restaurant[] {
   if (processedRestaurants) return processedRestaurants;
 
-  processedRestaurants = restaurantsData.map(baseRestaurant => {
+  processedRestaurants = (restaurantsData as any[]).map(baseRestaurant => {
     // Try to find images using different possible keys
     let restaurantImages: string[] = [];
     
@@ -491,7 +495,7 @@ function processRestaurantData(): Restaurant[] {
 function processDishData(): Dish[] {
   if (processedDishes) return processedDishes;
 
-  processedDishes = dishesData.map(baseDish => {
+  processedDishes = (dishesData as any[]).map(baseDish => {
     const imageKey = extractKeyFromPath(baseDish.originalMainImagePath, 'dishes');
     const dishImages = imageKey ? (typedManifest.dishes[imageKey] || []) : [];
     

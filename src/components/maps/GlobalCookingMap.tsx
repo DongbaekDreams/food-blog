@@ -34,6 +34,16 @@ const GlobalCookingMap = () => {
     setCountryData(data);
   }, []);
 
+  // Debug log before rendering
+  console.log(
+    '[RenderState] selectedCountry:',
+    selectedCountry,
+    'countryDetailsOpen:',
+    countryDetailsOpen,
+    'countryData[selectedCountry]:',
+    selectedCountry ? countryData[selectedCountry] : 'N/A'
+  );
+
   const getColor = (countryCode: string) => {
     const data = countryData[countryCode];
     if (!data) return '#E5E5E5'; // Light gray for countries with no data
@@ -65,11 +75,13 @@ const GlobalCookingMap = () => {
         });
       },
       click: () => {
+        console.log('[MapClick] Clicked on country code:', countryCode, 'Corresponding data:', data);
         if (data && data.dishes.length > 0) {
           setSelectedCountry(countryCode);
           setCountryDetailsOpen(true);
+          console.log('[MapClick] Attempting to open dialog for country:', countryCode);
         } else {
-          // Navigate to country detail page using React Router for countries without dishes
+          console.log('[MapClick] No dishes or no data, navigating to country page for:', countryCode);
           navigate(`/country/${countryCode}`);
         }
       },
@@ -268,7 +280,14 @@ const GlobalCookingMap = () => {
                   Dishes we've cooked from {getCountryName(selectedCountry)}:
                 </Typography>
                 
-                {countryData[selectedCountry]?.dishes.map((dish) => (
+                {countryData[selectedCountry]?.dishes.map((dish) => {
+                  console.log('[DialogDish] Rendering:', { 
+                    id: dish.id, 
+                    name: dish.name, 
+                    mainImage: dish.mainImage, 
+                    computedUrl: dish.mainImage ? `url(${import.meta.env.BASE_URL.replace(/\/$/, '')}${dish.mainImage})` : 'none' 
+                  });
+                  return (
                   <Paper 
                     key={dish.id} 
                     elevation={1} 
@@ -295,7 +314,9 @@ const GlobalCookingMap = () => {
                           sx={{ 
                             height: '100%',
                             minHeight: 250,
-                            backgroundImage: `url(${import.meta.env.BASE_URL}${dish.mainImage.startsWith('/') ? dish.mainImage.substring(1) : dish.mainImage})`,
+                            backgroundImage: dish.mainImage
+                              ? `url(${import.meta.env.BASE_URL.replace(/\/$/, '')}${dish.mainImage})`
+                              : 'none',
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             position: 'relative'
@@ -391,7 +412,8 @@ const GlobalCookingMap = () => {
                       </Grid>
                     </Grid>
                   </Paper>
-                ))}
+                );
+              })}
               </Box>
             </DialogContent>
           </Dialog>

@@ -2,41 +2,41 @@
   "dishes": {
     "baby-octopus-stirfry": [
       "/images/dishes/baby-octopus-stirfry/Dish.png",
-      "/images/dishes/baby-octopus-stirfry/octopus-fresh.heic",
-      "/images/dishes/baby-octopus-stirfry/octopus.heic",
-      "/images/dishes/baby-octopus-stirfry/pork-belly.heic",
-      "/images/dishes/baby-octopus-stirfry/stir-fried.heic",
-      "/images/dishes/baby-octopus-stirfry/stir-frying.heic"
+      "/images/dishes/baby-octopus-stirfry/octopus-fresh.png",
+      "/images/dishes/baby-octopus-stirfry/octopus.png",
+      "/images/dishes/baby-octopus-stirfry/pork-belly.png",
+      "/images/dishes/baby-octopus-stirfry/stir-fried.png",
+      "/images/dishes/baby-octopus-stirfry/stir-frying.png"
     ],
     "cajun-pasta": [
       "/images/dishes/cajun-pasta/CajunPasta.jpg",
-      "/images/dishes/cajun-pasta/prep-work-sausage.heic",
-      "/images/dishes/cajun-pasta/prep-work-tomato.heic",
-      "/images/dishes/cajun-pasta/sauce.heic"
+      "/images/dishes/cajun-pasta/prep-work-sausage.png",
+      "/images/dishes/cajun-pasta/prep-work-tomato.png",
+      "/images/dishes/cajun-pasta/sauce.png"
     ],
     "cake-jello": [
-      "/images/dishes/cake-jello/cake-batter.heic",
-      "/images/dishes/cake-jello/cake.heic",
-      "/images/dishes/cake-jello/decorated.heic",
-      "/images/dishes/cake-jello/finished-plate.heic",
-      "/images/dishes/cake-jello/icing.heic",
-      "/images/dishes/cake-jello/mixing.heic",
-      "/images/dishes/cake-jello/some-ingredients.heic"
+      "/images/dishes/cake-jello/finished-plate.png",
+      "/images/dishes/cake-jello/cake-batter.png",
+      "/images/dishes/cake-jello/cake.png",
+      "/images/dishes/cake-jello/decorated.png",
+      "/images/dishes/cake-jello/icing.png",
+      "/images/dishes/cake-jello/mixing.png",
+      "/images/dishes/cake-jello/some-ingredients.png"
     ],
     "garlic-bread": [
       "/images/dishes/garlic-bread/GarlicBread.jpg",
-      "/images/dishes/garlic-bread/prep-work-add-cheese.heic",
-      "/images/dishes/garlic-bread/prep-work-baste.heic",
-      "/images/dishes/garlic-bread/prep-work-stuffing.heic"
+      "/images/dishes/garlic-bread/prep-work-add-cheese.png",
+      "/images/dishes/garlic-bread/prep-work-baste.png",
+      "/images/dishes/garlic-bread/prep-work-stuffing.png"
     ]
   },
   "restaurants": {
     "jbistro": [
-      "/images/restaurants/jbistro/tangsuyuk.heic",
-      "/images/restaurants/jbistro/jjajangmyeon.heic",
-      "/images/restaurants/jbistro/jjajjanggochugaru.heic",
-      "/images/restaurants/jbistro/mandu.heic",
-      "/images/restaurants/jbistro/spread.heic"
+      "/images/restaurants/jbistro/tangsuyuk.png",
+      "/images/restaurants/jbistro/jjajangmyeon.png",
+      "/images/restaurants/jbistro/jjajjanggochugaru.png",
+      "/images/restaurants/jbistro/mandu.png",
+      "/images/restaurants/jbistro/spread.png"
     ],
     "rreal-tacos": [
       "/images/restaurants/rreal-tacos/generated-tacos.png"
