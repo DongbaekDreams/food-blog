@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, ListItem, ListItemButton, ListItemText, useTheme, useMediaQuery, ListItemIcon } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 
 const navLinks = [
   { label: 'Browse All Dishes', icon: <RestaurantMenuIcon />, path: '/dishes' },
+  { label: 'Browse Restaurants', icon: <RestaurantIcon />, path: '/restaurants' },
   // Add more links here if needed in the future
 ];
 

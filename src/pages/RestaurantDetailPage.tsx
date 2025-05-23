@@ -90,7 +90,7 @@ const RestaurantDetailPage = () => {
   }, [restaurantId]);
 
   const handleBackToList = () => {
-    navigate('/');
+    navigate('/restaurants');
   };
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -219,7 +219,7 @@ const RestaurantDetailPage = () => {
           <Link color="inherit" href="/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
             Home
           </Link>
-          <Link color="inherit" href="/map/restaurants" onClick={(e) => { e.preventDefault(); navigate('/map/restaurants'); }}>
+          <Link color="inherit" href="/restaurants" onClick={(e) => { e.preventDefault(); navigate('/restaurants'); }}>
             Restaurants
           </Link>
           <Typography color="text.primary">{restaurant.name}</Typography>

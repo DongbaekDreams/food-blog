@@ -7,6 +7,7 @@ import DishDetailPage from './pages/DishDetailPage';
 import DishGalleryPage from './pages/DishGalleryPage';
 import CountryDetail from './pages/CountryDetail';
 import RestaurantDetailPage from './pages/RestaurantDetailPage';
+import RestaurantsListPage from './pages/RestaurantsListPage';
 
 // Theme
 import { ThemeProvider } from './themeProvider';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/country/:countryId" element={<CountryDetail />} />
           <Route path="/dish/:dishId" element={<DishDetailPage />} />
           <Route path="/restaurant/:restaurantId" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants" element={<RestaurantsListPage />} />
         </Routes>
       </Box>
     </ThemeProvider>
