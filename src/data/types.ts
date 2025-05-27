@@ -24,7 +24,7 @@ export interface Restaurant {
   foodRating?: number;
   drinkRating?: number;
   rating: number;
-  visitDate: string;
+  visitDates: string[];
   review: string;
   cuisine: string;
   priceRange: string;

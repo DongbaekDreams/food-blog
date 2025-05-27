@@ -47,7 +47,7 @@ const restaurantsData: InitialRestaurantData[] = [
     foodRating: 4.7,
     drinkRating: undefined,
     googleRating: 4.9,
-    visitDate: '2025-04-26',
+    visitDates: ['2025-04-26'],
     review: 'We visited the pizzeria and were delighted by their exceptional dough – perfectly chewy with a subtle complexity that elevates every bite. The menu offers an impressive variety of topping combinations, each showcasing a bold, aromatic hit of garlic. The wood-fired oven produced an impeccably crisp crust with a subtle smoky depth, perfectly complementing the toppings. The charming patio area provides a lovely outdoor dining experience when weather permits.',
     cuisine: 'Pizzeria',
     priceRange: '$$',
@@ -81,7 +81,7 @@ const restaurantsData: InitialRestaurantData[] = [
     foodRating: 4.5,
     drinkRating: 4.5, // Example drink rating
     googleRating: 4.9,
-    visitDate: '2025-04-25',
+    visitDates: ['2025-04-25'],
     review: 'The birria quesadilla delivers tender, slow‑braised beef folded into a crisp tortilla with just the right balance of melted cheese and savory broth infusion. The drink menu complements the food perfectly, featuring well‑crafted margaritas and a decent beer selection that cleanse the palate between bites. The quality of ingredients is exceptional, evident in every flavorful bite. Do note that weekend visits can mean extended wait times as they don\'t accept reservations during peak hours. The consommé, while an additional charge, is worth considering as a rich complement to your meal. Parking is validated for two hours, which is a welcome convenience in the bustling Buckhead area.',
     cuisine: 'Tacos',
     priceRange: '$$',
@@ -113,7 +113,7 @@ const restaurantsData: InitialRestaurantData[] = [
     foodRating: 3.5,
     drinkRating: undefined, // Changed from null to undefined
     googleRating: 4.4,
-    visitDate: '2025-05-18',
+    visitDates: ['2025-05-18'],
     review: 'A cozy and authentic spot serving up Chinese and Korean dishes with generous portions that provide excellent value for money. While the quantity of food is impressive, some dishes could benefit from bolder seasoning as flavors tend to be a bit subdued. The dumplings (mandu) were especially good - perfectly crispy on the outside and flavorful on the inside. For future visits, the jjamppong (spicy seafood noodle soup) is on our list to try. The casual atmosphere makes it perfect for a quick lunch or casual dinner, complemented by friendly, attentive service.',
     cuisine: 'Chinese',
     priceRange: '$',
@@ -133,6 +133,205 @@ const restaurantsData: InitialRestaurantData[] = [
       icon: '/images/icons/thumbs-up.png',
       count: 2,
       description: ''
+    }
+  },
+  {
+    id: 'sixty-vines-nashville',
+    name: 'Sixty Vines',
+    location: {
+      lat: 36.16069249704874,
+      lng: -86.77958110538302,
+      address: '5055 Broadway Suite 3200, Nashville, TN 37203, USA',
+      city: 'Nashville',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=15828789826372707220'
+    },
+    rating: 4.5,
+    foodRating: 3.8,
+    drinkRating: 4.7,
+    visitDates: ['2025-05-24'],
+    review: 'Sixty Vines has a truly fantastic vibe, and the restaurant itself is absolutely beautiful, with a spacious and modern aesthetic that makes for a great atmosphere. Their drink selection, especially the extensive wine list, is genuinely impressive and we thoroughly enjoyed our beverages. However, we found the food to be rather mediocre. While nothing was inherently bad, it just didn\'t live up to the high standards set by the ambiance and drinks. It\'s a perfect spot for a drink and to soak in the surroundings, but perhaps not the best choice if food is your primary focus.',
+    cuisine: 'New American',
+    priceRange: '$$',
+    googleRating: 4.7,
+    phoneNumber: '+1 615-610-9330',
+    website: 'https://sixtyvines.com/location/nashville/',
+    openingHours: [
+      'Monday: 11:00 AM-10:00 PM',
+      'Tuesday: 11:00 AM-10:00 PM',
+      'Wednesday: 11:00 AM-10:00 PM',
+      'Thursday: 11:00 AM-10:00 PM',
+      'Friday: 11:00 AM-11:00 PM',
+      'Saturday: 10:00 AM-11:00 PM',
+      'Sunday: 10:00 AM-9:00 PM'
+    ],
+    tags: [
+      'New American',
+      'Wine Bar',
+      'Casual',
+      'Upscale',
+      'Date Night'
+    ]
+  },
+  {
+    id: 'back-40-nashville',
+    name: 'Back 40 Nashville',
+    location: {
+      lat: 36.16576823397997,
+      lng: -86.7788815900384,
+      address: '315 Deaderick St #225, Nashville, TN 37238, USA',
+      city: 'Nashville',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=5591181285851591253'
+    },
+    rating: 4.5,
+    foodRating: undefined,
+    drinkRating: 5.0,
+    visitDates: ['2025-05-24'],
+    review: 'Back 40 Nashville boasts a perfect environment, ideal for a relaxed date night or similar vibe. The drink selection is outstanding, with handcrafted cocktails and a wide array of libations. It\'s the perfect spot to unwind and enjoy a special evening. The food is also very good.',
+    cuisine: 'New American',
+    priceRange: '$$',
+    googleRating: 4.5,
+    phoneNumber: '+1 615-258-5568',
+    website: 'http://back40nashville.com/',
+    openingHours: [
+      'Monday: 4:00-9:00 PM',
+      'Tuesday: 4:00-9:00 PM',
+      'Wednesday: 4:00-9:00 PM',
+      'Thursday: 4:00-9:00 PM',
+      'Friday: 4:00-11:00 PM',
+      'Saturday: 11:00 AM-11:00 PM',
+      'Sunday: Closed'
+    ],
+    tags: [
+      'Upscale',
+      'Cocktails',
+      'Dinner',
+      'Live Music',
+      'Date Night'
+    ]
+  },
+  {
+    id: 'alley-taps-nashville',
+    name: 'Alley Taps',
+    location: {
+      lat: 36.163615091719755,
+      lng: -86.77790668077557,
+      address: '162 Printers Alley, Nashville, TN 37201, USA',
+      city: 'Nashville',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=7665939375427530112'
+    },
+    rating: 1.5,
+    foodRating: undefined,
+    drinkRating: 1.5,
+    visitDates: ['2025-05-24'],
+    review: 'Alley Taps has a truly fun environment, especially with its lively atmosphere and live music. It\'s a cool spot off the beaten path in Printers Alley. However, we found the drinks to be outrageously overpriced, which really detracted from the overall experience. While the vibe is great for a night out, be prepared for a steep bar tab.',
+    cuisine: 'Bar Food',
+    priceRange: '$$$$',
+    googleRating: 4.5,
+    phoneNumber: '+1 615-712-8303',
+    website: 'http://www.alleytapsnashville.com/',
+    openingHours: [
+      'Monday: 2:00 PM-3:00 AM',
+      'Tuesday: 2:00 PM-3:00 AM',
+      'Wednesday: 2:00 PM-3:00 AM',
+      'Thursday: 2:00 PM-3:00 AM',
+      'Friday: 12:00 PM-3:00 AM',
+      'Saturday: 12:00 PM-3:00 AM',
+      'Sunday: 12:00 PM-3:00 AM'
+    ],
+    tags: [
+      'Bar',
+      'Live Music',
+      'Casual',
+      'Late Night'
+    ]
+  },
+  {
+    id: 'riverport-grille-chattanooga',
+    name: 'Riverport Grille',
+    location: {
+      lat: 35.05375827141748,
+      lng: -85.31050379008802,
+      address: '224 Broad St, Chattanooga, TN 37402, USA',
+      city: 'Chattanooga',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=10487858015603037616'
+    },
+    rating: 3.5,
+    foodRating: 3.8,
+    drinkRating: 0.0,
+    visitDates: ['2025-05-25'],
+    review: 'The food at Riverport Grille was okay. The main dishes, such as the club sandwich and blackened catfish tacos, were tasty and well-prepared. However, the sides we had were unfortunately overcooked and quite salty, which was a bit disappointing. The environment is casual and the restaurant seems fairly new. Parking is a bit of a challenge; paid parking is available nearby, including garage, lot, and street parking, but it isn\'t always easy to find a spot.',
+    cuisine: 'American',
+    priceRange: '$$',
+    googleRating: 4.7,
+    phoneNumber: '+1 423-305-7000',
+    website: 'http://riverportgrille.com/',
+    openingHours: [
+      'Monday: 11:00 AM-10:00 PM',
+      'Tuesday: 11:00 AM-10:00 PM',
+      'Wednesday: 11:00 AM-10:00 PM',
+      'Thursday: 11:00 AM-10:00 PM',
+      'Friday: 11:00 AM-11:00 PM',
+      'Saturday: 11:00 AM-11:00 PM',
+      'Sunday: 10:00 AM-10:00 PM'
+    ],
+    tags: [
+      'American',
+      'Grille',
+      'Casual'
+    ],
+    parking: {
+      icon: '/images/icons/thumbs-down.png',
+      count: 1,
+      description: 'Paid parking available nearby but difficult to find.'
+    }
+  },
+  {
+    id: 'buc-ees-adairsville-ga',
+    name: "Buc-ee's",
+    location: {
+      lat: 34.441946862011264,
+      lng: -84.91636765239784,
+      address: '601 Union Grove Rd SE, Adairsville, GA 30103, USA',
+      city: 'Adairsville',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=14185891214205704908'
+    },
+    rating: 5.0,
+    foodRating: 5.0,
+    drinkRating: 0.0,
+    visitDates: ['2025-05-24', '2025-05-25'],
+    review: 'The food at Buc-ee\'s was absolutely great! It\'s truly a bargain for the quality you get. Their burritos and sandwiches don\'t skimp on the meat, and it\'s always cooked beautifully. This place is perfect for a stop on the road – excellent fuel for both the car and yourself! Their breakfast burritos are a perfect way to start the day, and the brisket sandwich is always a reliable choice. The clean facilities and friendly staff make it a must-stop location on any road trip.',
+    cuisine: 'American',
+    priceRange: '$',
+    googleRating: 4.2,
+    phoneNumber: '+1 979-238-6390',
+    website: 'http://buc-ees.com/',
+    openingHours: [
+      'Monday: Open 24 hours',
+      'Tuesday: Open 24 hours',
+      'Wednesday: Open 24 hours',
+      'Thursday: Open 24 hours',
+      'Friday: Open 24 hours',
+      'Saturday: Open 24 hours',
+      'Sunday: Open 24 hours'
+    ],
+    tags: [
+      'Convenience Store',
+      'Gas Station',
+      'Barbecue',
+      'Deli',
+      'Road Trip Stop',
+      '24 Hours',
+      'Affordable'
+    ],
+    parking: {
+      icon: '/images/icons/thumbs-up.png',
+      count: 3,
+      description: 'Ample free parking lot available.'
     }
   },
   
@@ -241,7 +440,7 @@ const dishesData: (Omit<Dish, 'photos' | 'mainImage'> & { originalMainImagePath:
     name: 'Garlic Bread',
     country: 'IT',
     countryName: 'Italy',
-    dateCooked: '2024-02-20',
+    dateCooked: '2025-03-15',
     rating: 4.2,
     difficulty: 'Easy',
     recipeDetails: 'Classic garlic bread with a crispy crust and buttery garlic topping. Perfect as a side for pasta dishes or soups. Made with a baguette, butter, fresh garlic, and parsley.',
@@ -409,17 +608,17 @@ const generateCountriesData = (): Record<string, CountryData> => {
 const generateTimelineEvents = (): TimelineEvent[] => {
   const processedRestaurantData = getRestaurants(); // Use processed data
   const restaurantEvents: TimelineEvent[] = processedRestaurantData
-    .filter(r => r.visitDate !== 'YYYY-MM-DD') // Filter out placeholder dates
-    .map(r => ({
-      id: `rest-${r.id}`,
+    .filter(r => r.visitDates.length > 0 && r.visitDates[0] !== 'YYYY-MM-DD') // Filter out placeholder dates
+    .flatMap(r => r.visitDates.map(visitDate => ({
+      id: `rest-${r.id}-${visitDate}`,
       type: 'restaurant',
       content: r.name,
-      start: r.visitDate,
+      start: visitDate,
       location: `${r.location.city}, ${r.location.country}`,
       rating: r.foodRating ?? r.rating, // Use foodRating, fallback to rating
       photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
       itemUrl: `/restaurant/${r.id}`
-    }));
+    })));
 
   const dishEvents: TimelineEvent[] = dishesData
     .filter(d => d.dateCooked !== 'YYYY-MM-DD') // Filter out placeholder dates

@@ -313,9 +313,9 @@ const RestaurantDetailPage = () => {
                 {restaurant.name}
               </Typography>
               
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, flexWrap: 'wrap' }}>
-                {restaurant.foodRating && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, mb: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, flexWrap: 'wrap' }}>
+                {typeof restaurant.foodRating === 'number' && (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <LocalDiningIcon sx={{ mr: 0.5, color: 'primary.main' }} />
                     <Rating value={restaurant.foodRating} precision={0.1} readOnly />
                     <Typography variant="subtitle1" sx={{ ml: 1 }}>
@@ -323,8 +323,8 @@ const RestaurantDetailPage = () => {
                     </Typography>
                   </Box>
                 )}
-                {restaurant.drinkRating && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, mb: 1 }}>
+                {typeof restaurant.drinkRating === 'number' && (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <LocalBarIcon sx={{ mr: 0.5, color: 'secondary.main' }} />
                     <Rating value={restaurant.drinkRating} precision={0.1} readOnly />
                     <Typography variant="subtitle1" sx={{ ml: 1 }}>
@@ -332,9 +332,8 @@ const RestaurantDetailPage = () => {
                     </Typography>
                   </Box>
                 )}
-                
-                {restaurant.googleRating && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, mb: 1 }}>
+                {typeof restaurant.googleRating === 'number' && (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <GoogleIcon fontSize="small" sx={{ mr: 0.5, color: '#4285F4' }} />
                     <Rating value={restaurant.googleRating} precision={0.1} readOnly size="small" />
                     <Typography variant="body2" sx={{ ml: 0.5 }}>
@@ -353,7 +352,22 @@ const RestaurantDetailPage = () => {
                 />
                 <Chip 
                   icon={<CalendarTodayIcon />} 
-                  label={`Visited on ${new Date(restaurant.visitDate).toLocaleDateString()}`} 
+                  label={
+                    restaurant.visitDates && restaurant.visitDates.length > 0 && restaurant.visitDates[0]
+                      ? `Visited on: ${restaurant.visitDates
+                          .map(date => {
+                            const d = new Date(date);
+                            return isNaN(d.getTime()) ? null : d.toLocaleDateString('en-US', {
+                              weekday: 'long',
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            });
+                          })
+                          .filter(Boolean)
+                          .join(', ')}`
+                      : 'Visited: Date Unknown'
+                  }
                   variant="outlined"
                   size="small"
                 />
@@ -576,7 +590,7 @@ const RestaurantDetailPage = () => {
                   <Typography variant="subtitle2">Price Range</Typography>
                   <Typography variant="body1">{restaurant.priceRange}</Typography>
                 </Grid>
-                {restaurant.foodRating && (
+                {typeof restaurant.foodRating === 'number' && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="subtitle2">Food Rating</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -588,7 +602,7 @@ const RestaurantDetailPage = () => {
                     </Box>
                   </Grid>
                 )}
-                {restaurant.drinkRating && (
+                {typeof restaurant.drinkRating === 'number' && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="subtitle2">Drink Rating</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -612,7 +626,7 @@ const RestaurantDetailPage = () => {
                     </Box>
                   </Grid>
                 )}
-                {restaurant.googleRating && (
+                {typeof restaurant.googleRating === 'number' && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="subtitle2">Google Rating</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -643,15 +657,17 @@ const RestaurantDetailPage = () => {
                     </Box>
                   </Grid>
                 )}
-                <Grid item xs={12}>
-                  <Typography variant="subtitle2">Visit Date</Typography>
-                  <Typography variant="body1">
-                    {new Date(restaurant.visitDate).toLocaleDateString(undefined, { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}
-                  </Typography>
+                <Grid item xs={12} md={6}>
+                  <Paper sx={{ p: 2 }}>
+                    <Typography variant="subtitle2">Visit Dates</Typography>
+                    <Typography variant="body1">
+                      {restaurant.visitDates.map(date => new Date(date).toLocaleDateString(undefined, { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })).join(', ')}
+                    </Typography>
+                  </Paper>
                 </Grid>
               </Grid>
               

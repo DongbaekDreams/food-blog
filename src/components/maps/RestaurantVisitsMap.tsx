@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'react-leaflet';
-import { Box, Typography, Rating, Chip, useTheme, Paper, alpha } from '@mui/material';
+import { Box, Typography, Rating, Chip, useTheme, Paper, alpha, Button, Tooltip } from '@mui/material';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -113,6 +113,192 @@ const RestaurantVisitsMap = () => {
     );
   };
 
+  const PopupContent: React.FC<{ restaurant: Restaurant }> = ({ restaurant }) => {
+    const navigate = useNavigate();
+    const theme = useTheme();
+
+    // Function to get a contrasting text color based on marker color
+    const getContrastingTextColor = (backgroundColor: string) => {
+      // Basic contrast check, can be made more sophisticated
+      const color = backgroundColor.substring(1); // strip #
+      const rgb = parseInt(color, 16);   // convert rrggbb to decimal
+      const r = (rgb >> 16) & 0xff;  // extract red
+      const g = (rgb >>  8) & 0xff;  // extract green
+      const b = (rgb >>  0) & 0xff;  // extract blue
+      const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+      return luma < 128 ? '#FFFFFF' : '#000000';
+    };
+
+    const markerColor = getRatingColor(restaurant);
+    const textColor = getContrastingTextColor(markerColor);
+
+    return (
+      <Paper 
+        elevation={0} 
+        sx={{
+          minWidth: '280px', 
+          maxWidth: '320px',
+          p: 1.5, 
+          borderRadius: '8px', 
+          boxShadow: 'none',
+          backgroundColor: alpha(theme.palette.background.paper, 0.95),
+          backdropFilter: 'blur(5px)',
+        }}
+      >
+        {restaurant.photos && restaurant.photos.length > 0 && (
+          <Box 
+            sx={{ 
+              height: '120px', 
+              mb: 1, 
+              borderRadius: '6px', 
+              overflow: 'hidden', 
+              bgcolor: theme.palette.grey[200] 
+            }}
+          >
+            <img 
+              src={`${import.meta.env.BASE_URL}${restaurant.photos[0].startsWith('/') ? restaurant.photos[0].substring(1) : restaurant.photos[0]}`} 
+              alt={restaurant.name} 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </Box>
+        )}
+        <Typography variant="h6" sx={{ mb: 0.5, fontWeight: 'bold', fontSize: '1.1rem' }}>
+          {restaurant.name}
+        </Typography>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
+          {typeof restaurant.foodRating === 'number' && (
+            <Tooltip title={`Food: ${restaurant.foodRating.toFixed(1)}`} placement="top">
+              <Chip 
+                icon={<LocalDiningIcon sx={{ fontSize: '1rem'}} />} 
+                label={restaurant.foodRating.toFixed(1)} 
+                size="small" 
+                variant="outlined"
+                sx={{ 
+                  fontSize: '0.7rem', 
+                  height: '22px',
+                  backgroundColor: alpha(theme.palette.primary.light, 0.2),
+                  borderColor: alpha(theme.palette.primary.main, 0.3),
+                  color: theme.palette.primary.dark,
+                  '.MuiChip-icon': { color: theme.palette.primary.main, fontSize: '1rem' },
+                }} 
+              />
+            </Tooltip>
+          )}
+          {typeof restaurant.drinkRating === 'number' && (
+            <Tooltip title={`Drinks: ${restaurant.drinkRating.toFixed(1)}`} placement="top">
+              <Chip 
+                icon={<LocalBarIcon sx={{ fontSize: '1rem'}} />}
+                label={restaurant.drinkRating.toFixed(1)} 
+                size="small" 
+                variant="outlined"
+                sx={{ 
+                  fontSize: '0.7rem', 
+                  height: '22px',
+                  backgroundColor: alpha(theme.palette.secondary.light, 0.2),
+                  borderColor: alpha(theme.palette.secondary.main, 0.3),
+                  color: theme.palette.secondary.dark,
+                  '.MuiChip-icon': { color: theme.palette.secondary.main, fontSize: '1rem' },
+                }} 
+              />
+            </Tooltip>
+          )}
+          {typeof restaurant.googleRating === 'number' && (
+            <Tooltip title={`Google: ${restaurant.googleRating.toFixed(1)}`} placement="top">
+              <Chip 
+                icon={
+                  <GoogleIcon 
+                    sx={{ 
+                      fontSize: '0.9rem', 
+                      color: theme.palette.mode === 'dark' ? '#fff' : '#4285F4' 
+                    }} 
+                  />
+                }
+                label={restaurant.googleRating.toFixed(1)}
+                size="small"
+                variant="outlined"
+                sx={{ 
+                  fontSize: '0.7rem', 
+                  height: '22px',
+                  backgroundColor: theme.palette.mode === 'dark' ? alpha('#fff', 0.08) : alpha(theme.palette.grey[300], 0.3),
+                  borderColor: theme.palette.mode === 'dark' ? alpha('#fff', 0.2) : alpha(theme.palette.grey[500], 0.4),
+                  color: theme.palette.mode === 'dark' ? '#fff' : theme.palette.text.secondary,
+                  '.MuiChip-icon': { color: theme.palette.mode === 'dark' ? '#fff' : '#4285F4', fontSize: '0.9rem' },
+                }} 
+              />
+            </Tooltip>
+          )}
+        </Box>
+        
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
+          <Chip label={restaurant.cuisine} size="small" sx={{ fontSize: '0.7rem', height: '20px' }} />
+          <Chip label={restaurant.priceRange} size="small" sx={{ fontSize: '0.7rem', height: '20px' }} />
+          <Chip label={restaurant.location.city} size="small" sx={{ fontSize: '0.7rem', height: '20px' }} />
+        </Box>
+
+        {restaurant.parking && (
+          <Box sx={{ mb: 1, mt: 0.5 }}>
+            <Typography variant="subtitle2" sx={{ fontSize: '0.85rem', fontWeight: 600, mb: 0.5 }}>
+              Parking
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {[...Array(restaurant.parking.count)].map((_, i) => (
+                <img 
+                  key={i} 
+                  src={`${import.meta.env.BASE_URL}${restaurant.parking?.icon?.startsWith('/') ? restaurant.parking?.icon?.substring(1) : restaurant.parking?.icon}`}
+                  alt="Parking" 
+                  style={{ width: '18px', height: '18px', marginRight: '3px' }}
+                />
+              ))}
+              {restaurant.parking.description && 
+                <Typography variant="caption" sx={{ ml: 0.5, color: 'text.secondary' }}>
+                  ({restaurant.parking.description})
+                </Typography>
+              }
+            </Box>
+          </Box>
+        )}
+
+        <Typography variant="body2" sx={{ fontSize: '0.8rem', color: 'text.secondary', mb: 1.5 }}>
+          {restaurant.visitDates && restaurant.visitDates.length > 0 && restaurant.visitDates[0]
+            ? `Visited on: ${restaurant.visitDates
+                .map(date => {
+                  const d = new Date(date);
+                  return isNaN(d.getTime()) ? null : d.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                  });
+                })
+                .filter(Boolean)
+                .join(', ')}`
+            : 'Visited: Date Unknown'}
+        </Typography>
+        
+        <Typography variant="body2" sx={{ fontSize: '0.85rem', mb: 2, maxHeight: '60px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {restaurant.review}
+        </Typography>
+        <Button 
+          variant="contained" 
+          size="small"
+          fullWidth
+          onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+          sx={{ 
+            fontSize: '0.8rem', 
+            py: 0.8,
+            backgroundColor: markerColor,
+            color: textColor,
+            '&:hover': {
+              backgroundColor: alpha(markerColor, 0.85)
+            }
+          }}
+        >
+          Click to view details
+        </Button>
+      </Paper>
+    );
+  };
+
   return (
     <Box sx={{ 
       height: '600px', 
@@ -154,206 +340,7 @@ const RestaurantVisitsMap = () => {
             icon={createCustomIcon(getRatingColor(restaurant))}
           >
             <Popup closeButton={false}>
-              <Box 
-                className="restaurant-popup-content"
-                sx={{
-                  minWidth: 220, 
-                  maxWidth: 250, 
-                  cursor: 'pointer',
-                  '&:hover': {
-                    opacity: 0.9
-                  },
-                  backgroundColor: theme.palette.background.paper,
-                  color: theme.palette.text.primary,
-                }}
-                onClick={() => handleRestaurantClick(restaurant.id)}
-              >
-                {/* Image Container for Overlay */}
-                {restaurant.photos && restaurant.photos.length > 0 && (
-                  <Box sx={{ position: 'relative', width: '100%', height: '150px', borderRadius: '4px', overflow: 'hidden', marginBottom: '8px' }}>
-                    <img 
-                      src={`${import.meta.env.BASE_URL}${restaurant.photos[0].startsWith('/') ? restaurant.photos[0].substring(1) : restaurant.photos[0]}`} 
-                      alt={restaurant.name} 
-                      style={{ 
-                        width: '100%', 
-                        height: '150px', 
-                        objectFit: 'cover',
-                      }}
-                    />
-                    {/* Ratings Overlay */}
-                    <Box sx={{ position: 'absolute', top: 8, right: 8, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      {/* Food Rating Bubble */}
-                      {restaurant.foodRating && (
-                        <Box 
-                          sx={{ 
-                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                            color: theme.palette.text.primary,
-                            p: '2px 8px',
-                            borderRadius: '12px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: 0.5 
-                          }}
-                        >
-                          <LocalDiningIcon sx={{ fontSize: '0.9rem', color: theme.palette.text.primary, mr: 0.25 }} />
-                          <Rating value={restaurant.foodRating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: theme.palette.text.primary } }} />
-                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary }}>
-                            {restaurant.foodRating.toFixed(1)}
-                          </Typography>
-                        </Box>
-                      )}
-                      {/* Drink Rating Bubble */}
-                      {restaurant.drinkRating && (
-                        <Box 
-                          sx={{ 
-                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                            color: theme.palette.text.primary,
-                            p: '2px 8px',
-                            borderRadius: '12px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: 0.5 
-                          }}
-                        >
-                          <LocalBarIcon sx={{ fontSize: '0.9rem', color: theme.palette.text.primary, mr: 0.25 }} />
-                          <Rating value={restaurant.drinkRating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: theme.palette.text.primary } }} />
-                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary }}>
-                            {restaurant.drinkRating.toFixed(1)}
-                          </Typography>
-                        </Box>
-                      )}
-                      {/* Fallback for original rating if no food/drink rating - can be removed later */}
-                      {!restaurant.foodRating && !restaurant.drinkRating && restaurant.rating && (
-                         <Box 
-                          sx={{ 
-                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                            color: theme.palette.text.primary,
-                            p: '2px 8px',
-                            borderRadius: '12px', 
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            gap: 0.5 
-                          }}
-                        >
-                          <Rating value={restaurant.rating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: theme.palette.text.primary } }} />
-                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary }}>
-                            {restaurant.rating.toFixed(1)}
-                          </Typography>
-                           <Typography variant="caption" sx={{ fontWeight: 300, lineHeight: '1.2', color: theme.palette.text.secondary }}>
-                            Our
-                          </Typography>
-                        </Box>
-                      )}
-                      {/* Google Rating Bubble */}
-                      {restaurant.googleRating && (
-                        <Box
-                          sx={{
-                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
-                            color: theme.palette.text.primary,
-                            p: '2px 8px',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5
-                          }}
-                        >
-                          <GoogleIcon sx={{ fontSize: '0.9rem', color: theme.palette.text.primary, mr: 0.5 }}/>
-                          <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                            <Rating value={restaurant.googleRating} precision={0.1} size="small" readOnly
-                              sx={{
-                                '& .MuiRating-iconFilled': { color: '#fb8c00' },
-                                '& .MuiRating-iconEmpty': { borderColor: '#fb8c00' }
-                              }}
-                            />
-                            <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary, ml: 0.5 }}>
-                              {restaurant.googleRating.toFixed(1)}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      )}
-                    </Box>
-                  </Box>
-                )}
-
-                {/* Details Below Image */}
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {restaurant.name}
-                </Typography>
-
-                <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mb: 1 }}>
-                  <Chip 
-                    label={restaurant.cuisine} 
-                    size="small" 
-                    sx={{ 
-                      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : alpha(theme.palette.primary.main, 0.1),
-                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.primary.main,
-                      fontWeight: 600,
-                      fontSize: '0.7rem'
-                    }} 
-                  />
-                  <Chip 
-                    label={restaurant.priceRange} 
-                    size="small" 
-                    sx={{ 
-                      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.secondary.dark : alpha(theme.palette.secondary.main, 0.1),
-                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.secondary.main,
-                      fontWeight: 600,
-                      fontSize: '0.7rem'
-                    }} 
-                  />
-                  <Chip 
-                    label={restaurant.location.city} 
-                    size="small" 
-                    sx={{ 
-                      backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : alpha(theme.palette.primary.dark, 0.07),
-                      color: theme.palette.mode === 'dark' ? theme.palette.common.white : theme.palette.primary.dark,
-                      fontWeight: 600,
-                      fontSize: '0.7rem'
-                    }} 
-                  />
-                </Box>
-                
-                {restaurant.parking && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    {[...Array(restaurant.parking?.count || 0)].map((_, i) => (
-                      <img 
-                        key={i} 
-                        src={`${import.meta.env.BASE_URL}${restaurant.parking?.icon?.startsWith('/') ? restaurant.parking?.icon?.substring(1) : restaurant.parking?.icon}`}
-                        alt="Parking Rating" 
-                        style={{ width: '16px', height: '16px', marginRight: '2px' }}
-                      />
-                    ))}
-                    {restaurant.parking?.description && (
-                      <Typography variant="caption" sx={{ ml: 0.5, fontSize: '0.7rem', color: 'text.secondary' }}>
-                        ({restaurant.parking?.description})
-                      </Typography>
-                    )}
-                  </Box>
-                )}
-                
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  Visited: {new Date(restaurant.visitDate).toLocaleDateString('en-US', { 
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                  })}
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: '0.85rem' }}>
-                  {restaurant.review}
-                </Typography>
-
-                <Box sx={{ 
-                  mt: 1.5, 
-                  p: 1, 
-                  bgcolor: alpha(theme.palette.primary.main, 0.1), 
-                  borderRadius: 1,
-                  textAlign: 'center'
-                }}>
-                  <Typography variant="caption" sx={{ color: theme.palette.primary.main, fontWeight: 500 }}>
-                    Click to view details
-                  </Typography>
-                </Box>
-              </Box>
+              <PopupContent restaurant={restaurant} />
             </Popup>
           </Marker>
         ))}
@@ -454,7 +441,7 @@ const RestaurantVisitsMap = () => {
         )}
       </Paper>
       {/* Custom styles for dark mode Leaflet popup */}
-      <style jsx global>{`
+      <style>{`
         .leaflet-popup-content-wrapper {
           background-color: ${theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#fff'};
           color: ${theme.palette.mode === 'dark' ? theme.palette.common.white : '#000'};

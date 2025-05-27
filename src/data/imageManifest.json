@@ -31,6 +31,27 @@
     ]
   },
   "restaurants": {
+    "alley-taps-nashville": [
+      "/images/restaurants/alley-taps/shithole2.png"
+    ],
+    "back-40-nashville": [
+      "/images/restaurants/back-40/b40-drinks.png",
+      "/images/restaurants/back-40/b40-bar.png"
+    ],
+    "buc-ees-adairsville-ga": [
+      "/images/restaurants/buccees/bb-s1.png",
+      "/images/restaurants/buccees/bb-s2.png",
+      "/images/restaurants/buccees/bb-car.png",
+      "/images/restaurants/buccees/bb-bur1.png",
+      "/images/restaurants/buccees/bb-bur2.png"
+    ],
+    "buc-ees-adairsville-ga-2": [
+      "/images/restaurants/buccees/bb-s1.png",
+      "/images/restaurants/buccees/bb-s2.png",
+      "/images/restaurants/buccees/bb-car.png",
+      "/images/restaurants/buccees/bb-bur1.png",
+      "/images/restaurants/buccees/bb-bur2.png"
+    ],
     "jbistro": [
       "/images/restaurants/jbistro/tangsuyuk.png",
       "/images/restaurants/jbistro/jjajangmyeon.png",
@@ -38,8 +59,17 @@
       "/images/restaurants/jbistro/mandu.png",
       "/images/restaurants/jbistro/spread.png"
     ],
+    "riverport-grille-chattanooga": [
+      "/images/restaurants/riverport-grille/rp-food.png"
+    ],
     "rreal-tacos": [
       "/images/restaurants/rreal-tacos/generated-tacos.png"
+    ],
+    "sixty-vines-nashville": [
+      "/images/restaurants/sixty-vines/tf-wine.png",
+      "/images/restaurants/sixty-vines/tf-pizza.png",
+      "/images/restaurants/sixty-vines/tf-fire.png",
+      "/images/restaurants/sixty-vines/tf-1.png"
     ],
     "verasanos-pizzeria": [
       "/images/restaurants/verasanos-pizzeria/generated-pizza.png"
