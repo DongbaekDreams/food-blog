@@ -773,4 +773,5 @@ export const loadGooglePlaceDetails = async (placeId: string): Promise<Partial<R
     website: 'https://example.com',
     openingHours: ['Monday: 9:00 AM - 10:00 PM', 'Tuesday: 9:00 AM - 10:00 PM']
   };
-}; 
+};
+

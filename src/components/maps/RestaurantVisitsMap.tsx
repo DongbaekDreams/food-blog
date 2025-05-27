@@ -68,8 +68,10 @@ const RestaurantVisitsMap = () => {
 
   // Function to calculate zoom level
   const getZoomLevel = () => {
-    if (activeCity) return 13; // Zoom in when a city is selected
-    return 11; // Default zoom for Atlanta overview
+    if (activeCity === 'Atlanta') return 11; // More zoomed out for Atlanta
+    if (activeCity === 'Adairsville') return 8; // More zoomed out for Atlanta
+    if (activeCity) return 13; // Default for other cities
+    return 7; // Default overview
   };
 
   const handleRestaurantClick = (restaurantId: string) => {
@@ -299,6 +301,15 @@ const RestaurantVisitsMap = () => {
     );
   };
 
+  // --- Add CityMapFlyTo component ---
+  const CityMapFlyTo: React.FC<{ center: [number, number], zoom: number }> = ({ center, zoom }) => {
+    const map = useMap();
+    useEffect(() => {
+      map.setView(center, zoom, { animate: true });
+    }, [center[0], center[1], zoom]);
+    return null;
+  };
+
   return (
     <Box sx={{ 
       height: '600px', 
@@ -316,6 +327,7 @@ const RestaurantVisitsMap = () => {
         scrollWheelZoom={true}
         attributionControl={false}
       >
+        <CityMapFlyTo center={getMapCenter()} zoom={getZoomLevel()} />
         {/* Stamen Toner Tiles */}
         <TileLayer
           url={
