@@ -5,6 +5,8 @@ import { Box, Typography, Rating, Chip, useTheme, Paper, alpha } from '@mui/mate
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import GoogleIcon from '@mui/icons-material/Google';
+import LocalDiningIcon from '@mui/icons-material/LocalDining';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
 import { getRestaurants } from '../../data/dataService';
 import { Restaurant } from '../../data/types';
 
@@ -34,9 +36,10 @@ const RestaurantVisitsMap = () => {
   }, []);
 
   // Calculate rating colors
-  const getRatingColor = (rating: number) => {
-    if (rating >= 4.5) return theme.palette.secondary.main; 
-    if (rating >= 4.0) return theme.palette.primary.main;
+  const getRatingColor = (restaurant: Restaurant) => {
+    const ratingToUse = restaurant.foodRating ?? restaurant.rating;
+    if (ratingToUse >= 4.5) return theme.palette.secondary.main; 
+    if (ratingToUse >= 4.0) return theme.palette.primary.main;
     return theme.palette.primary.light;
   };
 
@@ -148,17 +151,20 @@ const RestaurantVisitsMap = () => {
           <Marker
             key={restaurant.id}
             position={[restaurant.location.lat, restaurant.location.lng]}
-            icon={createCustomIcon(getRatingColor(restaurant.rating))}
+            icon={createCustomIcon(getRatingColor(restaurant))}
           >
             <Popup closeButton={false}>
               <Box 
-                sx={{ 
+                className="restaurant-popup-content"
+                sx={{
                   minWidth: 220, 
                   maxWidth: 250, 
                   cursor: 'pointer',
                   '&:hover': {
                     opacity: 0.9
-                  }
+                  },
+                  backgroundColor: theme.palette.background.paper,
+                  color: theme.palette.text.primary,
                 }}
                 onClick={() => handleRestaurantClick(restaurant.id)}
               >
@@ -176,49 +182,93 @@ const RestaurantVisitsMap = () => {
                     />
                     {/* Ratings Overlay */}
                     <Box sx={{ position: 'absolute', top: 8, right: 8, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      {/* Our Rating Bubble */}
-                      <Box 
-                        sx={{ 
-                          backgroundColor: 'rgba(0, 0, 0, 0.6)', 
-                          color: 'white', 
-                          p: '2px 8px', // Adjusted padding
-                          borderRadius: '12px', // Adjusted border radius
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: 0.5 
-                        }}
-                      >
-                        <Rating value={restaurant.rating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: 'white' } }} />
-                        <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2' }}>
-                          {restaurant.rating.toFixed(1)}
-                        </Typography>
-                         <Typography variant="caption" sx={{ fontWeight: 300, lineHeight: '1.2' }}>
-                          Our
-                        </Typography>
-                      </Box>
-                      {/* Google Rating Bubble */}
-                      {restaurant.googleRating && (
+                      {/* Food Rating Bubble */}
+                      {restaurant.foodRating && (
                         <Box 
                           sx={{ 
-                            backgroundColor: 'rgba(0, 0, 0, 0.6)', 
-                            color: 'white', 
-                            p: '2px 8px', // Adjusted padding
-                            borderRadius: '12px', // Adjusted border radius
+                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                            color: theme.palette.text.primary,
+                            p: '2px 8px',
+                            borderRadius: '12px', 
                             display: 'flex', 
                             alignItems: 'center', 
                             gap: 0.5 
                           }}
                         >
-                          <Rating value={restaurant.googleRating} precision={0.1} size="small" readOnly 
-                            sx={{ 
-                              '& .MuiRating-iconFilled': { color: '#fb8c00' }, 
-                              '& .MuiRating-iconEmpty': { borderColor: '#fb8c00' }
-                            }} 
-                          />
-                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2' }}>
-                            {restaurant.googleRating.toFixed(1)}
+                          <LocalDiningIcon sx={{ fontSize: '0.9rem', color: theme.palette.text.primary, mr: 0.25 }} />
+                          <Rating value={restaurant.foodRating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: theme.palette.text.primary } }} />
+                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary }}>
+                            {restaurant.foodRating.toFixed(1)}
                           </Typography>
-                          <GoogleIcon sx={{ fontSize: '0.9rem', color: 'white', ml: 0.25 }}/>
+                        </Box>
+                      )}
+                      {/* Drink Rating Bubble */}
+                      {restaurant.drinkRating && (
+                        <Box 
+                          sx={{ 
+                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                            color: theme.palette.text.primary,
+                            p: '2px 8px',
+                            borderRadius: '12px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 0.5 
+                          }}
+                        >
+                          <LocalBarIcon sx={{ fontSize: '0.9rem', color: theme.palette.text.primary, mr: 0.25 }} />
+                          <Rating value={restaurant.drinkRating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: theme.palette.text.primary } }} />
+                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary }}>
+                            {restaurant.drinkRating.toFixed(1)}
+                          </Typography>
+                        </Box>
+                      )}
+                      {/* Fallback for original rating if no food/drink rating - can be removed later */}
+                      {!restaurant.foodRating && !restaurant.drinkRating && restaurant.rating && (
+                         <Box 
+                          sx={{ 
+                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                            color: theme.palette.text.primary,
+                            p: '2px 8px',
+                            borderRadius: '12px', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 0.5 
+                          }}
+                        >
+                          <Rating value={restaurant.rating} precision={0.1} size="small" readOnly sx={{ '& .MuiRating-iconFilled': { color: theme.palette.text.primary } }} />
+                          <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary }}>
+                            {restaurant.rating.toFixed(1)}
+                          </Typography>
+                           <Typography variant="caption" sx={{ fontWeight: 300, lineHeight: '1.2', color: theme.palette.text.secondary }}>
+                            Our
+                          </Typography>
+                        </Box>
+                      )}
+                      {/* Google Rating Bubble */}
+                      {restaurant.googleRating && (
+                        <Box
+                          sx={{
+                            backgroundColor: alpha(theme.palette.background.paper, 0.8),
+                            color: theme.palette.text.primary,
+                            p: '2px 8px',
+                            borderRadius: '12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 0.5
+                          }}
+                        >
+                          <GoogleIcon sx={{ fontSize: '0.9rem', color: theme.palette.text.primary, mr: 0.5 }}/>
+                          <Box sx={{ display: 'flex', alignItems: 'center'}}>
+                            <Rating value={restaurant.googleRating} precision={0.1} size="small" readOnly
+                              sx={{
+                                '& .MuiRating-iconFilled': { color: '#fb8c00' },
+                                '& .MuiRating-iconEmpty': { borderColor: '#fb8c00' }
+                              }}
+                            />
+                            <Typography variant="caption" sx={{ fontWeight: 'bold', lineHeight: '1.2', color: theme.palette.text.primary, ml: 0.5 }}>
+                              {restaurant.googleRating.toFixed(1)}
+                            </Typography>
+                          </Box>
                         </Box>
                       )}
                     </Box>
@@ -403,8 +453,27 @@ const RestaurantVisitsMap = () => {
           </>
         )}
       </Paper>
+      {/* Custom styles for dark mode Leaflet popup */}
+      <style jsx global>{`
+        .leaflet-popup-content-wrapper {
+          background-color: ${theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#fff'};
+          color: ${theme.palette.mode === 'dark' ? theme.palette.common.white : '#000'};
+          border-radius: 8px;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        .leaflet-popup-tip {
+          background-color: ${theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#fff'};
+        }
+        .leaflet-popup-close-button {
+          color: ${theme.palette.mode === 'dark' ? theme.palette.common.white : '#000'} !important;
+        }
+        .restaurant-popup-content {
+          background-color: ${theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#fff'} !important;
+          color: ${theme.palette.mode === 'dark' ? theme.palette.common.white : '#000'} !important;
+        }
+      `}</style>
     </Box>
   );
 };
 
-export default RestaurantVisitsMap; 
+export default RestaurantVisitsMap;

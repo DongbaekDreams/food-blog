@@ -19,16 +19,45 @@ import {
 } from '@mui/material';
 import { getRestaurants } from '../data/dataService';
 import { Restaurant } from '../data/types';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const RestaurantsListPage = () => {
   const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string | null }>({ key: 'foodRating', direction: 'descending' });
 
   useEffect(() => {
     const data = getRestaurants();
-    // Sort by rating descending
-    setRestaurants([...data].sort((a, b) => b.rating - a.rating));
-  }, []);
+
+    const sortedRestaurants = [...data].sort((a, b) => {
+      if (!sortConfig.key) return 0;
+
+      const aValue = a[sortConfig.key as keyof Restaurant] ?? 0;
+      const bValue = b[sortConfig.key as keyof Restaurant] ?? 0;
+
+      if (aValue < bValue) {
+        return sortConfig.direction === 'ascending' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === 'ascending' ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setRestaurants(sortedRestaurants);
+  }, [sortConfig]);
+
+  // Function to handle sorting
+  const handleSort = (key: string) => {
+    let direction = 'ascending';
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    } else if (sortConfig.key === key && sortConfig.direction === 'descending') {
+        direction = 'ascending'; // Or you could set key to null to remove sort
+    }
+    setSortConfig({ key, direction });
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -52,10 +81,29 @@ const RestaurantsListPage = () => {
             <TableRow>
               <TableCell>Rank</TableCell>
               <TableCell>Thumbnail</TableCell>
-              <TableCell>Name</TableCell>
+              <TableCell
+                key="name"
+                onClick={() => handleSort('name')}
+                sx={{ cursor: 'pointer' }}
+              >
+                Name {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
+              </TableCell>
               <TableCell>City</TableCell>
               <TableCell>Cuisine</TableCell>
-              <TableCell>Rating</TableCell>
+              <TableCell
+                key="foodRating"
+                onClick={() => handleSort('foodRating')}
+                sx={{ cursor: 'pointer' }}
+              >
+                Food Rating {sortConfig.key === 'foodRating' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
+              </TableCell>
+              <TableCell
+                key="drinkRating"
+                onClick={() => handleSort('drinkRating')}
+                sx={{ cursor: 'pointer' }}
+              >
+                Drink Rating {sortConfig.key === 'drinkRating' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -84,8 +132,16 @@ const RestaurantsListPage = () => {
                   <Chip label={r.cuisine} size="small" />
                 </TableCell>
                 <TableCell>
-                  <Rating value={r.rating} precision={0.1} readOnly size="small" />
-                  <Typography variant="caption" sx={{ ml: 1 }}>{r.rating.toFixed(1)}</Typography>
+                  <Rating value={r.foodRating ?? r.rating} precision={0.1} readOnly size="small" />
+                  <Typography variant="caption" sx={{ ml: 1 }}>{(r.foodRating ?? r.rating).toFixed(1)}</Typography>
+                </TableCell>
+                <TableCell>
+                  {r.drinkRating !== undefined && (
+                    <>
+                      <Rating value={r.drinkRating} precision={0.1} readOnly size="small" />
+                      <Typography variant="caption" sx={{ ml: 1 }}>{r.drinkRating.toFixed(1)}</Typography>
+                    </>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

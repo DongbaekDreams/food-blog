@@ -36,6 +36,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -312,14 +313,28 @@ const RestaurantDetailPage = () => {
                 {restaurant.name}
               </Typography>
               
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <Rating value={restaurant.rating} precision={0.5} readOnly />
-                <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                  {restaurant.rating.toFixed(1)}
-                </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, flexWrap: 'wrap' }}>
+                {restaurant.foodRating && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, mb: 1 }}>
+                    <LocalDiningIcon sx={{ mr: 0.5, color: 'primary.main' }} />
+                    <Rating value={restaurant.foodRating} precision={0.1} readOnly />
+                    <Typography variant="subtitle1" sx={{ ml: 1 }}>
+                      {restaurant.foodRating.toFixed(1)}
+                    </Typography>
+                  </Box>
+                )}
+                {restaurant.drinkRating && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, mb: 1 }}>
+                    <LocalBarIcon sx={{ mr: 0.5, color: 'secondary.main' }} />
+                    <Rating value={restaurant.drinkRating} precision={0.1} readOnly />
+                    <Typography variant="subtitle1" sx={{ ml: 1 }}>
+                      {restaurant.drinkRating.toFixed(1)}
+                    </Typography>
+                  </Box>
+                )}
                 
                 {restaurant.googleRating && (
-                  <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mr: 2, mb: 1 }}>
                     <GoogleIcon fontSize="small" sx={{ mr: 0.5, color: '#4285F4' }} />
                     <Rating value={restaurant.googleRating} precision={0.1} readOnly size="small" />
                     <Typography variant="body2" sx={{ ml: 0.5 }}>
@@ -561,17 +576,44 @@ const RestaurantDetailPage = () => {
                   <Typography variant="subtitle2">Price Range</Typography>
                   <Typography variant="body1">{restaurant.priceRange}</Typography>
                 </Grid>
-                <Grid item xs={6}>
-                  <Typography variant="subtitle2">Our Rating</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Rating value={restaurant.rating} precision={0.5} readOnly size="small" />
-                    <Typography variant="body2" sx={{ ml: 1 }}>
-                      {restaurant.rating.toFixed(1)}
-                    </Typography>
-                  </Box>
-                </Grid>
+                {restaurant.foodRating && (
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2">Food Rating</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <LocalDiningIcon sx={{ mr: 0.5, fontSize: '1.2rem', color: 'primary.main' }} />
+                      <Rating value={restaurant.foodRating} precision={0.1} readOnly size="small" />
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        {restaurant.foodRating.toFixed(1)}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+                {restaurant.drinkRating && (
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="subtitle2">Drink Rating</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <LocalBarIcon sx={{ mr: 0.5, fontSize: '1.2rem', color: 'secondary.main' }} />
+                      <Rating value={restaurant.drinkRating} precision={0.1} readOnly size="small" />
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        {restaurant.drinkRating.toFixed(1)}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
+                {/* Fallback to old rating if new ones aren't present, can be removed later */}
+                {!restaurant.foodRating && !restaurant.drinkRating && restaurant.rating && (
+                   <Grid item xs={6}>
+                    <Typography variant="subtitle2">Our Rating</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Rating value={restaurant.rating} precision={0.5} readOnly size="small" />
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        {restaurant.rating.toFixed(1)}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )}
                 {restaurant.googleRating && (
-                  <Grid item xs={6}>
+                  <Grid item xs={12} sm={6}>
                     <Typography variant="subtitle2">Google Rating</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <GoogleIcon fontSize="small" sx={{ mr: 0.5, color: '#4285F4' }} />

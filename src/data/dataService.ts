@@ -1,4 +1,4 @@
-import { Restaurant, Dish, TimelineEvent, CountryData } from './types';
+import { Restaurant, Dish, TimelineEvent, CountryData, InitialRestaurantData } from './types';
 import imageManifestData from './imageManifest.json'; // Reverted to original path
 // import imageManifestData from '../../../public/imageManifest.json'; // Commented out the adjusted path
 
@@ -31,7 +31,7 @@ const extractKeyFromPath = (path: string, type: 'dishes' | 'restaurants'): strin
 };
 
 // Initial real restaurant data (renamed to restaurantsData)
-const restaurantsData: Omit<Restaurant, 'photos' | 'mainImage'>[] = [
+const restaurantsData: InitialRestaurantData[] = [
   {
     id: 'varasanos-pizzeria-atlanta',
     name: "Varasano's Pizzeria",
@@ -44,6 +44,8 @@ const restaurantsData: Omit<Restaurant, 'photos' | 'mainImage'>[] = [
       googleMapsUrl: 'https://maps.app.goo.gl/HRTTuTpDdmEN5LP66'
     },
     rating: 4.7,
+    foodRating: 4.7,
+    drinkRating: undefined,
     googleRating: 4.9,
     visitDate: '2025-04-26',
     review: 'We visited the pizzeria and were delighted by their exceptional dough – perfectly chewy with a subtle complexity that elevates every bite. The menu offers an impressive variety of topping combinations, each showcasing a bold, aromatic hit of garlic. The wood-fired oven produced an impeccably crisp crust with a subtle smoky depth, perfectly complementing the toppings. The charming patio area provides a lovely outdoor dining experience when weather permits.',
@@ -76,6 +78,8 @@ const restaurantsData: Omit<Restaurant, 'photos' | 'mainImage'>[] = [
       googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Rreal+Tacos+-+Buckhead+3365+Piedmont+Rd+NE+Suite+1120+Atlanta+GA+30305'
     },
     rating: 4.5,
+    foodRating: 4.5,
+    drinkRating: 4.5, // Example drink rating
     googleRating: 4.9,
     visitDate: '2025-04-25',
     review: 'The birria quesadilla delivers tender, slow‑braised beef folded into a crisp tortilla with just the right balance of melted cheese and savory broth infusion. The drink menu complements the food perfectly, featuring well‑crafted margaritas and a decent beer selection that cleanse the palate between bites. The quality of ingredients is exceptional, evident in every flavorful bite. Do note that weekend visits can mean extended wait times as they don\'t accept reservations during peak hours. The consommé, while an additional charge, is worth considering as a rich complement to your meal. Parking is validated for two hours, which is a welcome convenience in the bustling Buckhead area.',
@@ -106,6 +110,8 @@ const restaurantsData: Omit<Restaurant, 'photos' | 'mainImage'>[] = [
       googleMapsUrl: 'https://maps.google.com/?cid=11797768855317478154'
     },
     rating: 3.5,
+    foodRating: 3.5,
+    drinkRating: undefined, // Changed from null to undefined
     googleRating: 4.4,
     visitDate: '2025-05-18',
     review: 'A cozy and authentic spot serving up Chinese and Korean dishes with generous portions that provide excellent value for money. While the quantity of food is impressive, some dishes could benefit from bolder seasoning as flavors tend to be a bit subdued. The dumplings (mandu) were especially good - perfectly crispy on the outside and flavorful on the inside. For future visits, the jjamppong (spicy seafood noodle soup) is on our list to try. The casual atmosphere makes it perfect for a quick lunch or casual dinner, complemented by friendly, attentive service.',
@@ -168,7 +174,7 @@ const restaurantsData: Omit<Restaurant, 'photos' | 'mainImage'>[] = [
 
 // Initial real dish data (renamed to dishesData)
 // The mainImage path here will be used to find the manifest key
-const dishesData: Omit<Dish, 'photos' | 'mainImage'> & { originalMainImagePath: string }[] = [
+const dishesData: (Omit<Dish, 'photos' | 'mainImage'> & { originalMainImagePath: string })[] = [
   {
     id: 'us-1',
     name: 'Cajun Pasta',
@@ -401,7 +407,8 @@ const generateCountriesData = (): Record<string, CountryData> => {
 
 // Generate timeline events from restaurants and dishes
 const generateTimelineEvents = (): TimelineEvent[] => {
-  const restaurantEvents: TimelineEvent[] = restaurantsData
+  const processedRestaurantData = getRestaurants(); // Use processed data
+  const restaurantEvents: TimelineEvent[] = processedRestaurantData
     .filter(r => r.visitDate !== 'YYYY-MM-DD') // Filter out placeholder dates
     .map(r => ({
       id: `rest-${r.id}`,
@@ -409,7 +416,7 @@ const generateTimelineEvents = (): TimelineEvent[] => {
       content: r.name,
       start: r.visitDate,
       location: `${r.location.city}, ${r.location.country}`,
-      rating: r.rating,
+      rating: r.foodRating ?? r.rating, // Use foodRating, fallback to rating
       photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
       itemUrl: `/restaurant/${r.id}`
     }));
