@@ -44,6 +44,14 @@ const EstablishmentGallery = () => {
   useEffect(() => {
     // Load all restaurants
     const allRestaurants = getRestaurants();
+    // Sort by most recent visit date (if multiple, use the most recent)
+    allRestaurants.sort((a, b) => {
+      const aDates = Array.isArray(a.visitDates) ? a.visitDates : [a.visitDates];
+      const bDates = Array.isArray(b.visitDates) ? b.visitDates : [b.visitDates];
+      const aMostRecent = Math.max(...aDates.map(date => new Date(date).getTime()));
+      const bMostRecent = Math.max(...bDates.map(date => new Date(date).getTime()));
+      return bMostRecent - aMostRecent;
+    });
     setRestaurants(allRestaurants);
     setFilteredRestaurants(allRestaurants);
 

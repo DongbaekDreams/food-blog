@@ -42,6 +42,14 @@ const DishGallery = () => {
   useEffect(() => {
     // Load all dishes
     const allDishes = getDishes();
+    // Sort by most recent date (if multiple, use the most recent)
+    allDishes.sort((a, b) => {
+      const aDates = Array.isArray(a.dateCooked) ? a.dateCooked : [a.dateCooked];
+      const bDates = Array.isArray(b.dateCooked) ? b.dateCooked : [b.dateCooked];
+      const aMostRecent = Math.max(...aDates.map(date => new Date(date).getTime()));
+      const bMostRecent = Math.max(...bDates.map(date => new Date(date).getTime()));
+      return bMostRecent - aMostRecent;
+    });
     setDishes(allDishes);
     setFilteredDishes(allDishes);
 
