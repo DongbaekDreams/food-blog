@@ -8,7 +8,8 @@ import { ThemeToggle } from './ThemeToggle';
 
 const navLinks = [
   { label: 'Browse All Dishes', icon: <RestaurantMenuIcon />, path: '/dishes' },
-  { label: 'Browse Restaurants', icon: <RestaurantIcon />, path: '/restaurants' },
+  { label: 'Browse Establishments', icon: <RestaurantIcon />, path: '/establishments' },
+  { label: 'Establishment Rankings', icon: <RestaurantIcon />, path: '/restaurants' },
   // Add more links here if needed in the future
 ];
 
@@ -123,7 +124,7 @@ export const Header = () => {
                   px: 2,
                   textTransform: 'none',
                   bgcolor: location.pathname === nav.path ? 'primary.light' : 'transparent',
-                  color: theme => theme.palette.mode === 'dark' ? theme.palette.primary.main : undefined,
+                  color: location.pathname === nav.path ? theme.palette.primary.contrastText : (theme => theme.palette.mode === 'dark' ? theme.palette.primary.main : undefined),
                   fontSize: { xs: '0.95rem', sm: '1rem' },
                   minWidth: { xs: 0, sm: 120 },
                   '&:hover': {

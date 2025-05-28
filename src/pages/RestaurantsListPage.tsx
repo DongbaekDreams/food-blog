@@ -21,14 +21,37 @@ import { getRestaurants } from '../data/dataService';
 import { Restaurant } from '../data/types';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
 
 const RestaurantsListPage = () => {
   const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string | null }>({ key: 'foodRating', direction: 'descending' });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
+  const [availableCuisines, setAvailableCuisines] = useState<string[]>([]);
+  const [allCities, setAllCities] = useState<string[]>([]);
 
   useEffect(() => {
     const data = getRestaurants();
+
+    // Extract all unique cuisines and cities
+    const cuisines = new Set<string>();
+    const cities = new Set<string>();
+    data.forEach(r => {
+      if (r.cuisine) cuisines.add(r.cuisine);
+      if (r.location.city) cities.add(r.location.city);
+    });
+    setAvailableCuisines(Array.from(cuisines).sort());
+    setAllCities(Array.from(cities).sort());
 
     const sortedRestaurants = [...data].sort((a, b) => {
       if (!sortConfig.key) return 0;
@@ -47,6 +70,17 @@ const RestaurantsListPage = () => {
 
     setRestaurants(sortedRestaurants);
   }, [sortConfig]);
+
+  // Filtered restaurants
+  const filteredRestaurants = restaurants.filter(r => {
+    const matchesSearch =
+      r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.review?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      r.cuisine?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCity = selectedCity ? r.location.city === selectedCity : true;
+    const matchesCuisine = selectedCuisines.length > 0 ? selectedCuisines.includes(r.cuisine) : true;
+    return matchesSearch && matchesCity && matchesCuisine;
+  });
 
   // Function to handle sorting
   const handleSort = (key: string) => {
@@ -74,6 +108,52 @@ const RestaurantsListPage = () => {
         <Typography variant="subtitle1" color="text.secondary" gutterBottom>
           Ranked by rating
         </Typography>
+        {/* Filters */}
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 3, mb: 2 }}>
+          <TextField
+            label="Search"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            variant="outlined"
+            size="small"
+            sx={{ minWidth: 200 }}
+          />
+          <FormControl variant="outlined" size="small" sx={{ minWidth: 160 }}>
+            <InputLabel id="city-select-label">City</InputLabel>
+            <Select
+              labelId="city-select-label"
+              value={selectedCity}
+              onChange={(e: SelectChangeEvent) => setSelectedCity(e.target.value)}
+              label="City"
+            >
+              <MenuItem value=""><em>All Cities</em></MenuItem>
+              {allCities.map(city => (
+                <MenuItem key={city} value={city}>{city}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl variant="outlined" size="small" sx={{ minWidth: 180 }}>
+            <InputLabel id="cuisines-select-label">Cuisines</InputLabel>
+            <Select
+              labelId="cuisines-select-label"
+              multiple
+              value={selectedCuisines}
+              onChange={(e: SelectChangeEvent<typeof selectedCuisines>) => {
+                const value = e.target.value;
+                setSelectedCuisines(typeof value === 'string' ? value.split(',') : value);
+              }}
+              input={<OutlinedInput label="Cuisines" />}
+              renderValue={(selected) => selected.join(', ')}
+            >
+              {availableCuisines.map(cuisine => (
+                <MenuItem key={cuisine} value={cuisine}>
+                  <Checkbox checked={selectedCuisines.indexOf(cuisine) > -1} />
+                  <ListItemText primary={cuisine} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
       </Box>
       <TableContainer component={Paper}>
         <Table>
@@ -88,8 +168,6 @@ const RestaurantsListPage = () => {
               >
                 Name {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
               </TableCell>
-              <TableCell>City</TableCell>
-              <TableCell>Cuisine</TableCell>
               <TableCell
                 key="foodRating"
                 onClick={() => handleSort('foodRating')}
@@ -104,12 +182,14 @@ const RestaurantsListPage = () => {
               >
                 Drink Rating {sortConfig.key === 'drinkRating' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
               </TableCell>
+              <TableCell>City</TableCell>
+              <TableCell>Cuisine</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {restaurants.map((r, idx) => (
+            {filteredRestaurants.map((r, idx) => (
               <TableRow key={r.id} hover sx={{ cursor: 'pointer' }} onClick={() => navigate(`/restaurant/${r.id}`)}>
-                <TableCell>{idx + 1}</TableCell>
+                <TableCell>{sortConfig.direction === 'ascending' ? filteredRestaurants.length - idx : idx + 1}</TableCell>
                 <TableCell>
                   <Avatar
                     variant="rounded"
@@ -127,10 +207,6 @@ const RestaurantsListPage = () => {
                     {r.name}
                   </Link>
                 </TableCell>
-                <TableCell>{r.location.city}</TableCell>
-                <TableCell>
-                  <Chip label={r.cuisine} size="small" />
-                </TableCell>
                 <TableCell>
                   <Rating value={r.foodRating ?? r.rating} precision={0.1} readOnly size="small" />
                   <Typography variant="caption" sx={{ ml: 1 }}>{(r.foodRating ?? r.rating).toFixed(1)}</Typography>
@@ -142,6 +218,10 @@ const RestaurantsListPage = () => {
                       <Typography variant="caption" sx={{ ml: 1 }}>{r.drinkRating.toFixed(1)}</Typography>
                     </>
                   )}
+                </TableCell>
+                <TableCell>{r.location.city}</TableCell>
+                <TableCell>
+                  <Chip label={r.cuisine} size="small" />
                 </TableCell>
               </TableRow>
             ))}

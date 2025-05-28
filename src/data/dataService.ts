@@ -261,7 +261,6 @@ const restaurantsData: InitialRestaurantData[] = [
     },
     rating: 3.5,
     foodRating: 3.8,
-    drinkRating: 0.0,
     visitDates: ['2025-05-25'],
     review: 'The food at Riverport Grille was okay. The main dishes, such as the club sandwich and blackened catfish tacos, were tasty and well-prepared. However, the sides we had were unfortunately overcooked and quite salty, which was a bit disappointing. The environment is casual and the restaurant seems fairly new. Parking is a bit of a challenge; paid parking is available nearby, including garage, lot, and street parking, but it isn\'t always easy to find a spot.',
     cuisine: 'American',
@@ -302,7 +301,7 @@ const restaurantsData: InitialRestaurantData[] = [
     },
     rating: 5.0,
     foodRating: 5.0,
-    drinkRating: 0.0,
+
     visitDates: ['2025-05-24', '2025-05-25'],
     review: 'The food at Buc-ee\'s was absolutely great! It\'s truly a bargain for the quality you get. Their burritos and sandwiches don\'t skimp on the meat, and it\'s always cooked beautifully. This place is perfect for a stop on the road – excellent fuel for both the car and yourself! Their breakfast burritos are a perfect way to start the day, and the brisket sandwich is always a reliable choice. The clean facilities and friendly staff make it a must-stop location on any road trip.',
     cuisine: 'American',
