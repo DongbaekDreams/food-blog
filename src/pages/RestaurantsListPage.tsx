@@ -33,7 +33,7 @@ import ListItemText from '@mui/material/ListItemText';
 const RestaurantsListPage = () => {
   const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string | null }>({ key: 'foodRating', direction: 'descending' });
+  const [sortConfig, setSortConfig] = useState<{ key: string | null; direction: string | null }>({ key: 'rating', direction: 'descending' });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
   const [selectedCuisines, setSelectedCuisines] = useState<string[]>([]);
@@ -56,8 +56,12 @@ const RestaurantsListPage = () => {
     const sortedRestaurants = [...data].sort((a, b) => {
       if (!sortConfig.key) return 0;
 
-      const aValue = a[sortConfig.key as keyof Restaurant] ?? 0;
-      const bValue = b[sortConfig.key as keyof Restaurant] ?? 0;
+      const aValue = sortConfig.key === 'rating' 
+        ? (a[sortConfig.key as keyof Restaurant] as number | undefined) ?? 0
+        : a[sortConfig.key as keyof Restaurant] ?? 0;
+      const bValue = sortConfig.key === 'rating'
+        ? (b[sortConfig.key as keyof Restaurant] as number | undefined) ?? 0
+        : b[sortConfig.key as keyof Restaurant] ?? 0;
 
       if (aValue < bValue) {
         return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -169,11 +173,11 @@ const RestaurantsListPage = () => {
                 Name {sortConfig.key === 'name' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
               </TableCell>
               <TableCell
-                key="foodRating"
-                onClick={() => handleSort('foodRating')}
+                key="rating"
+                onClick={() => handleSort('rating')}
                 sx={{ cursor: 'pointer' }}
               >
-                Food Rating {sortConfig.key === 'foodRating' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
+                Food Rating {sortConfig.key === 'rating' && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon fontSize="small" /> : <ArrowDownwardIcon fontSize="small" />)}
               </TableCell>
               <TableCell
                 key="drinkRating"
@@ -208,11 +212,15 @@ const RestaurantsListPage = () => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  <Rating value={r.foodRating ?? r.rating} precision={0.1} readOnly size="small" />
-                  <Typography variant="caption" sx={{ ml: 1 }}>{(r.foodRating ?? r.rating).toFixed(1)}</Typography>
+                  {typeof r.rating === 'number' && (
+                    <>
+                      <Rating value={r.rating} precision={0.1} readOnly size="small" />
+                      <Typography variant="caption" sx={{ ml: 1 }}>{r.rating.toFixed(1)}</Typography>
+                    </>
+                  )}
                 </TableCell>
                 <TableCell>
-                  {r.drinkRating !== undefined && (
+                  {typeof r.drinkRating === 'number' && (
                     <>
                       <Rating value={r.drinkRating} precision={0.1} readOnly size="small" />
                       <Typography variant="caption" sx={{ ml: 1 }}>{r.drinkRating.toFixed(1)}</Typography>

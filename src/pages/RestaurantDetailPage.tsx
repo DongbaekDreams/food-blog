@@ -314,12 +314,12 @@ const RestaurantDetailPage = () => {
               </Typography>
               
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2, flexWrap: 'wrap' }}>
-                {typeof restaurant.foodRating === 'number' && (
+                {typeof restaurant.rating === 'number' && (
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <LocalDiningIcon sx={{ mr: 0.5, color: 'primary.main' }} />
-                    <Rating value={restaurant.foodRating} precision={0.1} readOnly />
+                    <Rating value={restaurant.rating} precision={0.1} readOnly />
                     <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                      {restaurant.foodRating.toFixed(1)}
+                      {restaurant.rating.toFixed(1)}
                     </Typography>
                   </Box>
                 )}
@@ -590,14 +590,14 @@ const RestaurantDetailPage = () => {
                   <Typography variant="subtitle2">Price Range</Typography>
                   <Typography variant="body1">{restaurant.priceRange}</Typography>
                 </Grid>
-                {typeof restaurant.foodRating === 'number' && (
+                {typeof restaurant.rating === 'number' && (
                   <Grid item xs={12} sm={6}>
-                    <Typography variant="subtitle2">Food Rating</Typography>
+                    <Typography variant="subtitle2">Rating</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <LocalDiningIcon sx={{ mr: 0.5, fontSize: '1.2rem', color: 'primary.main' }} />
-                      <Rating value={restaurant.foodRating} precision={0.1} readOnly size="small" />
+                      <Rating value={restaurant.rating} precision={0.1} readOnly size="small" />
                       <Typography variant="body2" sx={{ ml: 1 }}>
-                        {restaurant.foodRating.toFixed(1)}
+                        {restaurant.rating.toFixed(1)}
                       </Typography>
                     </Box>
                   </Grid>
@@ -610,18 +610,6 @@ const RestaurantDetailPage = () => {
                       <Rating value={restaurant.drinkRating} precision={0.1} readOnly size="small" />
                       <Typography variant="body2" sx={{ ml: 1 }}>
                         {restaurant.drinkRating.toFixed(1)}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                )}
-                {/* Fallback to old rating if new ones aren't present, can be removed later */}
-                {!restaurant.foodRating && !restaurant.drinkRating && restaurant.rating && (
-                   <Grid item xs={6}>
-                    <Typography variant="subtitle2">Our Rating</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Rating value={restaurant.rating} precision={0.5} readOnly size="small" />
-                      <Typography variant="body2" sx={{ ml: 1 }}>
-                        {restaurant.rating.toFixed(1)}
                       </Typography>
                     </Box>
                   </Grid>

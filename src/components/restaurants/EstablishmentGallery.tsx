@@ -108,7 +108,7 @@ const EstablishmentGallery = () => {
   };
 
   const getRatingColor = (restaurant: Restaurant) => {
-    const ratingToUse = restaurant.foodRating ?? restaurant.rating;
+    const ratingToUse = restaurant.rating ?? 0;  // Default to 0 if rating is undefined
     if (ratingToUse >= 4.5) return theme.palette.secondary.main;
     if (ratingToUse >= 4.0) return theme.palette.primary.main;
     return theme.palette.primary.light;
@@ -237,12 +237,12 @@ const EstablishmentGallery = () => {
                     gap: 0.5
                   }}
                 >
-                  {typeof restaurant.foodRating === 'number' && (
-                    <Tooltip title="Food Rating" placement="left">
+                  {typeof restaurant.rating === 'number' && (
+                    <Tooltip title="Rating" placement="left">
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                         <LocalDiningIcon sx={{ fontSize: '1rem' }} />
                         <Typography variant="caption" sx={{ fontSize: '0.75rem', fontWeight: 500 }}>
-                          {restaurant.foodRating.toFixed(1)}
+                          {restaurant.rating.toFixed(1)}
                         </Typography>
                       </Box>
                     </Tooltip>

@@ -37,7 +37,7 @@ const RestaurantVisitsMap = () => {
 
   // Calculate rating colors
   const getRatingColor = (restaurant: Restaurant) => {
-    const ratingToUse = restaurant.foodRating ?? restaurant.rating;
+    const ratingToUse = restaurant.rating ?? 0;  // Default to 0 if rating is undefined
     if (ratingToUse >= 4.5) return theme.palette.secondary.main; 
     if (ratingToUse >= 4.0) return theme.palette.primary.main;
     return theme.palette.primary.light;
@@ -169,11 +169,11 @@ const RestaurantVisitsMap = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.5, mb: 1 }}>
-          {typeof restaurant.foodRating === 'number' && (
-            <Tooltip title={`Food: ${restaurant.foodRating.toFixed(1)}`} placement="top">
+          {typeof restaurant.rating === 'number' && (
+            <Tooltip title={`Rating: ${restaurant.rating.toFixed(1)}`} placement="top">
               <Chip 
                 icon={<LocalDiningIcon sx={{ fontSize: '1rem'}} />} 
-                label={restaurant.foodRating.toFixed(1)} 
+                label={restaurant.rating.toFixed(1)} 
                 size="small" 
                 variant="outlined"
                 sx={{ 

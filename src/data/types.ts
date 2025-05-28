@@ -21,9 +21,8 @@ export interface Restaurant {
   id: string;
   name: string;
   location: RestaurantLocation;
-  foodRating?: number;
   drinkRating?: number;
-  rating: number;
+  rating?: number;
   visitDates: string[];
   review: string;
   cuisine: string;
@@ -41,7 +40,6 @@ export interface Restaurant {
 
 // Type for initial restaurant data, before processing (photos and mainImage are added later)
 export type InitialRestaurantData = Omit<Restaurant, 'photos' | 'mainImage'> & {
-  foodRating?: number;
   drinkRating?: number;
 };
 
