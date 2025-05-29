@@ -325,6 +325,41 @@ const restaurantsData: InitialRestaurantData[] = [
       description: 'Ample free parking lot available.'
     }
   },
+  {
+    id: 'fleet-street-pub-nashville',
+    name: 'Fleet Street Pub',
+    location: {
+      lat: 36.16455126757874, 
+      lng: -86.7784720884783,
+      address: '207 Printers Alley, Nashville, TN 37201, USA',
+      city: 'Nashville',
+      country: 'USA',
+      googleMapsUrl: 'https://maps.google.com/?cid=15828789826372707220'
+    },
+    rating: undefined,
+    drinkRating: 4,
+    googleRating: 4.4,
+    visitDates: ['2025-05-24'],
+    review: 'Fleet Street Pub offered a decent experience, with the drinks and atmosphere being generally okay. While the beer list certainly leaned into its British theme, the pub itself disappointingly lacked any significant British ambiance beyond that. It felt more like a standard local bar than an authentic English pub, which was a letdown given the name.',
+    cuisine: 'Pub, British',
+    priceRange: '$$',
+    phoneNumber: '+1 615-200-0782',
+    website: 'http://www.fleetstreetpub.com/',
+    openingHours: [
+      'Monday: 11:00 AM - 1:00 AM',
+      'Tuesday: 11:00 AM - 1:00 AM',
+      'Wednesday: 11:00 AM - 1:00 AM',
+      'Thursday: 11:00 AM - 1:00 AM',
+      'Friday: 11:00 AM - 2:00 AM',
+      'Saturday: 11:00 AM - 2:00 AM',
+      'Sunday: 11:00 AM - 1:00 AM'
+    ],
+    tags: [
+      'Pub',
+      'British',
+      'Bar'
+    ]
+  },
   
   // ADD YOUR OWN RESTAURANT ENTRIES HERE
   // {
