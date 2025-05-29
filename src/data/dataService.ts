@@ -641,12 +641,13 @@ const generateTimelineEvents = (): TimelineEvent[] => {
       content: r.name,
       start: visitDate,
       location: `${r.location.city}, ${r.location.country}`,
-      rating: r.rating, // Use rating directly
+      rating: r.rating ?? 0, // Use rating directly, default to 0 if undefined
       photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
       itemUrl: `/restaurant/${r.id}`
     })));
 
-  const dishEvents: TimelineEvent[] = dishesData
+  const processedDishesList = getDishes(); // Use processed dish data
+  const dishEvents: TimelineEvent[] = processedDishesList
     .filter(d => d.dateCooked !== 'YYYY-MM-DD') // Filter out placeholder dates
     .map(d => ({
       id: `dish-${d.id}`,
@@ -655,7 +656,7 @@ const generateTimelineEvents = (): TimelineEvent[] => {
       start: d.dateCooked,
       country: d.countryName,
       rating: d.rating,
-      photoUrl: d.originalMainImagePath ? d.originalMainImagePath : undefined,
+      photoUrl: d.mainImage, // Use processed mainImage from Dish type
       itemUrl: `/dish/${d.id}`
     }));
 
@@ -692,24 +693,23 @@ let processedDishes: Dish[] | null = null;
 function processRestaurantData(): Restaurant[] {
   if (processedRestaurants) return processedRestaurants;
 
-  processedRestaurants = (restaurantsData as any[]).map(baseRestaurant => {
-    // Try to find images using different possible keys
+  processedRestaurants = restaurantsData.map(baseRestaurant => {
     let restaurantImages: string[] = [];
-    
-    // First, try using the restaurant ID directly (most common case)
-    const idKey = baseRestaurant.id;
-    if (typedManifest.restaurants[idKey]) {
-      restaurantImages = typedManifest.restaurants[idKey];
+    const restaurantId = baseRestaurant.id;
+
+    // 1. Direct match
+    if (typedManifest.restaurants[restaurantId]) {
+      restaurantImages = typedManifest.restaurants[restaurantId];
     } 
-    // Handle known special cases
-    else if (baseRestaurant.id === 'varasanos-pizzeria-atlanta' && typedManifest.restaurants['verasanos-pizzeria']) {
+    // 2. Known aliases (can be expanded)
+    else if (restaurantId === 'varasanos-pizzeria-atlanta' && typedManifest.restaurants['verasanos-pizzeria']) {
       restaurantImages = typedManifest.restaurants['verasanos-pizzeria'];
     }
-    // If we still don't have images, try to extract a key from any existing photos
-    else if (baseRestaurant.id) {
-      // Look through all keys in the manifest to find a partial match
-      const possibleKeys = Object.keys(typedManifest.restaurants);
-      const matchingKey = possibleKeys.find(key => baseRestaurant.id.includes(key) || key.includes(baseRestaurant.id));
+    // 3. Fallback: Check if any manifest key is a substring of the restaurant ID or vice-versa
+    // This is a bit fuzzy and might be error-prone. Ideally, IDs should match or be explicitly mapped.
+    else {
+      const manifestKeys = Object.keys(typedManifest.restaurants);
+      const matchingKey = manifestKeys.find(key => restaurantId.includes(key) || key.includes(restaurantId));
       if (matchingKey) {
         restaurantImages = typedManifest.restaurants[matchingKey];
       }
@@ -727,7 +727,7 @@ function processRestaurantData(): Restaurant[] {
 function processDishData(): Dish[] {
   if (processedDishes) return processedDishes;
 
-  processedDishes = (dishesData as any[]).map(baseDish => {
+  processedDishes = dishesData.map(baseDish => {
     const imageKey = extractKeyFromPath(baseDish.originalMainImagePath, 'dishes');
     const dishImages = imageKey ? (typedManifest.dishes[imageKey] || []) : [];
     
