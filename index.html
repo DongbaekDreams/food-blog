@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/images/icons/logo.png" />
+    <link rel="icon" type="image/png" href="/food-blog/images/icons/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gourmet and Gormand | A Culinary Adventure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+      // Handle redirects from 404.html
+      (function() {
+        const redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.pathname) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     <style>
       body {
         margin: 0;
@@ -18,8 +28,8 @@
         font-family: 'Noto Sans KR', sans-serif;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-BNOOwkrY.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-jVQwaijg.css">
+    <script type="module" crossorigin src="/food-blog/assets/index-DtVXRaDh.js"></script>
+    <link rel="stylesheet" crossorigin href="/food-blog/assets/index-jVQwaijg.css">
   </head>
   <body>
     <div id="root"></div>
