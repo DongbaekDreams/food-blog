@@ -1,0 +1,32 @@
+{
+  "id": "nutella-pastry-hearts-1",
+  "name": "Nutella Pastry Hearts",
+  "country": "IT",
+  "countryName": "Italy",
+  "rating": 0.0,
+  "difficulty": "Easy",
+  "recipeDetails": "Delightful heart-shaped pastries filled with rich Nutella hazelnut spread. Made with puff pastry for a flaky, buttery texture that perfectly complements the sweet chocolate filling. A perfect treat for any occasion!",
+  "recipe": "Preheat oven to 175°C (350°F) and line a baking sheet with parchment paper.\nPrepare the egg wash by beating together 1 egg and 1 tsp water until well combined.\nUsing a heart-shaped cookie cutter, cut out an even number of hearts from the puff pastry sheet.\nPlace half of the heart shapes on the prepared baking sheet.\nAdd a generous teaspoon of Nutella in the center of each heart on the baking sheet.\nLightly brush the edges of these hearts with egg wash.\nCarefully place the remaining heart shapes on top of the Nutella-filled hearts.\nPress the edges together firmly to seal, then prick the top of each heart with a fork to allow steam to escape.\nBrush the top of each heart with egg wash for a golden finish.\nBake for 10 minutes, until puffed and golden brown.\nLet cool slightly, then dust with powdered sugar if desired.",
+  "ingredients": [
+    "1 sheet of ready roll puff pastry",
+    "6 tsp of Nutella hazelnut spread",
+    "1 egg, beaten (for egg wash)",
+    "1 tsp water (for egg wash)",
+    "Powdered sugar (for dusting, optional)"
+  ],
+  "originalMainImagePath": "/images/dishes/nutella-pastry-hearts/main.jpg",
+  "prepTime": "15 minutes",
+  "cookTime": "15 minutes",
+  "totalTime": "30 minutes",
+  "servings": 6,
+  "notes": "Make sure to thaw the puff pastry according to package instructions. For best results, keep the Nutella at room temperature for easier spreading. You can also add a sprinkle of chopped hazelnuts on top before baking for extra crunch.",
+  "tags": ["Dessert", "Italian", "Pastry", "Chocolate", "Nutella"],
+  "sourceUrls": [
+    {
+      "url": "https://www.instagram.com/p/Cp2xeHjonI8/",
+      "type": "instagram",
+      "description": "Recipe Link"
+    }
+  ],
+  "comingSoon": true
+} 

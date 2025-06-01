@@ -218,7 +218,20 @@ const EstablishmentGallery = () => {
                 <CardMedia
                   component="img"
                   height="200"
-                  image={`${import.meta.env.BASE_URL}${restaurant.photos[0].startsWith('/') ? restaurant.photos[0].substring(1) : restaurant.photos[0]}`}
+                  image={
+                    restaurant.photos && restaurant.photos.length > 0
+                      ? (() => {
+                          let path = restaurant.photos[0];
+                          if (path.startsWith('src/')) {
+                            path = path.substring('src/'.length);
+                          }
+                          if (path.startsWith('/')) {
+                            return path; // It's an absolute path
+                          }
+                          return `${import.meta.env.BASE_URL}${path}`; // It's a relative path
+                        })()
+                      : `${import.meta.env.BASE_URL}images/placeholder.png` // Fallback image
+                  }
                   alt={restaurant.name}
                   sx={{ objectFit: 'cover' }}
                 />

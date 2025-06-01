@@ -1,0 +1,42 @@
+{
+  "id": "cake-jello-1",
+  "name": "Cake With Jello",
+  "country": "US",
+  "countryName": "United States",
+  "dateCooked": "2025-05-17",
+  "rating": 2.5,
+  "difficulty": "Easy",
+  "recipeDetails": "A soft, homemade cake topped with a light and tangy frosting made from Greek yogurt and a blend of cheesecake and white chocolate jello powders. Finished with fresh, sliced strawberries for a delightful and unique dessert experience.",
+  "ingredients": [
+    "--- Cake ---",
+    "3 cups (354g) cake flour (spooned & leveled)",
+    "1 and 1/2 cups (300g) granulated sugar",
+    "1 teaspoon baking powder",
+    "1/2 teaspoon baking soda",
+    "1/2 teaspoon salt",
+    "1 cup (16 Tbsp; 226g) unsalted butter, cubed and softened to room temperature",
+    "1 Tablespoon pure vanilla extract",
+    "1 cup (240ml) whole milk, at room temperature and divided",
+    "1/3 cup (80g) sour cream, at room temperature",
+    "3 large eggs, at room temperature",
+    "--- Frosting ---",
+    "600g vanilla Greek yogurt",
+    "15g cheesecake jello powder",
+    "15g white chocolate jello powder",
+    "1/2 cup of milk",
+    "--- Topping ---",
+    "Sliced Strawberries"
+  ],
+  "originalMainImagePath": "/images/dishes/cake-jello/finished-plate.heic",
+  "prepTime": "40 minutes",
+  "cookTime": "40 minutes",
+  "totalTime": "80 minutes (plus cooling time for cake)",
+  "servings": 20,
+  "notes": "Cake must cool completely before frosting. Both the cake and the frosting were good individually (potentially 4/5 each), but they didn't fit well together.",
+  "tags": ["Dessert", "Cake", "Jello", "American"],
+  "sourceUrls": [
+    { "url": "https://sallysbakingaddiction.com/vanilla-sheet-cake/", "type": "web", "description": "Vanilla Sheet Cake Recipe" },
+    { "url": "https://www.instagram.com/reel/DIwrv6CPyat/", "type": "instagram", "description": "Frosting Inspiration Reel" }
+  ],
+  "recipe": "Make the cake: Preheat the oven to 350°F (177°C). Generously grease a 9×13-inch cake pan.\n\nSift the cake flour, sugar, baking powder, baking soda, and salt in the bowl of a stand mixer. (Or if using a handheld mixer, any large mixing bowl.) With the paddle attachment, beat the ingredients together on low speed for a few seconds to gently combine. Add the butter, vanilla, and 1/2 cup of milk. Mix on medium speed until the dry ingredients are moistened, about 1 minute. Stop the mixer and scrape down the sides and up the bottom of the bowl. The mixture will resemble a thick dough.\n\nWhisk the remaining milk, the sour cream, and eggs together in a medium bowl. With the mixer running on medium speed, add the egg mixture in 3 additions, mixing for about 15 seconds after each addition. Stop the mixer and scrape down the sides and up the bottom of the bowl, then mix for about 15 more seconds until batter is completely combined. Avoid over-mixing. Some small lumps are OK.\n\nPour and spread batter evenly into prepared pan. Bake for around 32-35 minutes or until the cake is baked through. To test for doneness, insert a toothpick into the center of the cake. If it comes out clean, it's done. Allow cake to cool completely in the pan set on a wire rack. The cake must be completely cool before frosting.\n\nPrepare the frosting: In a medium bowl, combine the vanilla Greek yogurt, cheesecake jello powder, white chocolate jello powder, and milk. Whisk until smooth and well combined. Once the cake has cooled completely, spread the frosting evenly over the top. Garnish with sliced strawberries."
+} 

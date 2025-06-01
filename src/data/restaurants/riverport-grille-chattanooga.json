@@ -1,0 +1,39 @@
+{
+  "id": "riverport-grille-chattanooga",
+  "name": "Riverport Grille",
+  "location": {
+    "lat": 35.05375827141748,
+    "lng": -85.31050379008802,
+    "address": "224 Broad St, Chattanooga, TN 37402, USA",
+    "city": "Chattanooga",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=10487858015603037616"
+  },
+  "rating": 3.8,
+  "googleRating": 4.7,
+  "visitDates": ["2025-05-25"],
+  "review": "The food at Riverport Grille was okay. The main dishes, such as the club sandwich and blackened catfish tacos, were tasty and well-prepared. However, the sides we had were unfortunately overcooked and quite salty, which was a bit disappointing. The environment is casual and the restaurant seems fairly new. Parking is a bit of a challenge; paid parking is available nearby, including garage, lot, and street parking, but it isn't always easy to find a spot.",
+  "cuisine": "American",
+  "priceRange": "$$",
+  "phoneNumber": "+1 423-305-7000",
+  "website": "http://riverportgrille.com/",
+  "openingHours": [
+    "Monday: 11:00 AM-10:00 PM",
+    "Tuesday: 11:00 AM-10:00 PM",
+    "Wednesday: 11:00 AM-10:00 PM",
+    "Thursday: 11:00 AM-10:00 PM",
+    "Friday: 11:00 AM-11:00 PM",
+    "Saturday: 11:00 AM-11:00 PM",
+    "Sunday: 10:00 AM-10:00 PM"
+  ],
+  "tags": [
+    "American",
+    "Grille",
+    "Casual"
+  ],
+  "parking": {
+    "icon": "/images/icons/thumbs-down.png",
+    "count": 1,
+    "description": "Paid parking available nearby but difficult to find."
+  }
+} 

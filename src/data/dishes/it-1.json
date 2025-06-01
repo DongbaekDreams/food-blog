@@ -1,0 +1,23 @@
+{
+  "id": "it-1",
+  "name": "Garlic Bread",
+  "country": "IT",
+  "countryName": "Italy",
+  "dateCooked": "2025-03-15",
+  "rating": 4.2,
+  "difficulty": "Easy",
+  "recipeDetails": "Classic garlic bread with a crispy crust and buttery garlic topping. Perfect as a side for pasta dishes or soups. Made with a baguette, butter, fresh garlic, and parsley.",
+  "ingredients": [
+    "1 baguette",
+    "1/2 cup unsalted butter, softened",
+    "4 cloves garlic, minced",
+    "2 tbsp fresh parsley, chopped",
+    "Pinch of salt"
+  ],
+  "originalMainImagePath": "/images/dishes/garlic-bread/GarlicBread.jpg",
+  "prepTime": "10 minutes",
+  "cookTime": "10 minutes",
+  "totalTime": "20 minutes",
+  "servings": 6,
+  "tags": ["Italian", "Side Dish", "Garlic", "Bread"]
+} 

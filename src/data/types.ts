@@ -73,6 +73,7 @@ export interface Dish {
   tags?: string[];
   recipe?: string;
   videoUrl?: string;
+  comingSoon?: boolean;
 }
 
 // Country data type with dishes
@@ -93,4 +94,16 @@ export interface TimelineEvent {
   rating: number;
   photoUrl?: string;
   itemUrl?: string;
+}
+
+// Drink types (New)
+export interface Drink {
+  id: string; // Will be derived from the filename
+  title: string;
+  date: string; // Date of tasting/purchase
+  mainImage: string; // Main image path
+  photos: string[]; // All images
+  stars: number;
+  tags: string[];
+  description: string;
 } 

@@ -1,0 +1,43 @@
+{
+  "id": "buc-ees-adairsville-ga",
+  "name": "Buc-ee's",
+  "location": {
+    "lat": 34.441946862011264,
+    "lng": -84.91636765239784,
+    "address": "601 Union Grove Rd SE, Adairsville, GA 30103, USA",
+    "city": "Adairsville",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=14185891214205704908"
+  },
+  "rating": 5.0,
+  "googleRating": 4.2,
+  "visitDates": ["2025-05-24", "2025-05-25"],
+  "review": "The food at Buc-ee's was absolutely great! It's truly a bargain for the quality you get. Their burritos and sandwiches don't skimp on the meat, and it's always cooked beautifully. This place is perfect for a stop on the road – excellent fuel for both the car and yourself! Their breakfast burritos are a perfect way to start the day, and the brisket sandwich is always a reliable choice. The clean facilities and friendly staff make it a must-stop location on any road trip.",
+  "cuisine": "American",
+  "priceRange": "$",
+  "phoneNumber": "+1 979-238-6390",
+  "website": "http://buc-ees.com/",
+  "openingHours": [
+    "Monday: Open 24 hours",
+    "Tuesday: Open 24 hours",
+    "Wednesday: Open 24 hours",
+    "Thursday: Open 24 hours",
+    "Friday: Open 24 hours",
+    "Saturday: Open 24 hours",
+    "Sunday: Open 24 hours"
+  ],
+  "tags": [
+    "Convenience Store",
+    "Gas Station",
+    "Barbecue",
+    "Deli",
+    "Road Trip Stop",
+    "24 Hours",
+    "Affordable"
+  ],
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 3,
+    "description": "Ample free parking lot available."
+  }
+} 

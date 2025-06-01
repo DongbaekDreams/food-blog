@@ -1,0 +1,32 @@
+{
+  "id": "varasanos-pizzeria-atlanta",
+  "name": "Varasano's Pizzeria",
+  "location": {
+    "lat": 33.813414802239876,
+    "lng": -84.3918889204468,
+    "address": "2171 Peachtree Rd NE UNIT 100, Atlanta, GA 30309, USA",
+    "city": "Atlanta",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.app.goo.gl/HRTTuTpDdmEN5LP66"
+  },
+  "rating": 4.7,
+  "googleRating": 4.9,
+  "visitDates": ["2025-04-26"],
+  "review": "We visited the pizzeria and were delighted by their exceptional dough – perfectly chewy with a subtle complexity that elevates every bite. The menu offers an impressive variety of topping combinations, each showcasing a bold, aromatic hit of garlic. The wood-fired oven produced an impeccably crisp crust with a subtle smoky depth, perfectly complementing the toppings. The charming patio area provides a lovely outdoor dining experience when weather permits.",
+  "cuisine": "Pizzeria",
+  "priceRange": "$$",
+  "phoneNumber": "+1 404-352-8216",
+  "website": "https://varasanos.com",
+  "openingHours": [
+    "Monday - Thursday: 5:30-9:00 PM",
+    "Friday: 5:30-10:00 PM",
+    "Saturday: 11:30 AM-10:00 PM",
+    "Sunday: 11:30 AM-9:00 PM"
+  ],
+  "tags": ["Pizza", "Casual", "Wood-fired"],
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 1,
+    "description": "Street parking"
+  }
+} 

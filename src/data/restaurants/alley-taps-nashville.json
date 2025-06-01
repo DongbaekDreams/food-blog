@@ -1,0 +1,35 @@
+{
+  "id": "alley-taps-nashville",
+  "name": "Alley Taps",
+  "location": {
+    "lat": 36.163615091719755,
+    "lng": -86.77790668077557,
+    "address": "162 Printers Alley, Nashville, TN 37201, USA",
+    "city": "Nashville",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=7665939375427530112"
+  },
+  "drinkRating": 1.5,
+  "googleRating": 4.5,
+  "visitDates": ["2025-05-24"],
+  "review": "Alley Taps has a truly fun environment, especially with its lively atmosphere and live music. It's a cool spot off the beaten path in Printers Alley. However, we found the drinks to be outrageously overpriced, which really detracted from the overall experience. While the vibe is great for a night out, be prepared for a steep bar tab.",
+  "cuisine": "Bar Food",
+  "priceRange": "$$$$",
+  "phoneNumber": "+1 615-712-8303",
+  "website": "http://www.alleytapsnashville.com/",
+  "openingHours": [
+    "Monday: 2:00 PM-3:00 AM",
+    "Tuesday: 2:00 PM-3:00 AM",
+    "Wednesday: 2:00 PM-3:00 AM",
+    "Thursday: 2:00 PM-3:00 AM",
+    "Friday: 12:00 PM-3:00 AM",
+    "Saturday: 12:00 PM-3:00 AM",
+    "Sunday: 12:00 PM-3:00 AM"
+  ],
+  "tags": [
+    "Bar",
+    "Live Music",
+    "Casual",
+    "Late Night"
+  ]
+} 

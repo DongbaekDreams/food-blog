@@ -1,0 +1,91 @@
+{
+  "id": "reverse-seared-steak-1",
+  "name": "Reverse Seared, Butter-Basted Chuck Eye Steak",
+  "country": "US",
+  "countryName": "United States",
+  "rating": 4.2,
+  "difficulty": "Medium",
+  "recipeDetails": "A perfectly cooked chuck eye steak using the reverse sear method, finished with a butter baste for maximum flavor and tenderness. This technique ensures even cooking and a beautiful crust.",
+  "recipe": "### 1. Preparation\nRemove the steak from the refrigerator and let it sit at room temperature for 30–60 minutes.\nPat the steak dry with paper towels. Season generously with kosher salt and freshly ground black pepper.\n\n### 2. Reverse Sear – Oven Cooking\nPreheat your oven to 225°F (107°C).\nPlace the steak on a wire rack set over a rimmed baking sheet.\nInsert an instant-read thermometer into the thickest part of the steak.\nCook in the oven until the internal temperature reaches 115°F (46°C) for medium-rare (30–45 minutes depending on thickness).\n\n### 3. Searing and Butter Basting\nHeat a cast-iron or heavy-bottomed skillet over high heat until very hot.\nAdd 1 tablespoon of neutral oil to the skillet.\nPlace the steak in the skillet and sear for about 45 seconds on one side.\nFlip the steak and add butter, smashed garlic, and herbs.\nTilt the pan and spoon the melted butter over the steak for about 45 seconds.\nBriefly sear the edges for a uniform crust.\n\n### 4. Final Temperature and Serving\nEnsure internal temperature is 125–130°F (52–54°C) for medium-rare.\nOptionally rest the steak briefly on a cutting board.\nSlice against the grain and serve immediately.",
+  "ingredients": [
+    "1.25–1.5 inch thick chuck eye steak",
+    "Kosher salt and freshly ground black pepper",
+    "1 tablespoon neutral oil (e.g., canola or avocado)",
+    "2 tablespoons unsalted butter",
+    "2 garlic cloves, smashed",
+    "1–2 sprigs fresh thyme or rosemary"
+  ],
+  "originalMainImagePath": "/images/dishes/reverse-seared-steak/steak-baste-1.heic",
+  "prepTime": "60 minutes",
+  "cookTime": "45 minutes",
+  "totalTime": "105 minutes",
+  "servings":1,
+  "notes": "Dry steak surface before searing to improve crust.\nUse a wire rack to promote even oven cooking.\nButter basting adds flavor and enhances browning.",
+  "tags": ["American", "Steak", "Beef", "Grilling", "Cast Iron", "Dinner"],
+  "sourceUrls": [
+    {
+      "url": "https://www.seriouseats.com/butter-basted-pan-seared-steaks-recipe",
+      "type": "web",
+      "description": "Butter-Basted Pan-Seared Steaks"
+    },
+    {
+      "url": "https://www.seriouseats.com/reverse-seared-steak-recipe",
+      "type": "web",
+      "description": "Reverse-Seared Steak"
+    }
+  ],
+  "images": [
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-baste-1.heic",
+      "alt": "Steak being basted with butter and herbs",
+      "caption": "Butter basting the steak with garlic and herbs for maximum flavor"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-baste-2.heic",
+      "alt": "Close-up of butter basting process",
+      "caption": "The butter basting process creates a beautiful crust and infuses the steak with flavor"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-cut.heic",
+      "alt": "Perfectly cooked steak being sliced",
+      "caption": "Slicing the steak against the grain reveals the perfect medium-rare doneness"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-pan-1.heic",
+      "alt": "Steak in the cast iron pan",
+      "caption": "The cast iron pan provides excellent heat retention for a perfect sear"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-raw.heic",
+      "alt": "Raw steak before cooking",
+      "caption": "Starting with a well-marbled chuck eye steak"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-rest.heic",
+      "alt": "Steak resting after cooking",
+      "caption": "Allowing the steak to rest ensures juices redistribute evenly"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/spread-1.heic",
+      "alt": "Final plated steak dish",
+      "caption": "The finished reverse-seared steak, ready to serve"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/spread-2.heic",
+      "alt": "Alternative plating of the steak",
+      "caption": "Another view of the perfectly cooked steak"
+    }
+  ],
+  "videos": [
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-cut.mp4",
+      "alt": "Video of slicing the cooked steak",
+      "caption": "Watch the perfect doneness as we slice the steak"
+    },
+    {
+      "path": "/images/dishes/reverse-seared-steak/steak-sear1.mp4",
+      "alt": "Video of searing the steak",
+      "caption": "The searing process creates a beautiful crust"
+    }
+  ]
+} 

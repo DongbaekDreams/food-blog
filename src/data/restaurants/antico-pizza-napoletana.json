@@ -1,0 +1,32 @@
+{
+  "id": "antico-pizza-napoletana",
+  "name": "Antico Pizza Napoletana",
+  "location": {
+    "lat": 33.7885922673036,
+    "lng": -84.40556908093512,
+    "address": "1093 Hemphill Ave NW, Atlanta, GA 30318, USA",
+    "city": "Atlanta",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=15672229930467172455"
+  },
+  "rating": 4.7,
+  "googleRating": 4.6,
+  "visitDates": ["2025-05-30"],
+  "review": "Relaxed pizzeria with an open kitchen serving crisp, Naples-style pies to diners at communal tables.",
+  "cuisine": "Pizzeria",
+  "priceRange": "$$",
+  "phoneNumber": "+1 404-724-2333",
+  "website": "https://littleitalia.com/",
+  "openingHours": [
+    "Monday - Thursday: 11:30 AM-10:00 PM",
+    "Friday: 11:30 AM-10:00 PM",
+    "Saturday: 12:00-10:00 PM",
+    "Sunday: 12:00-9:00 PM"
+  ],
+  "tags": [],
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 1,
+    "description": "Street parking"
+  }
+} 

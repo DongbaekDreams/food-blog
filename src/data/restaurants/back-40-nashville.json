@@ -1,0 +1,36 @@
+{
+  "id": "back-40-nashville",
+  "name": "Back 40 Nashville",
+  "location": {
+    "lat": 36.16576823397997,
+    "lng": -86.7788815900384,
+    "address": "315 Deaderick St #225, Nashville, TN 37238, USA",
+    "city": "Nashville",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=5591181285851591253"
+  },
+  "drinkRating": 5.0,
+  "googleRating": 4.5,
+  "visitDates": ["2025-05-24"],
+  "review": "Back 40 Nashville boasts a perfect environment, ideal for a relaxed date night or similar vibe. The drink selection is outstanding, with handcrafted cocktails and a wide array of libations. It's the perfect spot to unwind and enjoy a special evening. The food is also very good.",
+  "cuisine": "New American",
+  "priceRange": "$$",
+  "phoneNumber": "+1 615-258-5568",
+  "website": "http://back40nashville.com/",
+  "openingHours": [
+    "Monday: 4:00-9:00 PM",
+    "Tuesday: 4:00-9:00 PM",
+    "Wednesday: 4:00-9:00 PM",
+    "Thursday: 4:00-9:00 PM",
+    "Friday: 4:00-11:00 PM",
+    "Saturday: 11:00 AM-11:00 PM",
+    "Sunday: Closed"
+  ],
+  "tags": [
+    "Upscale",
+    "Cocktails",
+    "Dinner",
+    "Live Music",
+    "Date Night"
+  ]
+} 

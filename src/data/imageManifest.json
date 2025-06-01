@@ -28,6 +28,31 @@
       "/images/dishes/garlic-bread/prep-work-add-cheese.png",
       "/images/dishes/garlic-bread/prep-work-baste.png",
       "/images/dishes/garlic-bread/prep-work-stuffing.png"
+    ],
+    "nutella-pastry-hearts": [
+      "/images/unsorted/place-holder.jpg"
+    ],
+    "reverse-seared-steak": [
+      "/images/dishes/reverse-seared-steak/steak-baste-1.png",
+      "/images/dishes/reverse-seared-steak/steak-baste-2.png",
+      "/images/dishes/reverse-seared-steak/steak-cut.png",
+      "/images/dishes/reverse-seared-steak/steak-cut.mp4",
+      "/images/dishes/reverse-seared-steak/steak-pan-1.png",
+      "/images/dishes/reverse-seared-steak/steak-raw.png",
+      "/images/dishes/reverse-seared-steak/steak-rest.png",
+      "/images/dishes/reverse-seared-steak/steak-sear1.mp4",
+      "/images/dishes/reverse-seared-steak/spread-1.png",
+      "/images/dishes/reverse-seared-steak/spread-2.png"
+    ],
+    "marry-me-tortellini": [
+      "/images/dishes/marry-me-tortellini/tort-done.png",
+      "/images/dishes/marry-me-tortellini/tort-cream.png",
+      "/images/dishes/marry-me-tortellini/tort-broth-2.png",
+      "/images/dishes/marry-me-tortellini/tort-broth.png",
+      "/images/dishes/marry-me-tortellini/tort-roux.png",
+      "/images/dishes/marry-me-tortellini/tort-base.png",
+      "/images/dishes/marry-me-tortellini/spread-1.png",
+      "/images/dishes/marry-me-tortellini/spread-2.png"
     ]
   },
   "restaurants": {
@@ -76,6 +101,25 @@
     ],
     "fleet-street": [
       "/images/restaurants/fleet-street/fs-drinks.png"
+    ],
+    "antico-pizza-napoletana": [
+      "/images/restaurants/antico-pizza-napoletana/diavalo-pizza.png"
+    ],
+    "kdog": [
+      "/images/restaurants/kdog/kdog-yuna-1.png",
+      "/images/restaurants/kdog/kdog-yuna-2.png",
+      "/images/restaurants/kdog/kdog-kdog-1.png",
+      "/images/restaurants/kdog/kdog-kdog-2.png",
+      "/images/restaurants/kdog/kdog-kdog-3.png",
+      "/images/restaurants/kdog/kdog-kdog-4.png",
+      "/images/restaurants/kdog/kdog-th-1.png",
+      "/images/restaurants/kdog/kdog-th-2.png",
+      "/images/restaurants/kdog/kdog-store.png"
+    ]
+  },
+  "drinks": {
+    "lina-limoncello": [
+      "/images/drinks/lina-limoncello/lina-limoncello.png"
     ]
   }
 }

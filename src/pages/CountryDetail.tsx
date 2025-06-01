@@ -47,6 +47,11 @@ const CountryDetail = () => {
     navigate('/');
   };
 
+  // Helper to determine if a dish is coming soon
+  const isComingSoon = (dish: Dish) => {
+    return !!dish.comingSoon;
+  };
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box sx={{ mb: 4 }}>
@@ -92,13 +97,37 @@ const CountryDetail = () => {
               }}
               onClick={() => handleDishClick(dish.id)}
             >
-              <CardMedia
-                component="img"
-                height="220"
-                image={`${import.meta.env.BASE_URL}${dish.mainImage.startsWith('/') ? dish.mainImage.substring(1) : dish.mainImage}`}
-                alt={dish.name}
-                sx={{ objectFit: 'cover' }}
-              />
+              <Box sx={{ position: 'relative' }}>
+                <CardMedia
+                  component="img"
+                  height="220"
+                  image={`${import.meta.env.BASE_URL}${dish.mainImage.startsWith('/') ? dish.mainImage.substring(1) : dish.mainImage}`}
+                  alt={dish.name}
+                  sx={{ objectFit: 'cover' }}
+                />
+                {isComingSoon(dish) && (
+                  <Box 
+                    sx={{ 
+                      position: 'absolute', 
+                      top: '50%', 
+                      left: '50%', 
+                      transform: 'translate(-50%, -50%)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                      color: 'white',
+                      borderRadius: 1,
+                      px: 2,
+                      py: 1,
+                      fontWeight: 'bold',
+                      fontSize: '1.2rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.1em',
+                      zIndex: 2
+                    }}
+                  >
+                    Coming Soon
+                  </Box>
+                )}
+              </Box>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="h2" gutterBottom>
                   {dish.name}
@@ -127,12 +156,14 @@ const CountryDetail = () => {
                       variant="outlined"
                     />
                   )}
-                  <Chip 
-                    icon={<CalendarTodayIcon fontSize="small" />}
-                    label={new Date(dish.dateCooked).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                    size="small"
-                    variant="outlined"
-                  />
+                  {!isComingSoon(dish) && dish.dateCooked && (
+                    <Chip 
+                      icon={<CalendarTodayIcon fontSize="small" />}
+                      label={new Date(dish.dateCooked).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                      size="small"
+                      variant="outlined"
+                    />
+                  )}
                 </Box>
               </CardContent>
             </Card>

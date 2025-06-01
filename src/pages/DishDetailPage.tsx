@@ -32,6 +32,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 import { getDishById } from '../data/dataService';
 import { Dish } from '../data/types';
@@ -172,17 +173,27 @@ const DishDetailPage = () => {
             >
               <ChevronLeftIcon fontSize="large" />
             </IconButton>
-            
-            <img 
-              src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`} 
-              alt={`${dish.name} ${currentImageIndex + 1}`} 
-              style={{ 
-                maxWidth: '100%', 
-                maxHeight: '100%', 
-                objectFit: 'contain' 
-              }}
-            />
-            
+            {dish.photos[currentImageIndex].endsWith('.mp4') ? (
+              <video
+                src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+              />
+            ) : (
+              <img 
+                src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`} 
+                alt={`${dish.name} ${currentImageIndex + 1}`} 
+                style={{ 
+                  maxWidth: '100%', 
+                  maxHeight: '100%', 
+                  objectFit: 'contain' 
+                }}
+              />
+            )}
             <IconButton 
               onClick={goToNextImage}
               sx={{ 
@@ -240,16 +251,27 @@ const DishDetailPage = () => {
               mb: 2
             }}
           >
-            <img 
-              src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`} 
-              alt={dish.name} 
-              style={{ 
-                width: '100%', 
-                height: 'auto', 
-                maxHeight: '500px', 
-                objectFit: 'cover' 
-              }}
-            />
+            {dish.photos[currentImageIndex].endsWith('.mp4') ? (
+              <video
+                src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`}
+                style={{ width: '100%', height: 'auto', maxHeight: '500px', objectFit: 'cover' }}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <img 
+                src={`${import.meta.env.BASE_URL}${dish.photos[currentImageIndex].startsWith('/') ? dish.photos[currentImageIndex].substring(1) : dish.photos[currentImageIndex]}`} 
+                alt={dish.name} 
+                style={{ 
+                  width: '100%', 
+                  height: 'auto', 
+                  maxHeight: '500px', 
+                  objectFit: 'cover' 
+                }}
+              />
+            )}
             <IconButton
               onClick={() => openLightbox(currentImageIndex)}
               sx={{
@@ -284,15 +306,26 @@ const DishDetailPage = () => {
                   }}
                   onClick={() => handleThumbnailClick(index)}
                 >
-                  <img 
-                    src={`${import.meta.env.BASE_URL}${photo.startsWith('/') ? photo.substring(1) : photo}`} 
-                    alt={`Thumbnail ${index + 1}`} 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover' 
-                    }}
-                  />
+                  {photo.endsWith('.mp4') ? (
+                    <video
+                      src={`${import.meta.env.BASE_URL}${photo.startsWith('/') ? photo.substring(1) : photo}`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img 
+                      src={`${import.meta.env.BASE_URL}${photo.startsWith('/') ? photo.substring(1) : photo}`} 
+                      alt={`Thumbnail ${index + 1}`} 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover' 
+                      }}
+                    />
+                  )}
                 </Paper>
               ))}
             </Box>
@@ -436,16 +469,26 @@ const DishDetailPage = () => {
                 </Typography>
               )}
               
-              {dish.sourceUrl && (
-                <Button 
-                  variant="outlined" 
-                  startIcon={<LinkIcon />}
-                  href={dish.sourceUrl}
-                  target="_blank"
-                  sx={{ mt: 3 }}
-                >
-                  View Original Recipe
-                </Button>
+              {dish.sourceUrls && dish.sourceUrls.length > 0 && (
+                <Box sx={{ mt: 3 }}>
+                  <Typography variant="h6" gutterBottom sx={{mb:1}}>Sources</Typography>
+                  {dish.sourceUrls.map((source, index) => (
+                    <Button
+                      key={index}
+                      variant="outlined"
+                      startIcon={
+                        source.type === 'youtube' ? <YouTubeIcon /> :
+                        source.type === 'instagram' ? <InstagramIcon /> :
+                        <LinkIcon />
+                      }
+                      href={source.url}
+                      target="_blank"
+                      sx={{ mr: 1, mb: 1 }}
+                    >
+                      {source.description || `View ${source.type === 'web' ? 'Source' : source.type.charAt(0).toUpperCase() + source.type.slice(1)}`}
+                    </Button>
+                  ))}
+                </Box>
               )}
               
               {dish.googleSearchUrl && (
@@ -557,17 +600,26 @@ const DishDetailPage = () => {
                 </Button>
               )}
               
-              {dish.sourceUrl && (
-                <Button 
-                  variant="text" 
-                  startIcon={<LinkIcon />}
-                  href={dish.sourceUrl}
-                  target="_blank"
-                  sx={{ mt: 2 }}
-                  fullWidth
-                >
-                  Original Recipe Source
-                </Button>
+              {dish.sourceUrls && dish.sourceUrls.length > 0 && (
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="h6" gutterBottom sx={{mb:1}}>Sources</Typography>
+                  {dish.sourceUrls.map((source, index) => (
+                    <Button
+                      key={index}
+                      variant="text"
+                      startIcon={
+                        source.type === 'youtube' ? <YouTubeIcon /> :
+                        source.type === 'instagram' ? <InstagramIcon /> :
+                        <LinkIcon />
+                      }
+                      href={source.url}
+                      target="_blank"
+                      sx={{ mr: 1, mb: 1 }}
+                    >
+                      {source.description || `View ${source.type === 'web' ? 'Source' : source.type.charAt(0).toUpperCase() + source.type.slice(1)}`}
+                    </Button>
+                  ))}
+                </Box>
               )}
             </CardContent>
           </Card>

@@ -44,6 +44,11 @@ const DishGallery = () => {
     const allDishes = getDishes();
     // Sort by most recent date (if multiple, use the most recent)
     allDishes.sort((a, b) => {
+      // Skip sorting for dishes without dates
+      if (!a.dateCooked && !b.dateCooked) return 0;
+      if (!a.dateCooked) return 1;
+      if (!b.dateCooked) return -1;
+      
       const aDates = Array.isArray(a.dateCooked) ? a.dateCooked : [a.dateCooked];
       const bDates = Array.isArray(b.dateCooked) ? b.dateCooked : [b.dateCooked];
       const aMostRecent = Math.max(...aDates.map(date => new Date(date).getTime()));
@@ -123,6 +128,10 @@ const DishGallery = () => {
       default:
         return 'default';
     }
+  };
+
+  const isComingSoon = (dish: Dish) => {
+    return !!dish.comingSoon;
   };
 
   return (
@@ -227,10 +236,44 @@ const DishGallery = () => {
                 <CardMedia
                   component="img"
                   height="200"
-                  image={`${import.meta.env.BASE_URL}${dish.mainImage.startsWith('/') ? dish.mainImage.substring(1) : dish.mainImage}`}
+                  image={
+                    dish.mainImage
+                      ? (() => {
+                          let path = dish.mainImage;
+                          if (path.startsWith('src/')) {
+                            path = path.substring('src/'.length);
+                          }
+                          if (path.startsWith('/')) {
+                            return path; // It's an absolute path
+                          }
+                          return `${import.meta.env.BASE_URL}${path}`; // It's a relative path
+                        })()
+                      : `${import.meta.env.BASE_URL}images/placeholder.png` // Fallback image
+                  }
                   alt={dish.name}
                   sx={{ objectFit: 'cover' }}
                 />
+                {isComingSoon(dish) && (
+                  <Box 
+                    sx={{ 
+                      position: 'absolute', 
+                      top: '50%', 
+                      left: '50%', 
+                      transform: 'translate(-50%, -50%)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                      color: 'white',
+                      borderRadius: 1,
+                      px: 2,
+                      py: 1,
+                      fontWeight: 'bold',
+                      fontSize: '1.2rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.1em'
+                    }}
+                  >
+                    Coming Soon
+                  </Box>
+                )}
                 <Box 
                   sx={{ 
                     position: 'absolute', 
@@ -304,15 +347,17 @@ const DishGallery = () => {
                 </Typography>
                 
                 <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Chip 
-                    icon={<CalendarTodayIcon fontSize="small" />}
-                    label={new Date(dish.dateCooked).toLocaleDateString('en-US', { 
-                      month: 'short',
-                      year: 'numeric'
-                    })}
-                    size="small"
-                    variant="outlined"
-                  />
+                  {!isComingSoon(dish) && dish.dateCooked && (
+                    <Chip 
+                      icon={<CalendarTodayIcon fontSize="small" />}
+                      label={new Date(dish.dateCooked).toLocaleDateString('en-US', { 
+                        month: 'short',
+                        year: 'numeric'
+                      })}
+                      size="small"
+                      variant="outlined"
+                    />
+                  )}
                   {dish.photos.length > 1 && (
                     <Typography variant="caption" color="text.secondary">
                       {dish.photos.length} photos

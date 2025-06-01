@@ -1,0 +1,35 @@
+{
+  "id": "jbistro",
+  "name": "J-Bistro",
+  "location": {
+    "lat": 33.9075105378245,
+    "lng": -84.28713452936195,
+    "address": "6035 Peachtree Rd A112, Atlanta, GA 30360, USA",
+    "city": "Atlanta",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=11797768855317478154"
+  },
+  "rating": 3.5,
+  "googleRating": 4.4,
+  "visitDates": ["2025-05-18"],
+  "review": "A cozy and authentic spot serving up Chinese and Korean dishes with generous portions that provide excellent value for money. While the quantity of food is impressive, some dishes could benefit from bolder seasoning as flavors tend to be a bit subdued. The dumplings (mandu) were especially good - perfectly crispy on the outside and flavorful on the inside. For future visits, the jjamppong (spicy seafood noodle soup) is on our list to try. The casual atmosphere makes it perfect for a quick lunch or casual dinner, complemented by friendly, attentive service.",
+  "cuisine": "Chinese",
+  "priceRange": "$",
+  "phoneNumber": "+1 678-691-8886",
+  "website": "https://www.j-bistroga.com/",
+  "openingHours": [
+    "Monday: 11:30 AM-2:30 PM, 4:30-9:00 PM",
+    "Tuesday: 11:30 AM-2:30 PM, 4:30-9:00 PM",
+    "Wednesday: Closed",
+    "Thursday: 11:30 AM-2:30 PM, 4:30-9:00 PM",
+    "Friday: 11:30 AM-2:30 PM, 4:30-10:00 PM",
+    "Saturday: 12:00-10:00 PM",
+    "Sunday: 11:30 AM-9:00 PM"
+  ],
+  "tags": ["Korean", "Chinese", "Casual", "Cozy", "Inexpensive"],
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 3,
+    "description": ""
+  }
+} 

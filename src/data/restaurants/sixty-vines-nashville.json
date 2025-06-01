@@ -1,0 +1,37 @@
+{
+  "id": "sixty-vines-nashville",
+  "name": "Sixty Vines",
+  "location": {
+    "lat": 36.16069249704874,
+    "lng": -86.77958110538302,
+    "address": "5055 Broadway Suite 3200, Nashville, TN 37203, USA",
+    "city": "Nashville",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=15828789826372707220"
+  },
+  "rating": 3.8,
+  "drinkRating": 4.7,
+  "googleRating": 4.7,
+  "visitDates": ["2025-05-24"],
+  "review": "Sixty Vines has a truly fantastic vibe, and the restaurant itself is absolutely beautiful, with a spacious and modern aesthetic that makes for a great atmosphere. Their drink selection, especially the extensive wine list, is genuinely impressive and we thoroughly enjoyed our beverages. However, we found the food to be rather mediocre. While nothing was inherently bad, it just didn't live up to the high standards set by the ambiance and drinks. It's a perfect spot for a drink and to soak in the surroundings, but perhaps not the best choice if food is your primary focus.",
+  "cuisine": "New American",
+  "priceRange": "$$",
+  "phoneNumber": "+1 615-610-9330",
+  "website": "https://sixtyvines.com/location/nashville/",
+  "openingHours": [
+    "Monday: 11:00 AM-10:00 PM",
+    "Tuesday: 11:00 AM-10:00 PM",
+    "Wednesday: 11:00 AM-10:00 PM",
+    "Thursday: 11:00 AM-10:00 PM",
+    "Friday: 11:00 AM-11:00 PM",
+    "Saturday: 10:00 AM-11:00 PM",
+    "Sunday: 10:00 AM-9:00 PM"
+  ],
+  "tags": [
+    "New American",
+    "Wine Bar",
+    "Casual",
+    "Upscale",
+    "Date Night"
+  ]
+} 

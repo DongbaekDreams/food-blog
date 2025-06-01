@@ -1,0 +1,42 @@
+{
+  "id": "oh-kdog-doraville",
+  "name": "Oh K-Dog Doraville",
+  "location": {
+    "lat": 33.9285481419461,
+    "lng": -84.16763305789163,
+    "address": "Mart Food Court, 6035 Peachtree Rd Bldg B H, Doraville, GA 30360",
+    "city": "Doraville",
+    "country": "US",
+    "googleMapsUrl": "https://www.google.com/maps/place/Oh+K-Dog+Doraville/@33.916965,-84.281896,17z/data=!3m1!4b1!4m6!3m5!1s0x88f509e5b7b9e6c9:0x87d60920a0662d04!8m2!3d33.916965!4d-84.281896!16s%2Fg%2F11b6m6qg1d"
+  },
+  "drinkRating": null,
+  "rating": 4.6,
+  "visitDates": ["2025-05-31"],
+  "review": "Your review text goes here.",
+  "cuisine": "Hot Dog",
+  "priceRange": "$1-10",
+  "photos": [
+    "/images/restaurants/kdog/kdog-yuna-1.heic",
+    "/images/restaurants/kdog/kdog-yuna-2.heic",
+    "/images/restaurants/kdog/kdog-kdog-1.heic",
+    "/images/restaurants/kdog/kdog-kdog-2.heic",
+    "/images/restaurants/kdog/kdog-kdog-3.heic",
+    "/images/restaurants/kdog/kdog-kdog-4.heic",
+    "/images/restaurants/kdog/kdog-th-1.heic",
+    "/images/restaurants/kdog/kdog-th-2.heic",
+    "/images/restaurants/kdog/kdog-store.heic"
+  ],
+  "mainImage": "/images/restaurants/kdog/kdog-yuna-1.heic",
+  "googleRating": 4.4,
+  "phoneNumber": "(770) 234-9866",
+  "website": "https://www.ohkdog.com/",
+  "openingHours": [
+    "Mon - Sun: 10:00-20:30"
+  ],
+  "tags": ["Dine-in", "Takeout", "Delivery", "Korean"],
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 3,
+    "description": ""
+  }
+} 

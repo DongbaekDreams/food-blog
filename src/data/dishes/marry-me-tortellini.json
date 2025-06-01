@@ -1,0 +1,47 @@
+{
+  "id": "marry-me-tortellini-1",
+  "name": "Marry Me Tortellini",
+  "country": "US",
+  "countryName": "United States",
+  "rating": 4.2,
+  "difficulty": "Easy",
+  "recipeDetails": "Marry Me Tortellini is an easy one pot vegetarian pasta recipe inspired by the viral Marry Me Chicken recipe. This easy weeknight recipe is rich, creamy and so satisfying and it comes together in about 20 minutes.",
+  "recipe": "Add olive oil, garlic, sun dried tomatoes (and their oil!), Italian seasoning and red pepper flakes to a heavy bottomed pot.\nCook for 3-4 minutes or until garlic is tender and fragrant.\nAdd flour and cook for 3 minutes to create a roux.\nAdd in the Pacific Vegetable Broth and bring to a boil. Let the mixture thicken for 3-5 minutes then add the tortellini and a pinch of salt and stir.\nTurn the heat off and add in the heavy cream, parmigiano and spinach and stir once more until the spinach is wilted.\nIf it's too dry and you want it more saucy, add a little more chicken stock or even an extra splash of milk or heavy cream. You could even add 4oz of cream cheese if you wanted it extra creamy.\nSeason with salt and pepper to taste.",
+  "ingredients": [
+    "2 tablespoon Olive Oil",
+    "6 Garlic Cloves minced",
+    "½ cup Sun Dried Tomatoes in oil",
+    "1 teaspoon Italian seasoning",
+    "1 pinch Red Pepper Flakes",
+    "2 tablespoon Flour",
+    "2 cups Pacific Vegetable Broth",
+    "20 oz Fresh Cheese Tortellini",
+    "5 cups ½ cup Cream", 
+    "2 cups Fresh Spinach",
+    "1 cup Parmigiano"
+  ],
+  "originalMainImagePath": "/images/dishes/marry-me-tortellini/tort-done.heic",
+  "prepTime": "15 minutes",
+  "cookTime": "20 minutes",
+  "totalTime": "35 minutes",
+  "servings": 4,
+  "notes": "We replaced red pepper with gochugaru, used beef stock, and used tortellini with sausage in it. Ensure tortellini is fresh for the best texture. Adjust seasoning and liquid levels to your preference. Cream cheese can be added for extra creaminess.",
+  "tags": ["Soup", "Pasta", "Comfort Food", "Quick Meal"],
+  "sourceUrls": [
+    {
+      "url": "https://www.instagram.com/reel/C6cdb1cuqC_/?hl=en",
+      "type": "instagram",
+      "description": "Recipe Link"
+    }
+  ],
+  "images": [
+    { "path": "/images/dishes/marry-me-tortellini/tort-done.heic", "alt": "Finished Marry Me Tortellini", "caption": "The finished Marry Me Tortellini, ready to serve." },
+    { "path": "/images/dishes/marry-me-tortellini/tort-cream.heic", "alt": "Cream being added to the pot", "caption": "Adding cream to the tortellini base." },
+    { "path": "/images/dishes/marry-me-tortellini/tort-broth-2.heic", "alt": "Broth in the pot", "caption": "Simmering the broth for flavor." },
+    { "path": "/images/dishes/marry-me-tortellini/tort-broth.heic", "alt": "Broth and tortellini in the pot", "caption": "Cooking the tortellini in broth." },
+    { "path": "/images/dishes/marry-me-tortellini/tort-roux.heic", "alt": "Making the roux", "caption": "Preparing the roux for the sauce." },
+    { "path": "/images/dishes/marry-me-tortellini/tort-base.heic", "alt": "Base ingredients in the pot", "caption": "Starting the dish with aromatics and oil." },
+    { "path": "/images/dishes/marry-me-tortellini/spread-1.heic", "alt": "Plated tortellini spread", "caption": "A spread of the finished tortellini dish." },
+    { "path": "/images/dishes/marry-me-tortellini/spread-2.heic", "alt": "Alternative plating of tortellini", "caption": "Another view of the finished dish." }
+  ]
+} 

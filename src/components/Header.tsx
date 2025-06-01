@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, Button, IconButton, Box, Drawer, List, Lis
 import MenuIcon from '@mui/icons-material/Menu';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import WineBarIcon from '@mui/icons-material/WineBar';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -10,6 +11,7 @@ const navLinks = [
   { label: 'Browse All Dishes', icon: <RestaurantMenuIcon />, path: '/dishes' },
   { label: 'Browse Establishments', icon: <RestaurantIcon />, path: '/establishments' },
   { label: 'Establishment Rankings', icon: <RestaurantIcon />, path: '/restaurants' },
+  { label: 'Liqueurs and Liquors', icon: <WineBarIcon />, path: '/drinks' },
   // Add more links here if needed in the future
 ];
 

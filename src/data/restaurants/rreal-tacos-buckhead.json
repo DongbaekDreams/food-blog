@@ -1,0 +1,31 @@
+{
+  "id": "rreal-tacos-buckhead",
+  "name": "Rreal Tacos - Buckhead",
+  "location": {
+    "lat": 33.84734319436399,
+    "lng": -84.37277376044099,
+    "address": "3365 Piedmont Rd NE Suite 1120, Atlanta, GA 30305, USA",
+    "city": "Atlanta",
+    "country": "USA",
+    "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Rreal+Tacos+-+Buckhead+3365+Piedmont+Rd+NE+Suite+1120+Atlanta+GA+30305"
+  },
+  "rating": 4.5,
+  "drinkRating": 4.5,
+  "googleRating": 4.9,
+  "visitDates": ["2025-04-25"],
+  "review": "The birria quesadilla delivers tender, slow‑braised beef folded into a crisp tortilla with just the right balance of melted cheese and savory broth infusion. The drink menu complements the food perfectly, featuring well‑crafted margaritas and a decent beer selection that cleanse the palate between bites. The quality of ingredients is exceptional, evident in every flavorful bite. Do note that weekend visits can mean extended wait times as they don't accept reservations during peak hours. The consommé, while an additional charge, is worth considering as a rich complement to your meal. Parking is validated for two hours, which is a welcome convenience in the bustling Buckhead area.",
+  "cuisine": "Tacos",
+  "priceRange": "$$",
+  "phoneNumber": "+1 404-968-9837",
+  "website": "https://rrealtacos.com",
+  "openingHours": [
+    "Monday - Saturday: 11:00 AM-12:00 AM",
+    "Sunday: 11:00 AM-11:00 PM"
+  ],
+  "tags": ["Tacos", "Mexican", "Casual"],
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 1,
+    "description": "Validated"
+  }
+} 

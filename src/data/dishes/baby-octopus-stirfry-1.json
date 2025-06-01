@@ -1,0 +1,41 @@
+{
+  "id": "baby-octopus-stirfry-1",
+  "name": "Baby Octopus Stir-Fry",
+  "country": "KR",
+  "countryName": "South Korea",
+  "dateCooked": "2025-05-17",
+  "rating": 4,
+  "difficulty": "Medium",
+  "recipeDetails": "A vibrant and spicy Korean stir-fry featuring tender baby octopus and savory pork belly, all brought together with a rich gochujang-based sauce and crisp vegetables. A flavorful dish with a delightful kick.",
+  "ingredients": [
+    "주꾸미 (webfoot octopus): 400g",
+    "삼겹살 (pork belly): 250g",
+    "대파 (green onion/scallion): 90g",
+    "양파 (onion): 85g",
+    "양배추 (cabbage): 50g",
+    "청양고추 (Korean hot chili pepper): 25g",
+    "소주 (soju, for blanching): 50g",
+    "설탕 (sugar, for searing pork): 1 tablespoon",
+    "청주 (cooking rice wine): 2 tablespoons",
+    "--- Stir-fry Sauce ---",
+    "굵은고춧가루 (coarse red chili powder): 3 tablespoons",
+    "다진마늘 (minced garlic): 1 tablespoon",
+    "양조간장 (brewed soy sauce): 1 tablespoon",
+    "굴소스 (oyster sauce): 1 tablespoon",
+    "물엿 (corn syrup): 1 tablespoon",
+    "설탕 (sugar): 1 tablespoon",
+    "고추장 (gochujang chili paste): 1 heaping tablespoon",
+    "후추 (ground pepper): a few shakes"
+  ],
+  "originalMainImagePath": "/images/dishes/baby-octopus-stirfry/Dish.png",
+  "prepTime": "20 minutes",
+  "cookTime": "20 minutes",
+  "totalTime": "40 minutes",
+  "servings": 3,
+  "notes": "A collaborative cooking adventure! Details on our experience to come.",
+  "tags": ["Seafood", "Stir-fry", "Korean", "Octopus", "Pork Belly"],
+  "sourceUrls": [
+    { "url": "https://naver.me/FbO31oO3", "type": "web", "description": "Original Recipe" }
+  ],
+  "recipe": "1. 씻어서 손질해놓은 쭈꾸미는 살짝 데쳐주는데요. 끓는 물에 소주 1컵을 넣고 쭈꾸미를 넣어 1분 정도 데쳐줍니다.\n   Blanch the cleaned and prepared octopus: bring water to a boil, add 1 cup of soju, then add the octopus and cook for about 1 minute.\n\n2. 데친 주꾸미는 물기를 제거해준 후에 먹기 좋은 크기로 잘라주는데 편하게 가위로 작업해주세요.\n   Drain the blanched octopus, pat dry, and cut into bite-sized pieces using scissors for convenience.\n\n3. 물기를 제거한 후 쭈꾸미볶음 양념을 해줄 텐데요. 다진 마늘 1, 굵은 고춧가루 3, 양조간장 1, 굴소스 1, 물엿 1, 설탕 1, 고추장 1, 후추 톡톡톡 넣어준 후에 골고루 섞어줍니다.\n   Prepare the stir-fry sauce: in a bowl combine 1 Tbsp minced garlic, 3 Tbsp coarse red chili powder, 1 Tbsp brewed soy sauce, 1 Tbsp oyster sauce, 1 Tbsp corn syrup, 1 Tbsp sugar, 1 heaping Tbsp gochujang, and a few shakes of ground pepper; mix thoroughly.\n\n4. 양배추와 양파는 1cm 두께로 썰어주고, 대파와 청양고추는 어슷하게 썰어 준비해둡니다.\n   Slice the cabbage and onion into 1 cm-thick pieces, and cut the green onion and Korean hot chili pepper on the diagonal.\n\n5. 팬에 삼겹살을 먼저 구워주는데, 한쪽 면이 익으면 뒤집어 설탕 1스푼을 넣고 노릇노릇하게 구워주세요.\n   In a hot pan, cook the pork belly first; when one side is done, flip it, add 1 Tbsp sugar, and cook until golden brown.\n\n6. 청주 2스푼을 넣고 한 번 더 구워준 후에…\n   Pour in 2 Tbsp cooking rice wine and sear once more.\n\n7. 준비해놓은 주꾸미와 쭈꾸미 볶음 양념을 넣고 센 불에서 함께 볶아줍니다. 강한 불에서 볶아야 물이 생기지 않아 양념 맛을 그대로 즐길 수 있어요.\n   Add the prepared octopus and stir-fry sauce, then stir-fry over high heat so no liquid forms and the flavors stay concentrated.\n\n8. 준비해놓은 채소들(양파, 대파, 양배추, 청양고추)를 넣고 함께 볶아줍니다.\n   Add the prepared vegetables (onion, green onion, cabbage, chili pepper) and continue stir-frying together.\n\n9. 양파가 투명해지면 통깨를 솔솔 뿌려주면 주꾸미볶음 완성입니다.\n   When the onion becomes translucent, sprinkle with sesame seeds to finish the stir-fried octopus."
+} 

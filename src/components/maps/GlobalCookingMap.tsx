@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
-import { Box, Paper, Typography, useTheme, Button, Divider, Dialog, DialogContent, DialogTitle, IconButton, Grid, Rating, LinearProgress, Stack } from '@mui/material';
+import { Box, Paper, Typography, useTheme, Button, Divider, Dialog, DialogContent, DialogTitle, IconButton, Grid, Rating, LinearProgress, Stack, Select, MenuItem, FormControl, InputLabel, ButtonGroup } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import 'leaflet/dist/leaflet.css';
 import { getCountriesData } from '../../data/dataService';
@@ -20,6 +20,7 @@ const GlobalCookingMap = () => {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [countryDetailsOpen, setCountryDetailsOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState<string>('rating');
   const theme = useTheme();
 
   useEffect(() => {
@@ -115,8 +116,14 @@ const GlobalCookingMap = () => {
     });
   };
 
+  // Add this helper
+  const isComingSoon = (dish: Dish) => {
+    return !!dish.comingSoon;
+  };
+
   const handleCloseCountryDetails = () => {
     setCountryDetailsOpen(false);
+    setSortOrder('rating');
   };
 
   const handleDishClick = (dishId: string) => {
@@ -141,6 +148,31 @@ const GlobalCookingMap = () => {
       maxDishCount,
     };
   }, [countryData, geoData]);
+
+  // Sorted dishes logic
+  const getSortedDishes = () => {
+    if (!selectedCountry || !countryData[selectedCountry]) {
+      return [];
+    }
+    const dishesToSort = [...countryData[selectedCountry].dishes];
+
+    switch (sortOrder) {
+      case 'rating':
+        return dishesToSort.sort((a, b) => b.rating - a.rating);
+      case 'date':
+        return dishesToSort.sort((a, b) => {
+          if (a.comingSoon && b.comingSoon) return 0;
+          if (a.comingSoon) return 1;
+          if (b.comingSoon) return -1;
+          if (!a.dateCooked && !b.dateCooked) return 0;
+          if (!a.dateCooked) return 1;
+          if (!b.dateCooked) return -1;
+          return new Date(b.dateCooked).getTime() - new Date(a.dateCooked).getTime();
+        });
+      default: // 'default' or any other case
+        return dishesToSort;
+    }
+  };
 
   return (
     <>
@@ -274,13 +306,21 @@ const GlobalCookingMap = () => {
                 <CloseIcon />
               </IconButton>
             </DialogTitle>
-            <DialogContent sx={{ p: 0 }}>
+            <DialogContent sx={{ backgroundColor: theme.palette.background.default }}>
               <Box sx={{ p: 3 }}>
-                <Typography variant="body1" sx={{ mb: 3 }}>
+                <Typography variant="body1" sx={{ mb: 1 }}>
                   Dishes we've cooked from {getCountryName(selectedCountry)}:
                 </Typography>
+
+                {/* Sorting Controls */}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                  <ButtonGroup variant="outlined" size="small" aria-label="dish sort order buttons">
+                    <Button onClick={() => setSortOrder('rating')} disabled={sortOrder === 'rating'}>By Rating</Button>
+                    <Button onClick={() => setSortOrder('date')} disabled={sortOrder === 'date'}>By Date</Button>
+                  </ButtonGroup>
+                </Box>
                 
-                {countryData[selectedCountry]?.dishes.map((dish) => {
+                {getSortedDishes().map((dish) => {
                   console.log('[DialogDish] Rendering:', { 
                     id: dish.id, 
                     name: dish.name, 
@@ -345,6 +385,28 @@ const GlobalCookingMap = () => {
                               sx={{ color: '#FFB400' }} 
                             />
                           </Box>
+                          {isComingSoon(dish) && (
+                            <Box
+                              sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                color: 'white',
+                                borderRadius: 1,
+                                px: 2,
+                                py: 1,
+                                fontWeight: 'bold',
+                                fontSize: '1.2rem', // Adjusted for modal
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                zIndex: 2,
+                              }}
+                            >
+                              Coming Soon
+                            </Box>
+                          )}
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={8}>
@@ -354,9 +416,15 @@ const GlobalCookingMap = () => {
                           </Typography>
                           
                           <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                            <Typography variant="body2" color="text.secondary" sx={{ mr: 2 }}>
-                              Cooked on {formatDate(dish.dateCooked)}
-                            </Typography>
+                            {isComingSoon(dish) ? (
+                              <Typography variant="body2" color="text.secondary" sx={{ mr: 2, fontStyle: 'italic' }}>
+                                Coming Soon!
+                              </Typography>
+                            ) : (
+                              <Typography variant="body2" color="text.secondary" sx={{ mr: 2 }}>
+                                Cooked on {dish.dateCooked ? formatDate(dish.dateCooked) : 'Date not available'}
+                              </Typography>
+                            )}
                             <Typography variant="body2" sx={{ 
                               backgroundColor: 
                                 dish.difficulty === 'Easy' ? theme.palette.success.light :
