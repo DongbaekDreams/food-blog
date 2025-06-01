@@ -30,6 +30,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { getRestaurants } from '../../data/dataService';
 import { Restaurant } from '../../data/types';
+import { getImageUrl } from '../../utils/imageUtils';
 
 const EstablishmentGallery = () => {
   const theme = useTheme();
@@ -220,17 +221,8 @@ const EstablishmentGallery = () => {
                   height="200"
                   image={
                     restaurant.photos && restaurant.photos.length > 0
-                      ? (() => {
-                          let path = restaurant.photos[0];
-                          if (path.startsWith('src/')) {
-                            path = path.substring('src/'.length);
-                          }
-                          if (path.startsWith('/')) {
-                            return path; // It's an absolute path
-                          }
-                          return `${import.meta.env.BASE_URL}${path}`; // It's a relative path
-                        })()
-                      : `${import.meta.env.BASE_URL}images/placeholder.png` // Fallback image
+                      ? getImageUrl(restaurant.photos[0])
+                      : getImageUrl('images/placeholder.png')
                   }
                   alt={restaurant.name}
                   sx={{ objectFit: 'cover' }}

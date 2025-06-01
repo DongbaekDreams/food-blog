@@ -496,9 +496,9 @@ const RestaurantDetailPage = () => {
                   <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                     {/* Static test image */}
                     <img 
-                      src="/images/icons/thumbs-up.png"
-                      alt="Static Thumbs Up Test" 
-                      style={{ width: '28px', height: '28px', marginRight: '15px', border: '1px solid red' }}
+                      className="w-5 h-5 mr-2"
+                      src={`${import.meta.env.BASE_URL}images/icons/thumbs-up.png`}
+                      alt="Recommend"
                     />
                     {/* Test with BASE_URL */}
                     <img 

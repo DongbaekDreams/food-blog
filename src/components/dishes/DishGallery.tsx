@@ -27,6 +27,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { getDishes, getCountriesData } from '../../data/dataService';
 import { Dish } from '../../data/types';
+import { getImageUrl } from '../../utils/imageUtils';
 
 const DishGallery = () => {
   const theme = useTheme();
@@ -238,17 +239,8 @@ const DishGallery = () => {
                   height="200"
                   image={
                     dish.mainImage
-                      ? (() => {
-                          let path = dish.mainImage;
-                          if (path.startsWith('src/')) {
-                            path = path.substring('src/'.length);
-                          }
-                          if (path.startsWith('/')) {
-                            return path; // It's an absolute path
-                          }
-                          return `${import.meta.env.BASE_URL}${path}`; // It's a relative path
-                        })()
-                      : `${import.meta.env.BASE_URL}images/placeholder.png` // Fallback image
+                      ? getImageUrl(dish.mainImage)
+                      : getImageUrl('images/placeholder.png')
                   }
                   alt={dish.name}
                   sx={{ objectFit: 'cover' }}

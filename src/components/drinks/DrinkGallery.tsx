@@ -11,18 +11,22 @@ import {
   TextField,
   InputAdornment,
   Paper,
-  useTheme
+  useTheme,
+  Tooltip
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { getDrinks } from '../../data/dataService';
 import { Drink } from '../../data/types';
+import { getImageUrl } from '../../utils/imageUtils';
+import { useNavigate } from 'react-router-dom';
 
 const DrinkGallery = () => {
   const theme = useTheme();
   const [drinks, setDrinks] = useState<Drink[]>([]);
   const [filteredDrinks, setFilteredDrinks] = useState<Drink[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const allDrinks = getDrinks();
@@ -44,6 +48,10 @@ const DrinkGallery = () => {
     }
     setFilteredDrinks(result);
   }, [searchQuery, drinks]);
+
+  const handleDrinkClick = (drinkId: string) => {
+    navigate(`/drinks/${drinkId}`);
+  };
 
   return (
     <Box>
@@ -88,23 +96,59 @@ const DrinkGallery = () => {
                 '&:hover': {
                   transform: 'translateY(-4px)',
                   boxShadow: theme.shadows[6],
+                  cursor: 'pointer',
                 },
                 boxShadow: theme.shadows[2],
                 borderRadius: 2,
                 overflow: 'hidden'
-                // Removed onClick for now, can add later to navigate to a DrinkDetailPage
               }}
+              onClick={() => handleDrinkClick(drink.id)}
             >
-              {/* Render CardMedia only if drink.mainImage is a non-empty string */}
-              {drink.mainImage && (
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={drink.mainImage.startsWith('/') ? drink.mainImage : `/${drink.mainImage}`}
-                  alt={drink.title}
-                  sx={{ objectFit: 'cover' }}
-                />
-              )}
+              <Box sx={{ position: 'relative' }}>
+                {/* Render CardMedia only if drink.mainImage is a non-empty string */}
+                {drink.mainImage && (
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={getImageUrl(drink.mainImage)}
+                    alt={drink.title}
+                    sx={{ objectFit: 'cover' }}
+                  />
+                )}
+                {!drink.mainImage && (
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={getImageUrl('images/placeholder.png')}
+                    alt="Placeholder"
+                    sx={{ objectFit: 'cover' }}
+                  />
+                )}
+                <Box 
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    opacity: 0,
+                    transition: 'opacity 0.2s',
+                    '&:hover': {
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Tooltip title="View Details">
+                    <Typography variant="h6" component="div" sx={{ color: 'white' }}>
+                      {drink.title}
+                    </Typography>
+                  </Tooltip>
+                </Box>
+              </Box>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography gutterBottom variant="h6" component="div">
                   {drink.title}
