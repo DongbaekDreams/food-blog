@@ -1,5 +1,7 @@
 # Food Blog
 
+[link to website](https://dongbaekdreams.github.io/food-blog/)
+
 A modern, interactive food blog with a global cooking map, restaurant visits map, and combined timeline. Built with React, TypeScript, Vite, Material UI, Leaflet, and vis-timeline.
 
 ## Features
