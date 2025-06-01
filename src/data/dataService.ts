@@ -114,7 +114,7 @@ const generateTimelineEvents = (): TimelineEvent[] => {
       location: `${r.location.city}, ${r.location.country}`,
       rating: r.rating ?? 0, // Use rating directly, default to 0 if undefined
       photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
-      itemUrl: `/restaurant/${r.id}`
+      itemUrl: `/food-blog/restaurant/${r.id}`
     })));
 
   const processedDishesList = getDishes(); // Use processed dish data
@@ -128,7 +128,7 @@ const generateTimelineEvents = (): TimelineEvent[] => {
       country: d.countryName,
       rating: d.rating,
       photoUrl: d.mainImage, // Use processed mainImage from Dish type
-      itemUrl: `/dish/${d.id}`
+      itemUrl: `/food-blog/dish/${d.id}`
     }));
 
   return [...restaurantEvents, ...dishEvents].sort((a, b) => 

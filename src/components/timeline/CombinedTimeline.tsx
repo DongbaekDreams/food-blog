@@ -58,9 +58,9 @@ const CombinedTimeline = () => {
       
       .vis-item .vis-item-content {
         padding: 6px 10px !important;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
 
       .vis-time-axis .vis-text {
@@ -82,7 +82,7 @@ const CombinedTimeline = () => {
     return () => {
       styleElement.remove();
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     if (timelineRef.current) {
