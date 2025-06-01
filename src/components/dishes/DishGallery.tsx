@@ -28,6 +28,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { getDishes, getCountriesData } from '../../data/dataService';
 import { Dish } from '../../data/types';
 import { getImageUrl } from '../../utils/imageUtils';
+import MarkdownContent from '../../components/common/MarkdownContent';
 
 const DishGallery = () => {
   const theme = useTheme();
@@ -324,19 +325,29 @@ const DishGallery = () => {
                   )}
                 </Box>
                 
-                <Typography 
-                  variant="body2" 
-                  color="text.secondary" 
-                  sx={{ 
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    mb: 1.5
-                  }}
-                >
-                  {dish.recipeDetails}
-                </Typography>
+                <Box sx={{ 
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  mb: 1.5,
+                  height: '48px' // Fixed height for 2 lines of text
+                }}>
+                  <MarkdownContent 
+                    content={dish.recipeDetails} 
+                    variant="body2" 
+                    color="text.secondary"
+                    sx={{ 
+                      '& p': { margin: 0 },
+                      '& h1, & h2, & h3, & h4, & h5, & h6': { 
+                        margin: 0,
+                        fontSize: 'inherit',
+                        fontWeight: 'inherit',
+                        color: 'inherit'
+                      }
+                    }}
+                  />
+                </Box>
                 
                 <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   {!isComingSoon(dish) && dish.dateCooked && (

@@ -36,6 +36,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 
 import { getDishById } from '../data/dataService';
 import { Dish } from '../data/types';
+import MarkdownContent from '../components/common/MarkdownContent';
 
 // TabPanel component for tab content
 interface TabPanelProps {
@@ -406,16 +407,13 @@ const DishDetailPage = () => {
                 )}
               </Box>
 
-              <Typography variant="body1" paragraph>
-                {dish.recipeDetails}
-              </Typography>
-              
+              <Typography variant="h6" gutterBottom>Our Review</Typography>
+              <MarkdownContent content={dish.recipeDetails} />
+
               {dish.notes && (
                 <>
                   <Typography variant="h6" sx={{ mt: 3 }}>Notes</Typography>
-                  <Typography variant="body2" paragraph>
-                    {dish.notes}
-                  </Typography>
+                  <MarkdownContent content={dish.notes} variant="body2" color="text.secondary" />
                 </>
               )}
               
@@ -455,13 +453,7 @@ const DishDetailPage = () => {
               {dish.recipe ? (
                 <Box>
                   <Typography variant="h6" gutterBottom>Instructions</Typography>
-                  <Typography variant="body1" component="div">
-                    {dish.recipe.split('\n').map((paragraph, index) => (
-                      <Typography key={index} paragraph>
-                        {paragraph}
-                      </Typography>
-                    ))}
-                  </Typography>
+                  <MarkdownContent content={dish.recipe} />
                 </Box>
               ) : (
                 <Typography variant="body2" color="text.secondary">

@@ -43,6 +43,7 @@ import 'leaflet/dist/leaflet.css';
 
 import { getRestaurantById } from '../data/dataService';
 import { Restaurant } from '../data/types';
+import MarkdownContent from '../components/common/MarkdownContent';
 
 // TabPanel component for tab content
 interface TabPanelProps {
@@ -389,9 +390,7 @@ const RestaurantDetailPage = () => {
               <Divider sx={{ mb: 3 }} />
               
               <Typography variant="h6" gutterBottom>Our Review</Typography>
-              <Typography variant="body1" paragraph>
-                {restaurant.review}
-              </Typography>
+              <MarkdownContent content={restaurant.review} />
               
               <Divider sx={{ mb: 3 }} />
               
