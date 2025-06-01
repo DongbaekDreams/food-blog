@@ -14,15 +14,16 @@
     const pathSegmentsToKeep = 1; // Adjust this if your repo name has slashes or you have a more complex base path.
 
     const l = window.location;
-    const baseUrl = '/food-blog/'; // Hard-code the base URL for GitHub Pages
+    const newPath = l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/';
 
-    // Store the full path in sessionStorage
-    sessionStorage.redirect = l.pathname.replace(baseUrl, '/');
+    sessionStorage.redirect = l.pathname + l.search + l.hash;
 
-    // Redirect to the index.html with the base path
     l.replace(
       l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      baseUrl
+      newPath +
+      (l.search ? '?' + l.search : '') +
+      '#/' + // Add '#' for HashRouter-like behavior before redirecting to SPA
+      sessionStorage.redirect.substring(newPath.length).replace(/\/$/, '') // Get the part after the base path
     );
   </script>
 </head>
