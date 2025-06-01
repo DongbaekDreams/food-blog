@@ -5,7 +5,7 @@ import { Timeline, DataSet } from 'vis-timeline/standalone';
 import 'vis-timeline/styles/vis-timeline-graph2d.css';
 import { getTimelineEvents } from '../../data/dataService';
 import { TimelineEvent as AppTimelineEvent } from '../../data/types';
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 import { useTheme } from '@mui/material/styles';
 
 const CombinedTimeline = () => {
@@ -14,6 +14,20 @@ const CombinedTimeline = () => {
   const [timelineInstance, setTimelineInstance] = useState<Timeline | null>(null);
   const [error, setError] = useState<string | null>(null);
   const theme = useTheme();
+
+  // Helper function to safely format dates
+  const safeFormatDate = (dateStr: string) => {
+    try {
+      const date = new Date(dateStr);
+      if (isValid(date)) {
+        return format(date, 'MMM d, yyyy');
+      }
+      return 'Invalid date';
+    } catch (e) {
+      console.error('Error formatting date:', dateStr, e);
+      return 'Invalid date';
+    }
+  };
 
   // Inject custom CSS to override vis-timeline styles
   useEffect(() => {
@@ -95,15 +109,35 @@ const CombinedTimeline = () => {
 
         console.log("Events data:", actualEvents);
         
+        // Convert dates to valid format and filter out any invalid dates
+        const validEvents = actualEvents.filter(event => {
+          try {
+            const date = new Date(event.start);
+            return isValid(date);
+          } catch (e) {
+            console.error('Invalid date format:', event.start);
+            return false;
+          }
+        });
+
+        if (validEvents.length === 0) {
+          setError('No valid timeline events found. All dates appear to be invalid.');
+          return;
+        }
+        
         // Create simpler items that rely on direct className styling
         const items = new DataSet(
-          actualEvents.map(event => ({
-            id: event.id,
-            content: event.content,
-            start: event.start,
-            className: event.type === 'dish' ? 'dish-event' : 'restaurant-event',
-            title: `${event.content} - ${format(new Date(event.start), 'MMM d, yyyy')}${event.type === 'dish' && event.country ? ` - ${event.country}` : ''}${event.type === 'restaurant' && event.location ? ` - ${event.location}` : ''}`,
-          }))
+          validEvents.map(event => {
+            // Use ISO string format for date to ensure proper parsing
+            const dateObj = new Date(event.start);
+            return {
+              id: event.id,
+              content: event.content,
+              start: dateObj.toISOString(),
+              className: event.type === 'dish' ? 'dish-event' : 'restaurant-event',
+              title: `${event.content} - ${safeFormatDate(event.start)}${event.type === 'dish' && event.country ? ` - ${event.country}` : ''}${event.type === 'restaurant' && event.location ? ` - ${event.location}` : ''}`,
+            };
+          })
         );
         
         const options = {
@@ -135,7 +169,7 @@ const CombinedTimeline = () => {
         // Auto-zoom to fit all events with some padding
         try {
           // Find min and max dates from all events
-          const dates = actualEvents.map(event => new Date(event.start).getTime());
+          const dates = validEvents.map(event => new Date(event.start).getTime());
           if (dates.length > 0) {
             const minDate = new Date(Math.min(...dates));
             const maxDate = new Date(Math.max(...dates));
@@ -152,9 +186,10 @@ const CombinedTimeline = () => {
           }
         } catch (e) {
           console.error("Error auto-fitting timeline:", e);
-          // Fallback to 2025 if auto-fit fails
-          const start = new Date('2025-01-01');
-          const end = new Date('2025-12-31');
+          // Fallback to current year plus/minus 1 year
+          const currentYear = new Date().getFullYear();
+          const start = new Date(`${currentYear-1}-01-01`);
+          const end = new Date(`${currentYear+1}-12-31`);
           newTimeline.setWindow(start, end, { animation: true });
         }
         
@@ -178,7 +213,7 @@ const CombinedTimeline = () => {
         setError('Failed to initialize timeline. Please try refreshing the page.');
       }
     }
-  }, [navigate]);
+  }, [navigate, safeFormatDate]);
 
   const handleZoomIn = () => timelineInstance?.zoomIn(0.2);
   const handleZoomOut = () => timelineInstance?.zoomOut(0.2);

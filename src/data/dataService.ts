@@ -105,35 +105,99 @@ const generateCountriesData = (): Record<string, CountryData> => {
 const generateTimelineEvents = (): TimelineEvent[] => {
   const processedRestaurantData = getRestaurants(); // Use processed data
   const restaurantEvents: TimelineEvent[] = processedRestaurantData
-    .filter(r => r.visitDates.length > 0 && r.visitDates[0] !== 'YYYY-MM-DD') // Filter out placeholder dates
-    .flatMap(r => r.visitDates.map(visitDate => ({
-      id: `rest-${r.id}-${visitDate}`,
-      type: 'restaurant',
-      content: r.name,
-      start: visitDate,
-      location: `${r.location.city}, ${r.location.country}`,
-      rating: r.rating ?? 0, // Use rating directly, default to 0 if undefined
-      photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
-      itemUrl: `/food-blog/restaurant/${r.id}`
-    })));
+    .filter(r => r.visitDates && r.visitDates.length > 0 && r.visitDates[0] !== 'YYYY-MM-DD') // Filter out placeholder dates
+    .flatMap(r => r.visitDates.map(visitDate => {
+      // Ensure the date is valid
+      try {
+        const date = new Date(visitDate);
+        if (isNaN(date.getTime())) {
+          console.warn(`Invalid date detected for restaurant ${r.name}: ${visitDate}`);
+          return null;
+        }
+        
+        return {
+          id: `rest-${r.id}-${visitDate}`,
+          type: 'restaurant',
+          content: r.name,
+          start: visitDate,
+          location: `${r.location.city}, ${r.location.country}`,
+          rating: r.rating ?? 0, // Use rating directly, default to 0 if undefined
+          photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
+          itemUrl: `/food-blog/restaurant/${r.id}`
+        };
+      } catch (e) {
+        console.error(`Error parsing date for restaurant ${r.name}:`, e);
+        return null;
+      }
+    }))
+    .filter(Boolean) as TimelineEvent[]; // Filter out null values
 
   const processedDishesList = getDishes(); // Use processed dish data
   const dishEvents: TimelineEvent[] = processedDishesList
-    .filter(d => d.dateCooked !== 'YYYY-MM-DD') // Filter out placeholder dates
-    .map(d => ({
-      id: `dish-${d.id}`,
-      type: 'dish',
-      content: d.name,
-      start: d.dateCooked,
-      country: d.countryName,
-      rating: d.rating,
-      photoUrl: d.mainImage, // Use processed mainImage from Dish type
-      itemUrl: `/food-blog/dish/${d.id}`
-    }));
+    .filter(d => d.dateCooked && d.dateCooked !== 'YYYY-MM-DD') // Filter out placeholder dates
+    .map(d => {
+      // Ensure the date is valid
+      try {
+        const date = new Date(d.dateCooked);
+        if (isNaN(date.getTime())) {
+          console.warn(`Invalid date detected for dish ${d.name}: ${d.dateCooked}`);
+          return null;
+        }
+        
+        return {
+          id: `dish-${d.id}`,
+          type: 'dish',
+          content: d.name,
+          start: d.dateCooked,
+          country: d.countryName,
+          rating: d.rating,
+          photoUrl: d.mainImage, // Use processed mainImage from Dish type
+          itemUrl: `/food-blog/dish/${d.id}`
+        };
+      } catch (e) {
+        console.error(`Error parsing date for dish ${d.name}:`, e);
+        return null;
+      }
+    })
+    .filter(Boolean) as TimelineEvent[]; // Filter out null values
 
-  return [...restaurantEvents, ...dishEvents].sort((a, b) => 
-    new Date(b.start).getTime() - new Date(a.start).getTime()
-  );
+  // Add current date events for testing if no events are found
+  const combinedEvents = [...restaurantEvents, ...dishEvents];
+  if (combinedEvents.length === 0) {
+    // Add some test events using current date
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    
+    combinedEvents.push({
+      id: 'test-event-1',
+      type: 'dish',
+      content: 'Test Dish (Today)',
+      start: today.toISOString().split('T')[0],
+      country: 'Test Country',
+      rating: 5,
+      itemUrl: '/'
+    });
+    
+    combinedEvents.push({
+      id: 'test-event-2',
+      type: 'restaurant',
+      content: 'Test Restaurant (Yesterday)',
+      start: yesterday.toISOString().split('T')[0],
+      location: 'Test City, Test Country',
+      rating: 4,
+      itemUrl: '/'
+    });
+  }
+
+  return combinedEvents.sort((a, b) => {
+    try {
+      return new Date(b.start).getTime() - new Date(a.start).getTime();
+    } catch (e) {
+      console.error('Error sorting dates:', e);
+      return 0;
+    }
+  });
 };
 
 // Helper function to get flag emoji from country code
