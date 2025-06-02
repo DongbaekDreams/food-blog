@@ -50,7 +50,7 @@ const DrinkGallery = () => {
   }, [searchQuery, drinks]);
 
   const handleDrinkClick = (drinkId: string) => {
-    navigate(`/drinks/${drinkId}`);
+    navigate(`/drink/${drinkId}`);
   };
 
   return (
