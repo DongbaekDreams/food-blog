@@ -123,7 +123,7 @@ const generateTimelineEvents = (): TimelineEvent[] => {
           location: `${r.location.city}, ${r.location.country}`,
           rating: r.rating ?? 0, // Use rating directly, default to 0 if undefined
           photoUrl: r.photos && r.photos.length > 0 ? r.photos[0] : undefined,
-          itemUrl: `/food-blog/restaurant/${r.id}`
+          itemUrl: `/restaurant/${r.id}`
         };
       } catch (e) {
         console.error(`Error parsing date for restaurant ${r.name}:`, e);
@@ -152,7 +152,7 @@ const generateTimelineEvents = (): TimelineEvent[] => {
           country: d.countryName,
           rating: d.rating,
           photoUrl: d.mainImage, // Use processed mainImage from Dish type
-          itemUrl: `/food-blog/dish/${d.id}`
+          itemUrl: `/dish/${d.id}`
         };
       } catch (e) {
         console.error(`Error parsing date for dish ${d.name}:`, e);
