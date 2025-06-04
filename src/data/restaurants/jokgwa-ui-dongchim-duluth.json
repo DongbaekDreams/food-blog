@@ -1,0 +1,38 @@
+{
+  "id": "jokgwa-ui-dongchim-duluth",
+  "name": "족과의동침 둘루스",
+  "location": {
+    "lat": 33.958764882213934,
+    "lng": -84.13612261335389,
+    "address": "3751 Satellite Blvd #600, Duluth, GA 30096, USA",
+    "city": "Duluth",
+    "country": "USA",
+    "googleMapsUrl": "https://maps.google.com/?cid=16341685182562700646"
+  },
+  "rating": 4.4,
+  "googleRating": 4.5,
+  "visitDates": ["2025-04-19"],
+  "review": "We thoroughly enjoyed our visit to 족과의동침 둘루스! The authentic jokbal was truly a delight, and the quality of the ordinary jokbal was excellent – tender, flavorful, and perfectly cooked. It was definitely the highlight of our meal. The only minor disappointment was the spicy jokbal; while the flavors were good, the meat quality for that dish was noticeably subpar compared to the ordinary jokbal. Despite this, we'd highly recommend it for the classic jokbal experience!",
+  "cuisine": "Korean",
+  "priceRange": "$$",
+  "phoneNumber": "+1 470-299-6150",
+  "website": "https://maps.google.com/?cid=16341685182562700646",
+  "openingHours": [
+    "Monday: Closed",
+    "Tuesday: 3:00-10:00 PM",
+    "Wednesday: 3:00-10:00 PM",
+    "Thursday: 3:00-10:00 PM",
+    "Friday: 3:00-10:00 PM",
+    "Saturday: 3:00-10:00 PM",
+    "Sunday: 3:00-10:00 PM"
+  ],
+  "tags": ["Korean", "BBQ", "Traditional Korean", "Jokbal"],
+  "photos": ["/images/restaurants/jok-ga-a-dong-chim/jokbal.png"],
+  "mainImage": "/images/restaurants/jok-ga-a-dong-chim/jokbal.png",
+  "googlePlaceId": "ChIJUScC6wij9YgRZg3qcRdUyeI",
+  "parking": {
+    "icon": "/images/icons/thumbs-up.png",
+    "count": 2,
+    "description": "Open parking lot"
+  }
+} 

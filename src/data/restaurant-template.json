@@ -1,0 +1,95 @@
+{
+  "id": "unique-restaurant-id",
+  "name": "Restaurant Name",
+  "description": "A brief description of the restaurant, its cuisine, and atmosphere",
+  "cuisine": ["Cuisine Type 1", "Cuisine Type 2"],
+  "priceRange": "$$$",
+  "rating": 4.5,
+  "location": {
+    "address": "123 Restaurant Street",
+    "city": "City Name",
+    "state": "State",
+    "zipCode": "12345",
+    "country": "Country",
+    "coordinates": {
+      "latitude": 0.0,
+      "longitude": 0.0
+    }
+  },
+  "contact": {
+    "phone": "+1 (555) 123-4567",
+    "email": "contact@restaurant.com",
+    "website": "https://restaurant.com",
+    "socialMedia": {
+      "instagram": "https://instagram.com/restaurant",
+      "facebook": "https://facebook.com/restaurant",
+      "twitter": "https://twitter.com/restaurant"
+    }
+  },
+  "hours": {
+    "monday": "11:00 AM - 10:00 PM",
+    "tuesday": "11:00 AM - 10:00 PM",
+    "wednesday": "11:00 AM - 10:00 PM",
+    "thursday": "11:00 AM - 10:00 PM",
+    "friday": "11:00 AM - 11:00 PM",
+    "saturday": "10:00 AM - 11:00 PM",
+    "sunday": "10:00 AM - 9:00 PM"
+  },
+  "menu": {
+    "categories": [
+      {
+        "name": "Appetizers",
+        "items": [
+          {
+            "id": "item-1",
+            "name": "Item Name",
+            "description": "Detailed description of the dish",
+            "price": 12.99,
+            "dietary": ["vegetarian", "gluten-free"],
+            "spicy": false,
+            "popular": true
+          }
+        ]
+      }
+    ]
+  },
+  "features": {
+    "delivery": true,
+    "takeout": true,
+    "reservations": true,
+    "outdoorSeating": true,
+    "wheelchairAccessible": true,
+    "parking": ["street", "valet"],
+    "paymentMethods": ["cash", "credit", "debit"]
+  },
+  "images": {
+    "cover": "/images/restaurants/restaurant-id/cover.jpg",
+    "gallery": [
+      "/images/restaurants/restaurant-id/gallery-1.jpg",
+      "/images/restaurants/restaurant-id/gallery-2.jpg"
+    ],
+    "menu": [
+      "/images/restaurants/restaurant-id/menu-1.jpg",
+      "/images/restaurants/restaurant-id/menu-2.jpg"
+    ]
+  },
+  "reviews": [
+    {
+      "id": "review-1",
+      "author": "Reviewer Name",
+      "rating": 5,
+      "date": "2024-03-20",
+      "comment": "Detailed review of the restaurant experience",
+      "images": [
+        "/images/reviews/review-1-1.jpg",
+        "/images/reviews/review-1-2.jpg"
+      ]
+    }
+  ],
+  "metadata": {
+    "createdAt": "2024-03-20T00:00:00Z",
+    "updatedAt": "2024-03-20T00:00:00Z",
+    "status": "active",
+    "tags": ["tag1", "tag2", "tag3"]
+  }
+} 
