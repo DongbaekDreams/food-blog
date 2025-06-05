@@ -31,7 +31,13 @@ const DrinkGallery = () => {
   useEffect(() => {
     const allDrinks = getDrinks();
     // Sort by most recent date
-    allDrinks.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    allDrinks.sort((a, b) => {
+      const [ay, am, ad] = a.date.split('-');
+      const [by, bm, bd] = b.date.split('-');
+      const aDate = new Date(Number(ay), Number(am) - 1, Number(ad));
+      const bDate = new Date(Number(by), Number(bm) - 1, Number(bd));
+      return bDate.getTime() - aDate.getTime();
+    });
     setDrinks(allDrinks);
     setFilteredDrinks(allDrinks);
   }, []);
@@ -157,7 +163,11 @@ const DrinkGallery = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', mb: 1 }}>
                   <CalendarTodayIcon fontSize="small" sx={{ mr: 0.5 }} />
                   <Typography variant="caption">
-                    {new Date(drink.date).toLocaleDateString()}
+                    {(() => {
+                      const [year, month, day] = drink.date.split('-');
+                      const d = new Date(Number(year), Number(month) - 1, Number(day));
+                      return d.toLocaleDateString();
+                    })()}
                   </Typography>
                 </Box>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5, height: '60px', overflow: 'hidden', textOverflow: 'ellipsis'}} title={drink.description}>

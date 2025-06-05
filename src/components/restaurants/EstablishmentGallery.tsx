@@ -49,8 +49,14 @@ const EstablishmentGallery = () => {
     allRestaurants.sort((a, b) => {
       const aDates = Array.isArray(a.visitDates) ? a.visitDates : [a.visitDates];
       const bDates = Array.isArray(b.visitDates) ? b.visitDates : [b.visitDates];
-      const aMostRecent = Math.max(...aDates.map(date => new Date(date).getTime()));
-      const bMostRecent = Math.max(...bDates.map(date => new Date(date).getTime()));
+      const aMostRecent = Math.max(...aDates.map(date => {
+        const [year, month, day] = date.split('-');
+        return new Date(Number(year), Number(month) - 1, Number(day)).getTime();
+      }));
+      const bMostRecent = Math.max(...bDates.map(date => {
+        const [year, month, day] = date.split('-');
+        return new Date(Number(year), Number(month) - 1, Number(day)).getTime();
+      }));
       return bMostRecent - aMostRecent;
     });
     setRestaurants(allRestaurants);
@@ -320,10 +326,11 @@ const EstablishmentGallery = () => {
                   <Chip 
                     icon={<CalendarTodayIcon fontSize="small" />}
                     label={restaurant.visitDates && restaurant.visitDates[0]
-                      ? new Date(restaurant.visitDates[0]).toLocaleDateString('en-US', { 
-                          month: 'short',
-                          year: 'numeric'
-                        })
+                      ? (() => {
+                          const [year, month, day] = restaurant.visitDates[0].split('-');
+                          const d = new Date(Number(year), Number(month) - 1, Number(day));
+                          return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                        })()
                       : 'Date Unknown'
                     }
                     size="small"

@@ -357,7 +357,8 @@ const RestaurantDetailPage = () => {
                     restaurant.visitDates && restaurant.visitDates.length > 0 && restaurant.visitDates[0]
                       ? `Visited on: ${restaurant.visitDates
                           .map(date => {
-                            const d = new Date(date);
+                            const [year, month, day] = date.split('-');
+                            const d = new Date(Number(year), Number(month) - 1, Number(day));
                             return isNaN(d.getTime()) ? null : d.toLocaleDateString('en-US', {
                               weekday: 'long',
                               year: 'numeric',
@@ -648,11 +649,15 @@ const RestaurantDetailPage = () => {
                   <Paper sx={{ p: 2 }}>
                     <Typography variant="subtitle2">Visit Dates</Typography>
                     <Typography variant="body1">
-                      {restaurant.visitDates.map(date => new Date(date).toLocaleDateString(undefined, { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })).join(', ')}
+                      {restaurant.visitDates.map(date => {
+                        const [year, month, day] = date.split('-');
+                        const d = new Date(Number(year), Number(month) - 1, Number(day));
+                        return d.toLocaleDateString(undefined, {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        });
+                      }).join(', ')}
                     </Typography>
                   </Paper>
                 </Grid>

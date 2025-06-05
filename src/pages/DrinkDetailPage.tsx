@@ -347,11 +347,15 @@ const DrinkDetailPage = () => {
                 Tasting Date
               </Typography>
               <Typography variant="body1" paragraph>
-                {new Date(drink.date).toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
+                {(() => {
+                  const [year, month, day] = drink.date.split('-');
+                  const d = new Date(Number(year), Number(month) - 1, Number(day));
+                  return d.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  });
+                })()}
               </Typography>
               
               <Divider sx={{ my: 2 }} />
@@ -408,11 +412,15 @@ const DrinkDetailPage = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
               <CalendarTodayIcon fontSize="small" sx={{ mr: 1, color: 'text.secondary' }} />
               <Typography variant="body2" color="text.secondary">
-                {new Date(drink.date).toLocaleDateString('en-US', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
-                })}
+                {(() => {
+                  const [year, month, day] = drink.date.split('-');
+                  const d = new Date(Number(year), Number(month) - 1, Number(day));
+                  return d.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  });
+                })()}
               </Typography>
             </Box>
             

@@ -124,6 +124,9 @@
   "drinks": {
     "lina-limoncello": [
       "/images/drinks/lina-limoncello/lina-limoncello.png"
+    ],
+    "remy-martin-vsop": [
+      "/images/drinks/remy-martin-vsop/remy-martin-strawberry.png"
     ]
   }
 }

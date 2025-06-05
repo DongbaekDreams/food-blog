@@ -20,7 +20,7 @@
     "2 cups Fresh Spinach",
     "1 cup Parmigiano"
   ],
-  "originalMainImagePath": "/images/dishes/marry-me-tortellini/tort-done.heic",
+  "originalMainImagePath": "/images/dishes/marry-me-tortellini/tort-done.png",
   "prepTime": "15 minutes",
   "cookTime": "20 minutes",
   "totalTime": "35 minutes",
@@ -34,14 +34,5 @@
       "description": "Recipe Link"
     }
   ],
-  "images": [
-    { "path": "/images/dishes/marry-me-tortellini/tort-done.heic", "alt": "Finished Marry Me Tortellini", "caption": "The finished Marry Me Tortellini, ready to serve." },
-    { "path": "/images/dishes/marry-me-tortellini/tort-cream.heic", "alt": "Cream being added to the pot", "caption": "Adding cream to the tortellini base." },
-    { "path": "/images/dishes/marry-me-tortellini/tort-broth-2.heic", "alt": "Broth in the pot", "caption": "Simmering the broth for flavor." },
-    { "path": "/images/dishes/marry-me-tortellini/tort-broth.heic", "alt": "Broth and tortellini in the pot", "caption": "Cooking the tortellini in broth." },
-    { "path": "/images/dishes/marry-me-tortellini/tort-roux.heic", "alt": "Making the roux", "caption": "Preparing the roux for the sauce." },
-    { "path": "/images/dishes/marry-me-tortellini/tort-base.heic", "alt": "Base ingredients in the pot", "caption": "Starting the dish with aromatics and oil." },
-    { "path": "/images/dishes/marry-me-tortellini/spread-1.heic", "alt": "Plated tortellini spread", "caption": "A spread of the finished tortellini dish." },
-    { "path": "/images/dishes/marry-me-tortellini/spread-2.heic", "alt": "Alternative plating of tortellini", "caption": "Another view of the finished dish." }
-  ]
+  "dateCooked": "2025-05-31"
 } 

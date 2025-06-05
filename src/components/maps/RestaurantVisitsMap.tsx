@@ -265,7 +265,8 @@ const RestaurantVisitsMap = () => {
           {restaurant.visitDates && restaurant.visitDates.length > 0 && restaurant.visitDates[0]
             ? `Visited on: ${restaurant.visitDates
                 .map(date => {
-                  const d = new Date(date);
+                  const [year, month, day] = date.split('-');
+                  const d = new Date(Number(year), Number(month) - 1, Number(day));
                   return isNaN(d.getTime()) ? null : d.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
